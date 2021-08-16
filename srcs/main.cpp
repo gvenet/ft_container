@@ -3,24 +3,29 @@
 #include <stack>
 #include <vector>
 
-#include "../inc/ft_vector.hpp"
+using namespace std;
 #include "../inc/Stack.hpp"
 
+
 int main() {
-    std::stack<int> s1;
-    std::stack<int> s2;
- 	std::stack<int,std::vector<int> > s3;
+    stack<int> s1;
+    stack<int> s2;
 
 
     s1.empty();
     s1.push(10);
     s1.push(20);
-    s2.operator=(s1);
-    std::cout << "s1 : " << s1.size() << std::endl;
-    std::cout << "s2 : " << s2.size() << std::endl;
+    s2.push(30);
+	s2.operator=(s1);
+    cout << "s1 : " << s1.size() << endl;
+    cout << "s2 : " << s2.size() << endl;
     s1.pop();
-    std::cout << "s1 : " << s1.top() << std::endl;
-    std::cout << "s2 : " << s2.top() << std::endl;
+    cout << "s1 : " << s1.top() << endl;
+    cout << "s2 : " << s2.top() << endl;
+
+	ft::Stack A;
+	cout << A.size() <<endl;
+
 
     return 0;
 }

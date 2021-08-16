@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../includes/ft_vector.hpp"
+#include "../inc/ft_vector.hpp"
 
 
 int main(void)

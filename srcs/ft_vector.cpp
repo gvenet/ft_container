@@ -1,4 +1,4 @@
-#include "../includes/ft_vector.hpp"
+#include "../inc/ft_vector.hpp"
 
 Ft_vector::Ft_vector()
 {

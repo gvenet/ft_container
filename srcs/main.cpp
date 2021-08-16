@@ -23,7 +23,7 @@ int main() {
     cout << "s1 : " << s1.top() << endl;
     cout << "s2 : " << s2.top() << endl;
 
-	ft::Stack A;
+	ft::Stack<int> A;
 	cout << A.size() <<endl;
 
 

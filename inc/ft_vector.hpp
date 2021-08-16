@@ -3,74 +3,60 @@
 
 #include <iostream>
 
-template <typename T>class FtVector {
+template <typename T>
+class FtVector
+{
 
 private:
-	T *arr;
-	int capacity;
-	int current;
+	T		*_arr;
+	int		_capacity;
+	int		_current;
 
 public:
-	FtVector() {
-		arr = new T[1];
-		capacity = 1;
-		current = 0;
+	FtVector()
+	{
+		_arr = new T[1];
+		_capacity = 1;
+		_current = 0;
 	}
 
-	void push(T data) {
-		if (current == capacity){
-			T *temp = new T[2 * capacity];
-			for (int i = 0; i < capacity; i++){
-				temp[i] = arr[i];
-			}
-			delete[] arr;
-			capacity *= 2;
-			arr = temp;
+	void push_back(T data)
+	{
+		if (_current == _capacity)
+		{
+			T *temp = new T[2 * _capacity];
+			for (int i = 0; i < _capacity; i++)
+				temp[i] = _arr[i];
+			delete[] _arr;
+			_capacity *= 2;
+			_arr = temp;
 		}
-		arr[current] = data;
-		current++;
+		_arr[_current] = data;
+		_current++;
 	}
 
-	void push(int data, int index){
-		if (index == capacity)
-			push(data);
-		else
-			arr[index] = data;
+	T at(int index)
+	{
+		return _arr[index];
 	}
 
-	T get(int index){
-		if (index < current)
-			return arr[index];
+	void pop_back()
+	{
+		_current--;
 	}
 
-	void pop() { 
-		current--; }
-
-	int size() { 
-		return current; }
-
-	int getcapacity() { 
-		return capacity; }
-	
-	void print(){
-		for (int i = 0; i < current; i++){
-			std::cout << arr[i] << " ";
-		}
-		std::cout << std::endl;
+	int size()
+	{
+		return _current;
 	}
+
+	int capacity()
+	{
+		return _capacity;
+	}
+
+
+
 };
 
-// class Ft_vector
-// {
-// private:
-// public:
-// 	Ft_vector();
-// 	Ft_vector(Ft_vector const &cpy);
-// 	Ft_vector &operator=(Ft_vector const &op);
-// 	virtual ~Ft_vector();
-
-// 	//========GETTERS========
-// 	//========SETTERS========
-// 	//========METHODS========
-// };
 #endif

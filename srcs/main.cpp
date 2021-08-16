@@ -4,6 +4,6 @@
 
 int main(void)
 {
-	
+	Ft_vector A;	
 	return 0;
 }

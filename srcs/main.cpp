@@ -1,60 +1,26 @@
-#include <iostream>
-#include "../inc/ft_vector.hpp"
-#include <vector>
 #include <algorithm>
-using namespace std;
+#include <iostream>
+#include <stack>
+#include <vector>
 
-void feprint(int i) {
-	cout << i << " ";
-}
+#include "../inc/ft_vector.hpp"
+#include "../inc/ft_stack.hpp"
 
-int main()
-{
-	FtVector<int> ftVec;
-	std::vector<int> stVec;
+int main() {
+    std::stack<int> s1;
+    std::stack<int> s2;
 
-	ftVec.push_back(1);
-	ftVec.push_back(2);
-	ftVec.push_back(3);
-	ftVec.push_back(4);
-	ftVec.push_back(5);
-	ftVec.push_back(6);
-	ftVec.push_back(7);
-	ftVec.push_back(8);
-	ftVec.push_back(9);
-
-	stVec.push_back(1);
-	stVec.push_back(2);
-	stVec.push_back(3);
-	stVec.push_back(4);
-	stVec.push_back(5);
-	stVec.push_back(6);
-	stVec.push_back(7);
-	stVec.push_back(8);
-	stVec.push_back(9);
-
-	cout << endl;
-	for_each(ftVec.begin(), ftVec.end(), feprint);
-	cout << " : ftVec" << endl;
-	for_each(stVec.begin(), stVec.end(), feprint);
-	cout << " : stVec" << endl;
-	
-	cout << "capacity()\n";
-	cout << ftVec.capacity() << "\tftVec\n";
-	cout << stVec.capacity() << "\tstVec\n\n";
-
-	cout << "size()\n";
-	cout << ftVec.size() << "\tftVec\n";
-	cout << stVec.size() << "\tstVec\n\n";
-
-	stVec.pop_back();
-	ftVec.pop_back();
-
-	cout << "pop_back()\n";
-	cout << ftVec.size() << "\tftVec\n";
-	cout << stVec.size() << "\tstVec\n\n";
-
-
-
-	return 0;
+    s1.empty();
+    s1.push(10);
+    s1.push(20);
+    s2.operator=(s1);
+    std::cout << "s1 : " << s1.size() << std::endl;
+    std::cout << "s2 : " << s2.size() << std::endl;
+    s1.pop();
+    std::cout << "s1 : " << s1.top() << std::endl;
+    std::cout << "s2 : " << s2.top() << std::endl;
+    s1.swap(s2);
+    std::cout << "s1 : " << s1.top() << std::endl;
+    std::cout << "s2 : " << s2.top() << std::endl;
+    return 0;
 }

@@ -1,3 +1,14 @@
+Objectifs
+
+Dans ce projet, vous implémenterez les différents types de conteneurs du standard C++
+bibliothèque de modèles.
+Pour chaque conteneur, rendez les fichiers de classe nommés de manière appropriée.
+L'espace de noms sera toujours ft et vos conteneurs seront testés à l'aide de ft::<container>.
+Vous devez respecter la structure du conteneur de référence. S'il manque une partie du
+forme canonique orthodoxe, ne l'appliquez pas.
+Pour rappel, nous codons en C++98, donc toute nouvelle fonctionnalité des conteneurs NE DOIT PAS
+être implémentée, mais toutes les anciennes fonctionnalités (même obsolètes) sont attendues.
+
 • Implémentez les conteneurs suivants et remettez les fichiers nécessaires <container>.hpp
 
 • Vous devez également fournir un main.cpp qui teste tout pour vos évaluations. (toi

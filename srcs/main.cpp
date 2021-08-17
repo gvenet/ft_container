@@ -1,7 +1,7 @@
 #include <algorithm>
 #include <iostream>
 #include <stack>
-
+#include <vector>
 #include "../inc/Stack.hpp"
 
 int main() {

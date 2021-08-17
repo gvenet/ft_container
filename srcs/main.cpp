@@ -6,26 +6,9 @@
 using namespace std;
 #include "../inc/Stack.hpp"
 
-
 int main() {
-    stack<int> s1;
-    stack<int> s2;
-
-
-    s1.empty();
-    s1.push(10);
-    s1.push(20);
-    s2.push(30);
-	s2.operator=(s1);
-    cout << "s1 : " << s1.size() << endl;
-    cout << "s2 : " << s2.size() << endl;
-    s1.pop();
-    cout << "s1 : " << s1.top() << endl;
-    cout << "s2 : " << s2.top() << endl;
-
-	ft::Stack<int> A;
-	cout << A.size() <<endl;
-
+    ft::Stack<int> s1;
+    std::stack<int> s2;
 
     return 0;
 }

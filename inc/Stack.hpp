@@ -36,38 +36,32 @@ class Stack {
 };
 
 template <class _Tp, class _Container>
-bool
-operator==(const Stack<_Tp, _Container>& __x, const Stack<_Tp, _Container>& __y) {
+bool operator==(const Stack<_Tp, _Container>& __x, const Stack<_Tp, _Container>& __y) {
     return __x.c == __y.c;
 }
 
 template <class _Tp, class _Container>
-bool
-operator<(const Stack<_Tp, _Container>& __x, const Stack<_Tp, _Container>& __y) {
+bool operator<(const Stack<_Tp, _Container>& __x, const Stack<_Tp, _Container>& __y) {
     return __x.c < __y.c;
 }
 
 template <class _Tp, class _Container>
-bool
-operator!=(const Stack<_Tp, _Container>& __x, const Stack<_Tp, _Container>& __y) {
+bool operator!=(const Stack<_Tp, _Container>& __x, const Stack<_Tp, _Container>& __y) {
     return !(__x == __y);
 }
 
 template <class _Tp, class _Container>
-bool
-operator>(const Stack<_Tp, _Container>& __x, const Stack<_Tp, _Container>& __y) {
+bool operator>(const Stack<_Tp, _Container>& __x, const Stack<_Tp, _Container>& __y) {
     return __y < __x;
 }
 
 template <class _Tp, class _Container>
-bool
-operator>=(const Stack<_Tp, _Container>& __x, const Stack<_Tp, _Container>& __y) {
+bool operator>=(const Stack<_Tp, _Container>& __x, const Stack<_Tp, _Container>& __y) {
     return !(__x < __y);
 }
 
 template <class _Tp, class _Container>
-bool
-operator<=(const Stack<_Tp, _Container>& __x, const Stack<_Tp, _Container>& __y) {
+bool operator<=(const Stack<_Tp, _Container>& __x, const Stack<_Tp, _Container>& __y) {
     return !(__y < __x);
 }
 

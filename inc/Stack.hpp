@@ -1,8 +1,11 @@
 #ifndef STACK_HPP
 #define STACK_HPP
+// #include "Vector.hpp"
+#include <vector>
 
 namespace ft {
 
+// template <class _Tp, class _Container = ft::Vector<_Tp> >
 template <class _Tp, class _Container = std::vector<_Tp> >
 class Stack;
 
@@ -36,32 +39,38 @@ class Stack {
 };
 
 template <class _Tp, class _Container>
-bool operator==(const Stack<_Tp, _Container>& __x, const Stack<_Tp, _Container>& __y) {
+bool operator==(const Stack<_Tp, _Container>& __x,
+                const Stack<_Tp, _Container>& __y) {
     return __x.c == __y.c;
 }
 
 template <class _Tp, class _Container>
-bool operator<(const Stack<_Tp, _Container>& __x, const Stack<_Tp, _Container>& __y) {
+bool operator<(const Stack<_Tp, _Container>& __x,
+               const Stack<_Tp, _Container>& __y) {
     return __x.c < __y.c;
 }
 
 template <class _Tp, class _Container>
-bool operator!=(const Stack<_Tp, _Container>& __x, const Stack<_Tp, _Container>& __y) {
+bool operator!=(const Stack<_Tp, _Container>& __x,
+                const Stack<_Tp, _Container>& __y) {
     return !(__x == __y);
 }
 
 template <class _Tp, class _Container>
-bool operator>(const Stack<_Tp, _Container>& __x, const Stack<_Tp, _Container>& __y) {
+bool operator>(const Stack<_Tp, _Container>& __x,
+               const Stack<_Tp, _Container>& __y) {
     return __y < __x;
 }
 
 template <class _Tp, class _Container>
-bool operator>=(const Stack<_Tp, _Container>& __x, const Stack<_Tp, _Container>& __y) {
+bool operator>=(const Stack<_Tp, _Container>& __x,
+                const Stack<_Tp, _Container>& __y) {
     return !(__x < __y);
 }
 
 template <class _Tp, class _Container>
-bool operator<=(const Stack<_Tp, _Container>& __x, const Stack<_Tp, _Container>& __y) {
+bool operator<=(const Stack<_Tp, _Container>& __x,
+                const Stack<_Tp, _Container>& __y) {
     return !(__y < __x);
 }
 

@@ -4,20 +4,14 @@
 
 namespace ft {
 
-// template <class T, class Allocator = allocator<T> >
-template <class T, class Allocator>
+template <class T, class Allocator = std::allocator<T> > // generic template
 class Vector {
 public:
 	typedef T										 value_type;
 	typedef Allocator								 allocator_type;
 	typedef typename allocator_type::reference		 reference;
 	typedef typename allocator_type::const_reference const_reference;
-	typedef implementation - defined				 iterator;
-	typedef implementation - defined				 const_iterator;
 	typedef typename allocator_type::size_type		 size_type;
-	typedef typename allocator_type::difference_type difference_type;
-	typedef typename allocator_type::pointer		 pointer;
-	typedef typename allocator_type::const_pointer	 const_pointer;
 	typedef std::reverse_iterator<iterator>			 reverse_iterator;
 	typedef std::reverse_iterator<const_iterator>	 const_reverse_iterator;
 
@@ -27,7 +21,7 @@ public:
 	Vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type()); //_fill (2)
 	template <class InputIterator>																			   //_range (3)
 	Vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type());		   //_
-	Vector(const vector &x);																				   //_copy (4)
+	Vector(const Vector &x);																				   //_copy (4)
 	~Vector();																								   //destructor
 	Vector &operator=(const Vector &x);																		   //operator=
 
@@ -73,11 +67,28 @@ public:
 	void	 insert(iterator position, InputIterator first, InputIterator last); //
 	iterator erase(iterator position);
 	iterator erase(iterator first, iterator last);
-	void	 swap(vector &x);
+	void	 swap(Vector &x);
 	void	 clear();
 
 	//ALLOCATOR
 	allocator_type get_allocator() const; //get_allocator
 };
+
+template <class T, class Allocator>
+void swap(Vector<T, Allocator> &x, Vector<T, Allocator> &y);
+
+template <class T, class Allocator>
+bool operator==(const Vector<T, Allocator> &lhs, const Vector<T, Allocator> &rhs);
+template <class T, class Allocator>
+bool operator!=(const Vector<T, Allocator> &lhs, const Vector<T, Allocator> &rhs);
+template <class T, class Allocator>
+bool operator<(const Vector<T, Allocator> &lhs, const Vector<T, Allocator> &rhs);
+template <class T, class Allocator>
+bool operator<=(const Vector<T, Allocator> &lhs, const Vector<T, Allocator> &rhs);
+template <class T, class Allocator>
+bool operator>(const Vector<T, Allocator> &lhs, const Vector<T, Allocator> &rhs);
+template <class T, class Allocator>
+bool operator>=(const Vector<T, Allocator> &lhs, const Vector<T, Allocator> &rhs);
+
 } // namespace ft
 #endif

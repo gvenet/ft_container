@@ -6,16 +6,9 @@
 /*   By: gvenet <gvenet@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/18 12:45:54 by excalibur         #+#    #+#             */
-/*   Updated: 2021/09/07 20:31:53 by gvenet           ###   ########.fr       */
+/*   Updated: 2021/09/07 22:25:03 by gvenet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-//
-// Documentation :
-// (fr) https://github.com/rchallie/ft_containers/blob/master/vector.txt
-// http://www.cplusplus.com/reference/vector/vector/?kw=vector
-// (fr) https://docs.microsoft.com/fr-fr/cpp/standard-library/vector-class?view=vs-2019
-//
 
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
@@ -27,8 +20,8 @@
 #include <cstddef>
 #include <memory>
 
-#include "./utils/random_access_iterator.hpp"
-#include "./utils/utils.hpp"
+#include "./random_access_iterator.hpp"
+#include "./utils.hpp"
 
 // =============================================================================
 

@@ -6,7 +6,7 @@
 /*   By: gvenet <gvenet@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/24 18:25:12 by rchallie          #+#    #+#             */
-/*   Updated: 2021/09/07 22:25:01 by gvenet           ###   ########.fr       */
+/*   Updated: 2021/09/07 22:27:06 by gvenet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,30 +27,30 @@
 // From : (Take a look)
 // https://www.amazon.com/dp/0201924889
 //
-static class nullptr_t {
-public:
-	//
-	// @brief For conversion to any type
-	// of null non-member pointer.
-	//
-	template <class T>
-	operator T*() const { return (0); }
+// static class nullptr_t {
+// public:
+// 	//
+// 	// @brief For conversion to any type
+// 	// of null non-member pointer.
+// 	//
+// 	template <class T>
+// 	operator T*() const { return (0); }
 
-	//
-	// @brief For conversion to any type of null
-	// member pointer.
-	//
-	template <class C, class T>
-	operator T C::*() const { return (0); }
+// 	//
+// 	// @brief For conversion to any type of null
+// 	// member pointer.
+// 	//
+// 	template <class C, class T>
+// 	operator T C::*() const { return (0); }
 
-private:
-	//
-	// @brief It's imposible to get an address of
-	// a nullptr.
-	//
-	void operator&() const;
+// private:
+// 	//
+// 	// @brief It's imposible to get an address of
+// 	// a nullptr.
+// 	//
+// 	void operator&() const;
 
-} u_nullptr = {};
+// } u_nullptr = {};
 
 namespace ft {
 	//

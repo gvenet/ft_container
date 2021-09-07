@@ -25,20 +25,22 @@ public:
 	typedef typename allocator_type::difference_type difference_type;
 
 private:
-	size_type  _n;
-	value_type _val;
-	Iterator   _first;
-	Iterator   _last;
+	size_type	   _n;	  //size_t
+	value_type	   _val;  //T
+	Iterator	   _first;
+	Iterator	   _last;
+	allocator_type _alloc;
+	const allocator_type _calloc;
 
 public:
 	//MEMBERS FUNCTIONS
-	Vector(const allocator_type &alloc = allocator_type());
-	// Vector(const allocator_type &alloc = allocator_type()) : _n(NULL), _val(NULL), _first(NULL), _last(NULL) {}
-	Vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type());
-	template <class InputIterator>
-	Vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type());
-	Vector(const Vector &x);
-	~Vector();
+	Vector(const allocator_type &alloc = allocator_type()) : _n(0), _alloc(alloc) {}																//default
+	Vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type()) : _n(n), _val(val), _calloc(alloc) {}	//fill
+	// Vector(size_type n, const allocator_type &alloc = allocator_type()) : Vector<T>(n, 0), _alloc(alloc) {}											//size
+	template <class InputIterator>																													//
+	Vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type());												//range
+	Vector(const Vector &x);																														//copy
+	~Vector() {}
 	Vector &operator=(const Vector &x);
 
 	//ITERATORS

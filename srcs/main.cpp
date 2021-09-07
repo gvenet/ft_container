@@ -7,11 +7,18 @@
 typedef ft::Vector<int>::Iterator Iterator;
 
 int main() {
-	std::vector<int>		   v1(10, 10);
-	std::vector<int>::iterator it;
+	// std::vector<int> v1(10);
+	// std::vector<int>::iterator it;
 
-	it = v1.begin();
-	std::cout << *it << std::endl;
+
+	ft::Vector<int>			  v1;
+	ft::Vector<int>::iterator it;
+
+	// v1.push_back(42);
+	// it = v1.begin();
+	// for ( ; it != v1.end(); it++)
+	// 	std::cout << *it << " ";
+	// std::cout << std::endl;
 
 	return 0;
 }

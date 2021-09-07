@@ -6,7 +6,7 @@
 /*   By: gvenet <gvenet@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/24 18:25:12 by rchallie          #+#    #+#             */
-/*   Updated: 2021/09/07 22:27:06 by gvenet           ###   ########.fr       */
+/*   Updated: 2021/09/07 22:37:04 by gvenet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,30 +27,30 @@
 // From : (Take a look)
 // https://www.amazon.com/dp/0201924889
 //
-// static class nullptr_t {
-// public:
-// 	//
-// 	// @brief For conversion to any type
-// 	// of null non-member pointer.
-// 	//
-// 	template <class T>
-// 	operator T*() const { return (0); }
+static class nullptr_t {
+public:
+	//
+	// @brief For conversion to any type
+	// of null non-member pointer.
+	//
+	template <class T>
+	operator T*() const { return (0); }
 
-// 	//
-// 	// @brief For conversion to any type of null
-// 	// member pointer.
-// 	//
-// 	template <class C, class T>
-// 	operator T C::*() const { return (0); }
+	//
+	// @brief For conversion to any type of null
+	// member pointer.
+	//
+	template <class C, class T>
+	operator T C::*() const { return (0); }
 
-// private:
-// 	//
-// 	// @brief It's imposible to get an address of
-// 	// a nullptr.
-// 	//
-// 	void operator&() const;
+private:
+	//
+	// @brief It's imposible to get an address of
+	// a nullptr.
+	//
+	void operator&() const;
 
-// } u_nullptr = {};
+} u_nullptr = {};
 
 namespace ft {
 	//
@@ -1003,179 +1003,6 @@ namespace ft {
 		}
 		return (first2 != last2);
 	}
-
-	//
-	// @brief Return true if the range [first1, last2) compare
-	// lexicographically lest than the range [first2, last2).
-	// The comparision is effectued by "comp".
-	//
-	// @param first1, last1 the start and the end of the first range.
-	// @param first2, last2 the start and the end of the second range.
-	// @param comp the function that will compare.
-	// @return true if the first range compares lexicographically less
-	// than the second, false otherwise.
-	//
-	template <class InputIterator1, class InputIterator2, class Compare>
-	bool lexicographical_compare(InputIterator1 first1, InputIterator1 last1,
-								 InputIterator2 first2, InputIterator2 last2,
-								 Compare comp) {
-		while ( first1 != last1 ) {
-			if ( first2 == last2 || comp(*first2, *first1) )
-				return false;
-			else if ( comp(*first1, *first2) )
-				return true;
-			++first1;
-			++first2;
-		}
-		return (first2 != last2);
-	}
-
-	template <typename T>
-	struct BST_Node {
-	public:
-		// First template argument, the type of stocked value //
-		typedef T value_type;
-
-		value_type value;
-		BST_Node*  parent;
-		BST_Node*  left;
-		BST_Node*  right;
-
-		//
-		// @brief Default.
-		// Create a BST_Node with default initisialized value.
-		// Left and right branch pointer to a "u_nullptr" (t_nullptr).
-		//
-		BST_Node()
-			: value(),
-			  parent(u_nullptr),
-			  left(u_nullptr),
-			  right(u_nullptr) { }
-
-		//
-		// @brief Default.
-		// Create a BST_Node with default initisialized value.
-		// Left and right branch pointer to a "u_nullptr" (t_nullptr).
-		//
-		BST_Node(BST_Node* parent = u_nullptr,
-				 BST_Node* left = u_nullptr, BST_Node* right = u_nullptr)
-			: value(),
-			  parent(parent),
-			  left(left),
-			  right(right) { }
-
-		//
-		// @brief Value.
-		// Create a BST_Node with value defined by a copy of "val".
-		// Left and right branch pointer to a "u_nullptr" (t_nullptr).
-		//
-		// @param val the value to copy.
-		//
-		BST_Node(const value_type& val, BST_Node* parent = u_nullptr,
-				 BST_Node* left = u_nullptr, BST_Node* right = u_nullptr)
-			: value(val),
-			  parent(parent),
-			  left(left),
-			  right(right) { }
-
-		//
-		// @brief Copy.
-		// Create a BST_Node that a copy of "nd".
-		// The value is initalized by a copy of "nd" value.
-		// Left and right branch point to the same than "nb" branches.
-		//
-		// @param nd the BST_Node to copy.
-		//
-		BST_Node(const BST_Node& nd)
-			: value(nd.value),
-			  parent(nd.parent),
-			  left(nd.left),
-			  right(nd.right) { }
-
-		virtual ~BST_Node() { }
-
-		//
-		// @brief Equal operator.
-		// Create a BST_Node that a copy of "nd".
-		// The value is initalized by a copy of "nd" value.
-		// Left and right branch point to the same than "nb" branches.
-		//
-		// @param nd the BST_Node to copy.
-		// @return *this.
-		//
-		BST_Node& operator=(const BST_Node& nd) {
-			if ( nd == *this )
-				return (*this);
-
-			this->value = nd.value;
-			this->parent = nd.parent;
-			this->left = nd.left;
-			this->right = nd.right;
-
-			return (*this);
-		}
-
-		//
-		// @brief Compare two BST_Node to know
-		// if they contains the same value.
-		//
-		// @param nd the BST_Node to compare.
-		// @return true if the value are the same,
-		// otherwise no.
-		//
-		bool operator==(const BST_Node& nd) {
-			if ( value == nd.value )
-				return (true);
-			return (false);
-		}
-	};
-
-	// List Node : //
-	template <class Data_T>
-	struct Doubly_Linked_Node {
-	public:
-		Doubly_Linked_Node* prev;
-		Doubly_Linked_Node* next;
-		Data_T				data;
-
-		//
-		// @brief Default:
-		// Create a node with next and prev
-		// value that pointing to u_nullptr.
-		// data is unitialized.
-		//
-		Doubly_Linked_Node()
-			: prev(u_nullptr),
-			  next(u_nullptr) { }
-
-		//
-		// @brief Data init:
-		// Create a node with next and prev
-		// value that pointing to u_nullptr.
-		// data is itialized to "val".
-		//
-		// @param val the data of this node.
-		//
-		Doubly_Linked_Node(const Data_T& val)
-			: prev(u_nullptr),
-			  next(u_nullptr),
-			  data(val) { }
-
-		//
-		// @brief Init:
-		// Create a node with next and prev
-		// value that pointing to parameters "prev" & "next".
-		// data is itialized to "val".
-		//
-		// @param val the data of this node.
-		// @param prev,next the previous and next node.
-		//
-		Doubly_Linked_Node(const Data_T&	   val,
-						   Doubly_Linked_Node* prev, Doubly_Linked_Node* next)
-			: prev(prev),
-			  next(next),
-			  data(val) { }
-	};
 
 }  // End of namespace //
 

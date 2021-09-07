@@ -1,7 +1,8 @@
-#include "../inc/Vector.hpp"
 #include <iostream>
 #include <string>
 #include <vector>
+
+#include "../inc/Vector.hpp"
 
 typedef ft::Vector<int>::Iterator Iterator;
 
@@ -16,7 +17,6 @@ int main() {
 }
 
 // int main() {
-
 // 	int numbers[] = {10, 20, 30, 40, 50, 60};
 
 // 	Iterator begin(numbers);
@@ -27,7 +27,7 @@ int main() {
 // 		std::cout << *it << " ";
 // 	std::cout << "\n------------\n";
 // 	it = end - 1;
-// 	for ( ; it >= begin ; it-- )
+// 	for ( ; it >= begin; it-- )
 // 		std::cout << *it << " ";
 // 	std::cout << "\n------------\n";
 // 	for ( it = begin; it < end; it++ )
@@ -37,7 +37,6 @@ int main() {
 // 	std::cout << *it << std::endl;
 // 	it = end - 6;
 // 	std::cout << *it << std::endl;
-
 // 	return 0;
 // }
 

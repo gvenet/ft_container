@@ -36,8 +36,8 @@ public:
 		  _start(nullptr),
 		  _end(nullptr),
 		  _end_capacity(nullptr) {
-		_start = _alloc.allocate(n);
 		_end_capacity = _start + n;
+		_start = _alloc.allocate(n);
 		_end = _start;
 		while ( n-- ) {
 			_alloc.construct(_end, val);
@@ -95,6 +95,11 @@ public:
 	void pop_back();
 
 	iterator insert(iterator position, const value_type &val) {
+		size_type v_len = &(*position) - _start;
+		std::cout << "v_len     : " << v_len<< " " << std::endl;
+		std::cout << "empty_len : " << (_end_capacity - _end) << " " << std::endl;
+		
+		return (position);
 	}  // single element (1)
 	// void	 insert(iterator position, size_type n, const value_type &val);		  // fill (2)
 	// template <class InputIterator>												  // range (3)

@@ -4,21 +4,22 @@
 
 #include "../inc/Vector.hpp"
 
-typedef ft::Vector<int>::Iterator Iterator;
+// typedef ft::Vector<int>::Iterator Iterator;
+typedef std::vector<int>::iterator Iterator;
 
 int main() {
-	// std::vector<int> v1(10);
-	// std::vector<int>::iterator it;
+	std::vector<int> v1(10);
+	std::vector<int>::iterator it;
 
 
-	ft::Vector<int>			  v1;
-	ft::Vector<int>::iterator it;
+	// ft::Vector<int>			  v1;
+	// ft::Vector<int>::iterator it;
 
-	// v1.push_back(42);
-	// it = v1.begin();
-	// for ( ; it != v1.end(); it++)
-	// 	std::cout << *it << " ";
-	// std::cout << std::endl;
+	v1.push_back(42);
+	it = v1.begin();
+	for ( ; it != v1.end(); it++)
+		std::cout << *it << " ";
+	std::cout << std::endl;
 
 	return 0;
 }

@@ -5,7 +5,6 @@
 
 namespace ft {
 
-
 template <class Category, class T, class Distance = ptrdiff_t,
 		  class Pointer = T*, class Reference = T&>
 class iterator {
@@ -17,7 +16,7 @@ public:
 	typedef Category  iterator_category;
 };
 
-class random_access_iterator_tag {};
+class random_access_iterator_tag { };
 
 template <typename T>
 class random_access_iterator : ft::iterator<ft::random_access_iterator_tag, T> {
@@ -28,11 +27,11 @@ public:
 	typedef T*																			pointer;
 	typedef T&																			reference;
 
-	random_access_iterator(void) : _elem(u_nullptr) {}
+	random_access_iterator(void) : _elem(u_nullptr) { }
 
-	random_access_iterator(pointer elem) : _elem(elem) {}
+	random_access_iterator(pointer elem) : _elem(elem) { }
 
-	random_access_iterator(const random_access_iterator& op) : _elem(op._elem) {}
+	random_access_iterator(const random_access_iterator& op) : _elem(op._elem) { }
 
 	random_access_iterator& operator=(const random_access_iterator& op) {
 		if ( this == &op )
@@ -40,7 +39,7 @@ public:
 		this->_elem = op._elem;
 		return (*this);
 	}
-	virtual ~random_access_iterator() {}
+	virtual ~random_access_iterator() { }
 
 	pointer base() const { return (this->_elem); }
 

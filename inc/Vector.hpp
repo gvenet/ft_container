@@ -35,7 +35,9 @@ private:
 public:
 	//MEMBERS FUNCTIONS
 	Vector(const allocator_type &alloc = allocator_type()) : _n(0), _alloc(alloc) {}																//default
-	Vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type()) : _n(n), _val(val), _calloc(alloc) {}	//fill
+	Vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type()) : _n(n), _val(val), _calloc(alloc) {
+		
+	}	//fill
 	// Vector(size_type n, const allocator_type &alloc = allocator_type()) : Vector<T>(n, 0), _alloc(alloc) {}											//size
 	template <class InputIterator>																													//
 	Vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type());												//range

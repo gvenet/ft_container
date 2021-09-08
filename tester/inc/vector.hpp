@@ -1,22 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   vector.hpp                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: gvenet <gvenet@student.42lyon.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/18 12:45:54 by excalibur         #+#    #+#             */
-/*   Updated: 2021/09/08 10:34:48 by gvenet           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-//
-// Documentation :
-// (fr) https://github.com/rchallie/ft_containers/blob/master/vector.txt
-// http://www.cplusplus.com/reference/vector/vector/?kw=vector
-// (fr) https://docs.microsoft.com/fr-fr/cpp/standard-library/vector-class?view=vs-2019
-//
-
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
@@ -48,8 +29,8 @@ public:
 	typedef ft::random_access_iterator<const value_type>			const_iterator;
 	typedef ft::reverse_iterator<iterator>							reverse_iterator;
 	typedef ft::reverse_iterator<const_iterator>					const_reverse_iterator;
-	typedef typename ft::iterator_traits<iterator>::difference_type difference_type;
 	typedef typename allocator_type::size_type						size_type;
+	typedef typename ft::iterator_traits<iterator>::difference_type difference_type;
 
 	// Constructors:
 

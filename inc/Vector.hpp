@@ -2,6 +2,9 @@
 #define VECTOR_HPP
 
 #include <iostream>
+
+#include <algorithm>
+#include <cstddef>
 #include <memory>
 
 #include "Iterator.hpp"
@@ -25,26 +28,28 @@ public:
 	typedef typename allocator_type::size_type			 size_type;
 	typedef typename allocator_type::difference_type	 difference_type;
 
-public:
 	//MEMBERS FUNCTIONS
 	Vector(const allocator_type &alloc = allocator_type())
 		: _alloc(alloc),
-		  _start(nullptr),
-		  _end(nullptr),
-		  _end_capacity(nullptr) { }  //default
+		  _start(u_nullptr),
+		  _end(u_nullptr),
+		  _end_capacity(u_nullptr) { }	//default
 
-	Vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type())
+	Vector(size_type n, const value_type &val = value_type(),
+					const allocator_type &alloc = allocator_type())
 		: _alloc(alloc),
-		  _start(nullptr),
-		  _end(nullptr),
-		  _end_capacity(nullptr) {
+		  _start(u_nullptr),
+		  _end(u_nullptr),
+		  _end_capacity(u_nullptr) {
 		_start = _alloc.allocate(n);
 		_end_capacity = _start + n;
+		_end = _start;
 		while ( n-- ) {
 			_alloc.construct(_end, val);
 			_end++;
 		}
-	}																								  //fill
+	}  //fill
+
 	template <class InputIterator>																	  //
 	Vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type());  //range
 	Vector(const Vector &x);																		  //copy
@@ -99,7 +104,7 @@ public:
 	//ALLOCATOR
 	allocator_type get_allocator() const;
 
-private:
+	private:
 	allocator_type _alloc;
 	pointer		   _start;
 	pointer		   _end;

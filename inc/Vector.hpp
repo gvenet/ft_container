@@ -2,13 +2,9 @@
 #define VECTOR_HPP
 
 #include <iostream>
-
-#include <algorithm>
-#include <cstddef>
 #include <memory>
 
 #include "Iterator.hpp"
-#include "Utils.hpp"
 
 namespace ft {
 
@@ -28,19 +24,18 @@ public:
 	typedef typename allocator_type::size_type			 size_type;
 	typedef typename allocator_type::difference_type	 difference_type;
 
-	//MEMBERS FUNCTIONS
-	Vector(const allocator_type &alloc = allocator_type())
+	explicit Vector(const allocator_type &alloc = allocator_type())
 		: _alloc(alloc),
-		  _start(u_nullptr),
-		  _end(u_nullptr),
-		  _end_capacity(u_nullptr) { }	//default
+		  _start(nullptr),
+		  _end(nullptr),
+		  _end_capacity(nullptr) { }
 
-	Vector(size_type n, const value_type &val = value_type(),
+	explicit Vector(size_type n, const value_type &val = value_type(),
 					const allocator_type &alloc = allocator_type())
 		: _alloc(alloc),
-		  _start(u_nullptr),
-		  _end(u_nullptr),
-		  _end_capacity(u_nullptr) {
+		  _start(nullptr),
+		  _end(nullptr),
+		  _end_capacity(nullptr) {
 		_start = _alloc.allocate(n);
 		_end_capacity = _start + n;
 		_end = _start;
@@ -48,23 +43,26 @@ public:
 			_alloc.construct(_end, val);
 			_end++;
 		}
-	}  //fill
+	}
 
-	template <class InputIterator>																	  //
-	Vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type());  //range
-	Vector(const Vector &x);																		  //copy
+	// template <class InputIterator>
+	// explicit Vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type());
+
+	explicit Vector(const Vector &x);
+
 	~Vector() { }
+
 	Vector &operator=(const Vector &x);
 
 	//ITERATORS
-	iterator			   begin();
-	const_iterator		   begin() const;
-	iterator			   end();
-	const_iterator		   end() const;
-	reverse_iterator	   rbegin();
-	const_reverse_iterator rbegin() const;
-	reverse_iterator	   rend();
-	const_reverse_iterator rend() const;
+	iterator begin() { return _start; }
+	// const_iterator		   begin() const;
+	iterator end() { return _end; }
+	// const_iterator		   end() const;
+	// reverse_iterator	   rbegin();
+	// const_reverse_iterator rbegin() const;
+	// reverse_iterator	   rend();
+	// const_reverse_iterator rend() const;
 
 	//CAPACITY
 	size_type size() const;
@@ -87,24 +85,24 @@ public:
 	const_reference back() const;
 
 	//MODIFIERS
-	template <class InputIterator>							   //range (1)
-	void	 assign(InputIterator first, InputIterator last);  //
-	void	 assign(size_type n, const value_type &val);	   //fill (2)
-	void	 push_back(const value_type &x);
-	void	 pop_back();
-	iterator insert(iterator position, const value_type &val);					  // single element (1)
-	void	 insert(iterator position, size_type n, const value_type &val);		  // fill (2)
-	template <class InputIterator>												  // range (3)
-	void	 insert(iterator position, InputIterator first, InputIterator last);  //
-	iterator erase(iterator position);
-	iterator erase(iterator first, iterator last);
-	void	 swap(Vector &x);
-	void	 clear();
+	// template <class InputIterator>							   //range (1)
+	// void	 assign(InputIterator first, InputIterator last);  //
+	void assign(size_type n, const value_type &val);  //fill (2)
+	void push_back(const value_type &x);
+	void pop_back();
+	// iterator insert(iterator position, const value_type &val);					  // single element (1)
+	// void	 insert(iterator position, size_type n, const value_type &val);		  // fill (2)
+	// template <class InputIterator>												  // range (3)
+	// void	 insert(iterator position, InputIterator first, InputIterator last);  //
+	// iterator erase(iterator position);
+	// iterator erase(iterator first, iterator last);
+	void swap(Vector &x);
+	void clear();
 
 	//ALLOCATOR
 	allocator_type get_allocator() const;
 
-	private:
+private:
 	allocator_type _alloc;
 	pointer		   _start;
 	pointer		   _end;

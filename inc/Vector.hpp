@@ -31,7 +31,7 @@ public:
 		  _end_capacity(nullptr) { }
 
 	Vector(size_type n, const value_type &val = value_type(),
-					const allocator_type &alloc = allocator_type())
+		   const allocator_type &alloc = allocator_type())
 		: _alloc(alloc),
 		  _start(nullptr),
 		  _end(nullptr),
@@ -51,7 +51,8 @@ public:
 	Vector(const Vector &x);
 
 	~Vector() {
-		
+		clear();
+		_alloc.deallocate(_start, this->capacity());
 	}
 
 	Vector &operator=(const Vector &x);
@@ -67,11 +68,11 @@ public:
 	// const_reverse_iterator rend() const;
 
 	//CAPACITY
-	size_type size() const;
+	size_type size() const { return (_end - _start); }
 	size_type max_size() const;
 	void	  resize(size_type sz);
 	void	  resize(size_type sz, const value_type &c);
-	size_type capacity() const;
+	size_type capacity() const { return (_end_capacity - _start); }
 	bool	  empty() const;
 	void	  reserve(size_type n);
 
@@ -92,14 +93,23 @@ public:
 	void assign(size_type n, const value_type &val);  //fill (2)
 	void push_back(const value_type &x);
 	void pop_back();
-	// iterator insert(iterator position, const value_type &val);					  // single element (1)
+
+	iterator insert(iterator position, const value_type &val) {
+	}  // single element (1)
 	// void	 insert(iterator position, size_type n, const value_type &val);		  // fill (2)
 	// template <class InputIterator>												  // range (3)
 	// void	 insert(iterator position, InputIterator first, InputIterator last);  //
+
 	// iterator erase(iterator position);
 	// iterator erase(iterator first, iterator last);
 	void swap(Vector &x);
-	void clear();
+	void clear() {
+		size_type size = this->size();
+		for ( size_type i = 0; i < size; i++ ) {
+			_end--;
+			_alloc.destroy(_end);
+		}
+	}
 
 	//ALLOCATOR
 	allocator_type get_allocator() const;

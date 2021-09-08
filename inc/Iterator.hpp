@@ -5,19 +5,6 @@
 
 namespace ft {
 
-template <class Category, class T, class Distance = ptrdiff_t,
-		  class Pointer = T*, class Reference = T&>
-class iterator {
-public:
-	typedef T		  value_type;
-	typedef Distance  difference_type;
-	typedef Pointer	  pointer;
-	typedef Reference reference;
-	typedef Category  iterator_category;
-};
-
-class random_access_iterator_tag { };
-
 template <typename T>
 class random_access_iterator : ft::iterator<ft::random_access_iterator_tag, T> {
 public:
@@ -27,7 +14,7 @@ public:
 	typedef T*																			pointer;
 	typedef T&																			reference;
 
-	random_access_iterator(void) : _elem(u_nullptr) { }
+	random_access_iterator(void) : _elem(nullptr) { }
 
 	random_access_iterator(pointer elem) : _elem(elem) { }
 

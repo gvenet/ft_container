@@ -5,7 +5,7 @@
 #include "../inc/Vector.hpp"
 
 int main() {
-	ft::Vector<int>		   v1;
+	ft::Vector<int>		   v1(2);
 	ft::Vector<int>::iterator it;
 
 

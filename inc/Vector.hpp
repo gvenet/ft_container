@@ -27,11 +27,27 @@ public:
 
 public:
 	//MEMBERS FUNCTIONS
-	Vector(const allocator_type &alloc = allocator_type());														//default
-	Vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type());	//fill
-	template <class InputIterator>																				//
-	Vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type());			//range
-	Vector(const Vector &x);																					//copy
+	Vector(const allocator_type &alloc = allocator_type())
+		: _alloc(alloc),
+		  _start(nullptr),
+		  _end(nullptr),
+		  _end_capacity(nullptr) { }  //default
+
+	Vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type())
+		: _alloc(alloc),
+		  _start(nullptr),
+		  _end(nullptr),
+		  _end_capacity(nullptr) {
+		_start = _alloc.allocate(n);
+		_end_capacity = _start + n;
+		while ( n-- ) {
+			_alloc.construct(_end, val);
+			_end++;
+		}
+	}																								  //fill
+	template <class InputIterator>																	  //
+	Vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type());  //range
+	Vector(const Vector &x);																		  //copy
 	~Vector() { }
 	Vector &operator=(const Vector &x);
 
@@ -82,6 +98,12 @@ public:
 
 	//ALLOCATOR
 	allocator_type get_allocator() const;
+
+private:
+	allocator_type _alloc;
+	pointer		   _start;
+	pointer		   _end;
+	pointer		   _end_capacity;
 };
 
 template <class T, class Alloc>

@@ -24,13 +24,13 @@ public:
 	typedef typename allocator_type::size_type			 size_type;
 	typedef typename allocator_type::difference_type	 difference_type;
 
-	explicit Vector(const allocator_type &alloc = allocator_type())
+	Vector(const allocator_type &alloc = allocator_type())
 		: _alloc(alloc),
 		  _start(nullptr),
 		  _end(nullptr),
 		  _end_capacity(nullptr) { }
 
-	explicit Vector(size_type n, const value_type &val = value_type(),
+	Vector(size_type n, const value_type &val = value_type(),
 					const allocator_type &alloc = allocator_type())
 		: _alloc(alloc),
 		  _start(nullptr),
@@ -48,9 +48,11 @@ public:
 	// template <class InputIterator>
 	// explicit Vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type());
 
-	explicit Vector(const Vector &x);
+	Vector(const Vector &x);
 
-	~Vector() { }
+	~Vector() {
+		
+	}
 
 	Vector &operator=(const Vector &x);
 

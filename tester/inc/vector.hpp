@@ -6,7 +6,7 @@
 /*   By: gvenet <gvenet@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/18 12:45:54 by excalibur         #+#    #+#             */
-/*   Updated: 2021/09/07 22:45:10 by gvenet           ###   ########.fr       */
+/*   Updated: 2021/09/08 09:43:36 by gvenet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,7 @@ namespace ft {
 	template <class T, class Alloc = std::allocator<T> >
 	class vector {
 	public:
-		//
-		// The first template parameter (T)
-		//
 		typedef T value_type;
-
-		//
-		// The second template parameter (Alloc)
-		//
 		typedef Alloc allocator_type;
 
 		//

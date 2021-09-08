@@ -1,7 +1,7 @@
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 #include <iostream>
-#include <iterator>
+#include "Iterator.hpp"
 #include <memory>
 
 namespace ft {
@@ -9,16 +9,14 @@ namespace ft {
 template <class T, class Alloc = std::allocator<T> >
 class Vector {
 public:
-	class Iterator;
-	class Const_Iterator;
 	typedef T										 value_type;
 	typedef Alloc									 allocator_type;
 	typedef typename allocator_type::reference		 reference;
 	typedef typename allocator_type::const_reference const_reference;
 	typedef typename allocator_type::pointer		 pointer;
 	typedef typename allocator_type::const_pointer	 const_pointer;
-	typedef Iterator								 iterator;
-	typedef Const_Iterator							 const_iterator;
+	// typedef Iterator								 iterator;
+	// typedef Const_Iterator							 const_iterator;
 	typedef std::reverse_iterator<iterator>			 reverse_iterator;
 	typedef std::reverse_iterator<const_iterator>	 const_reverse_iterator;
 	typedef typename allocator_type::size_type		 size_type;
@@ -93,71 +91,7 @@ public:
 	//ALLOCATOR
 	allocator_type get_allocator() const;
 
-	//CLASS ITERATOR
-	class Iterator : public std::iterator<std::random_access_iterator_tag, T> {
-	public:
-		Iterator() : p(0) {}
-		Iterator(T *x) : p(x) {}
-		Iterator(const Iterator &mit) : p(mit.p) {}
 
-		Iterator &operator++() {
-			++p;
-			return *this;
-		}
-
-		Iterator operator++(int) {
-			Iterator tmp(*this);
-
-			operator++();
-			return tmp;
-		}
-
-		Iterator &operator--() {
-			--p;
-			return *this;
-		}
-
-		Iterator operator--(int) {
-			Iterator tmp(*this);
-
-			operator--();
-			return tmp;
-		}
-
-		Iterator operator-(int x) {
-			// Iterator tmp(*this);
-
-			for ( int i = 0; i < x; i++ ) {
-				// tmp.operator--();
-				operator--();
-			}
-			return *this;
-		}
-
-		Iterator operator+(int x) {
-			Iterator tmp(*this);
-
-			for ( int i = 0; i < x; i++ )
-				tmp.operator++();
-			return tmp;
-		}
-
-		bool operator<(const Iterator &rhs) const { return p < rhs.p; }
-		bool operator<=(const Iterator &rhs) const { return p <= rhs.p; }
-		bool operator>(const Iterator &rhs) const { return p > rhs.p; }
-		bool operator>=(const Iterator &rhs) const { return p >= rhs.p; }
-		bool operator==(const Iterator &rhs) const { return p == rhs.p; }
-		bool operator!=(const Iterator &rhs) const { return p != rhs.p; }
-
-		T &operator*() { return *p; }
-
-	private:
-		T *p;
-	};
-
-	class ConstIterator {
-		typedef typename std::random_access_iterator_tag iterator_category;
-	};
 };
 
 template <class T, class Alloc>

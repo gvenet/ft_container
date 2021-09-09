@@ -91,12 +91,14 @@ namespace ft {
 		// template <class InputIterator>							   //range (1)
 		// void	 assign(InputIterator first, InputIterator last);  //
 		void assign(size_type n, const value_type &val);  //fill (2)
-		void push_back(const value_type &x);
+		void push_back(const value_type &x) {
+			this->insert(_end, x);
+		}
 		void pop_back();
 
 		iterator insert(iterator position, const value_type &val) {
 			size_type pos_len = &(*position) - _start;
-			if ( size_type(_end_capacity - _end) >= this->size() + 1 ) {
+			if ( size_type(_end_capacity - _end) > 0 ) {
 				for ( size_type i = 0; i < pos_len; i++ )
 					_alloc.construct(_end - i, *(_end - i - 1));
 				_end++;
@@ -128,6 +130,7 @@ namespace ft {
 			}
 			return (iterator(_start + pos_len));
 		}  // single element (1)
+
 		// void	 insert(iterator position, size_type n, const value_type &val);		  // fill (2)
 		// template <class InputIterator>												  // range (3)
 		// void	 insert(iterator position, InputIterator first, InputIterator last);  //

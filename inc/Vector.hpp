@@ -72,12 +72,21 @@ public:
 	//CAPACITY
 	size_type size() const { return (_end - _start); }
 
-	size_type max_size() const { return numeric_limits<size_type>::max() / sizeof(value_type); }
+	size_type max_size() const {
+		size_type maxVal = std::numeric_limits<size_type>::max() / sizeof(value_type);
+		size_type maxAlloc = std::numeric_limits<size_type>::max() / 2;
+		if (maxVal > maxAlloc)
+			return maxAlloc;
+		return maxVal;
+	}
 
 	void	  resize(size_type sz);
 	void	  resize(size_type sz, const value_type &c);
+
 	size_type capacity() const { return (_end_capacity - _start); }
+
 	bool	  empty() const { return (this->size() == 0); }
+
 	void	  reserve(size_type n);
 
 	//ELEMENTS ACCES
@@ -145,7 +154,9 @@ public:
 
 	// iterator erase(iterator position);
 	// iterator erase(iterator first, iterator last);
+	
 	void swap(vector &x);
+
 	void clear() {
 		size_type size = this->size();
 		for ( size_type i = 0; i < size; i++ ) {

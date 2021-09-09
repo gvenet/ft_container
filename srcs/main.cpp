@@ -5,20 +5,39 @@
 
 #include "../inc/Vector.hpp"
 
-// void print(int i) {
-// 	std::cout << i << " ";
-// }
+static int rf = 20;
 
-void test(int i) {
-	ft::Vector<int> v1(i, 5);
-	v1.insert(v1.end(), 42);
-	std::cout << v1.size() << " " << v1.capacity() << "\n";
+void test_ft(int i) {
+	ft::vector<std::string> v1(i, "toto");
+	for ( int i = 0; i < rf; i++ ) {
+		v1.insert(v1.end(), "titi");
+		std::cout << v1.size() << " " << v1.capacity() << " | ";
+	}
 }
 
+void test_std(int i) {
+	std::vector<std::string> v1(i, "toto");
+	for ( int i = 0; i < rf; i++ ) {
+		v1.insert(v1.end(), "titi");
+		std::cout << v1.size() << " " << v1.capacity() << " | ";
+	}
+}
+// void test2(int i) {
+// 	std::vector<int> v1(i, 5);
+// 	v1.insert(v1.end(), 42);
+// 	std::cout << v1.size() << " " << v1.capacity() << "\n";
+// }
+
 int main() {
-	for ( int i = 0; i < 10; i++ ) {
-		test(i);
-		std::cout << "\n";	
+	int r = 10;
+
+	std::cout << "S C\n\n";
+	for ( int i = 0; i < r; i++ ) {
+		test_ft(i);
+		std::cout << std::endl;
+		test_std(i);
+		std::cout << std::endl;
+		std::cout << std::endl;
 	}
 
 	// ft::Vector<int>::iterator it;

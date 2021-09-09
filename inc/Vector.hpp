@@ -72,9 +72,7 @@ public:
 	//CAPACITY
 	size_type size() const { return (_end - _start); }
 
-	// size_type max_size() const { return (std::numeric_limits<difference_type>::max() / 2); };
-	size_type max_size(void) const { return allocator_type().max_size(); }
-
+	size_type max_size() const { return numeric_limits<size_type>::max() / sizeof(value_type); }
 
 	void	  resize(size_type sz);
 	void	  resize(size_type sz, const value_type &c);

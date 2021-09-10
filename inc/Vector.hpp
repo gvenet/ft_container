@@ -233,9 +233,9 @@ public:
 	void swap(vector &x) {
 		vector<T> tmp;
 
-		tmp.operator=(x);
-		x.operator=(*this);
-		this->operator=(tmp);
+		tmp = x;
+		x = *this;
+		*this = tmp;
 	}
 
 	void clear() {

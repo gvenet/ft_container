@@ -54,11 +54,19 @@ public:
 	vector(const vector &x);
 
 	~vector() {
-		clear();
-		_alloc.deallocate(_start, this->capacity());
+		_dealloc();
 	}
 
-	vector &operator=(const vector &x);
+	vector &operator=(const vector &x) {
+		_dealloc();
+		_start = _alloc.allocate(x.capacity());
+		_end = _start + x.size();
+		_end_capacity = _start + x.capacity();
+		for ( size_type i = 0; i < this->size(); i++ ) {
+			_alloc.construct(_start + i, x.at(i));
+		}
+		return *this;
+	}
 
 	////////////////////////////////////ITERATORS
 	iterator begin() { return _start; }
@@ -90,8 +98,7 @@ public:
 			new_start = _alloc.allocate(next_capacity);
 			for ( size_type i = 0; i < sz; i++ )
 				_alloc.construct(new_start + i, (i < this->size()) ? *(_start + i) : val);
-			this->clear();
-			_alloc.deallocate(_start, this->capacity());
+			_dealloc();
 			_start = new_start;
 			_end_capacity = new_start + next_capacity;
 		} else if ( sz > this->size() )
@@ -104,7 +111,22 @@ public:
 
 	bool empty() const { return (this->size() == 0); }
 
-	void reserve(size_type n);
+	void reserve(size_type n) {
+		// pointer	  new_start = pointer();
+		pointer	  new_start;
+		size_type size = this->size();
+
+		if ( n > this->capacity() ) {
+			new_start = _alloc.allocate(n);
+			for ( size_type i = 0; i < size; i++ ) {
+				_alloc.construct(new_start + i, *(_start + i));
+			}
+			_dealloc();
+			_start = new_start;
+			_end = _start + size;
+			_end_capacity = _start + n;
+		}
+	}
 
 	////////////////////////////////////ELEMENTS ACCES
 
@@ -129,7 +151,25 @@ public:
 	// template <class InputIterator>							   //range (1)
 	// void	 assign(InputIterator first, InputIterator last);  //
 
-	void assign(size_type n, const value_type &val);  //fill (2)
+	void assign(size_type n, const value_type &val) {
+		pointer new_start;
+
+		if ( n > this->capacity() ) {
+			new_start = _alloc.allocate(n);
+			for ( size_type i = 0; i < n; i++ ) {
+				_alloc.construct(new_start + i, val);
+			}
+			_dealloc();
+			_start = new_start;
+			_end = _start + n;
+			_end_capacity = _end;
+		} else {
+			for ( size_type i = 0; i < n; i++ ) {
+				_alloc.construct(_start + i, val);
+			}
+			_end = _start + n;
+		}
+	}  //fill (2)
 
 	void push_back(const value_type &x) {
 		this->insert(_end, x);
@@ -150,7 +190,7 @@ public:
 			_end++;
 			_alloc.construct(&(*position), val);
 		} else {
-			pointer new_start = pointer(0);
+			pointer new_start = pointer();
 			pointer new_end = pointer();
 			pointer new_end_capacity = pointer();
 
@@ -164,14 +204,9 @@ public:
 			for ( size_type i = 0; i < pos_len; i++ )
 				_alloc.construct(new_start + i, *(_start + i));
 			_alloc.construct(new_start + pos_len, val);
-			for ( size_type j = 0; j < this->size() - pos_len; j++ )
-				_alloc.construct(new_end - j - 1, *(_end - j - 1));
-
-			for ( size_type l = 0; l < this->size(); l++ )
-				_alloc.destroy(_start + l);
-			if ( _start )
-				_alloc.deallocate(_start, this->capacity());
-
+			for ( size_type i = 0; i < this->size() - pos_len; i++ )
+				_alloc.construct(new_end - i - 1, *(_end - i - 1));
+			_dealloc();
 			_start = new_start;
 			_end = new_end;
 			_end_capacity = new_end_capacity;
@@ -195,7 +230,13 @@ public:
 
 	// iterator erase(iterator first, iterator last);
 
-	void swap(vector &x);
+	void swap(vector &x) {
+		vector<T> tmp;
+
+		tmp.operator=(x);
+		x.operator=(*this);
+		this->operator=(tmp);
+	}
 
 	void clear() {
 		size_type size = this->size();
@@ -213,6 +254,11 @@ private:
 	pointer		   _start;
 	pointer		   _end;
 	pointer		   _end_capacity;
+
+	void _dealloc(void) {
+		this->clear();
+		_alloc.deallocate(_start, this->capacity());
+	}
 };
 
 template <class T, class Alloc>

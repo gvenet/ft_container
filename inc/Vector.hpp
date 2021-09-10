@@ -86,9 +86,7 @@ public:
 		size_type next_capacity;
 
 		if ( sz > this->capacity() ) {
-			next_capacity = this->capacity() * 2;
-			if ( sz > this->capacity() * 2 )
-				next_capacity = sz;
+			(sz > this->capacity() * 2) ? next_capacity = sz : next_capacity = this->capacity() * 2;
 			new_start = _alloc.allocate(next_capacity);
 			for ( size_type i = 0; i < sz; i++ )
 				_alloc.construct(new_start + i, (i < this->size()) ? *(_start + i) : val);

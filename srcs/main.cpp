@@ -118,8 +118,6 @@ void test4(void) {
 	std::cout << "\n";
 
 	for ( int i = 2; i < 50; i += 9 ) {
-		// vstd.push_back(i);
-		// vft.insert(vft.end(), i);
 		test4_an(vft, vstd, i, 1);
 	}
 

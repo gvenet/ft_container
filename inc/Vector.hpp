@@ -59,7 +59,7 @@ public:
 
 	vector &operator=(const vector &x);
 
-	//ITERATORS
+	////////////////////////////////////ITERATORS
 	iterator begin() { return _start; }
 	// const_iterator		   begin() const;
 	iterator end() { return _end; }
@@ -69,27 +69,27 @@ public:
 	// reverse_iterator	   rend();
 	// const_reverse_iterator rend() const;
 
-	//CAPACITY
+	////////////////////////////////////CAPACITY
 	size_type size() const { return (_end - _start); }
 
 	size_type max_size() const {
 		size_type maxVal = std::numeric_limits<size_type>::max() / sizeof(value_type);
 		size_type maxAlloc = std::numeric_limits<size_type>::max() / 2;
-		if (maxVal > maxAlloc)
+		if ( maxVal > maxAlloc )
 			return maxAlloc;
 		return maxVal;
 	}
 
-	void	  resize(size_type sz);
-	void	  resize(size_type sz, const value_type &c);
+	void resize(size_type sz);
+	void resize(size_type sz, const value_type &c);
 
 	size_type capacity() const { return (_end_capacity - _start); }
 
-	bool	  empty() const { return (this->size() == 0); }
+	bool empty() const { return (this->size() == 0); }
 
-	void	  reserve(size_type n);
+	void reserve(size_type n);
 
-	//ELEMENTS ACCES
+	////////////////////////////////////ELEMENTS ACCES
 	reference		operator[](size_type n);
 	const_reference operator[](size_type n) const;
 	reference		at(size_type n) { return *(_start + n); }
@@ -100,14 +100,18 @@ public:
 	reference		back();
 	const_reference back() const;
 
-	//MODIFIERS
+	////////////////////////////////////MODIFIERS
 	// template <class InputIterator>							   //range (1)
 	// void	 assign(InputIterator first, InputIterator last);  //
 	void assign(size_type n, const value_type &val);  //fill (2)
+
 	void push_back(const value_type &x) {
 		this->insert(_end, x);
 	}
-	void pop_back();
+
+	void pop_back() {
+		this->erase(_end - 1);
+	}
 
 	iterator insert(iterator position, const value_type &val) {
 		int		  next_capacity = 1;
@@ -119,7 +123,7 @@ public:
 			_end++;
 			_alloc.construct(&(*position), val);
 		} else {
-			pointer new_start = pointer();
+			pointer new_start = pointer(0);
 			pointer new_end = pointer();
 			pointer new_end_capacity = pointer();
 
@@ -148,13 +152,22 @@ public:
 		return (iterator(_start + pos_len));
 	}  // single element (1)
 
-	// void	 insert(iterator position, size_type n, const value_type &val);		  // fill (2)
-	// template <class InputIterator>												  // range (3)
-	// void	 insert(iterator position, InputIterator first, InputIterator last);  //
+	// void insert(iterator position, size_type n, const value_type &val);		  // fill (2)
+	// template <class InputIterator>											  // range (3)
+	// void insert(iterator position, InputIterator first, InputIterator last);  //
 
-	// iterator erase(iterator position);
+	iterator erase(iterator position) {
+		size_type pos_len = &(*position) - _start;
+		for ( size_type i = 0; i < (this->size() - pos_len); i++ ) {
+			_alloc.construct(_start + i + pos_len, *(_start + i + 1 + pos_len));
+		}
+		_alloc.destroy(_end);
+		_end--;
+		return (iterator(_start + pos_len));
+	}
+
 	// iterator erase(iterator first, iterator last);
-	
+
 	void swap(vector &x);
 
 	void clear() {
@@ -165,7 +178,7 @@ public:
 		}
 	}
 
-	//ALLOCATOR
+	////////////////////////////////////ALLOCATOR
 	allocator_type get_allocator() const;
 
 private:

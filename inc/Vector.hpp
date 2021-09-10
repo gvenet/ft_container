@@ -2,6 +2,7 @@
 #define VECTOR_HPP
 
 #include <limits.h>
+#include <math.h>
 
 #include <iostream>
 #include <memory>
@@ -80,8 +81,26 @@ public:
 		return maxVal;
 	}
 
-	void resize(size_type sz);
-	void resize(size_type sz, const value_type &c);
+	void resize(size_type sz, const value_type val = value_type()) {
+		pointer	  new_start = pointer();
+		size_type next_capacity;
+
+		if ( sz > this->capacity() ) {
+			next_capacity = this->capacity() * 2;
+			if ( sz > this->capacity() * 2 )
+				next_capacity = sz;
+			new_start = _alloc.allocate(next_capacity);
+			for ( size_type i = 0; i < sz; i++ )
+				_alloc.construct(new_start + i, (i < this->size()) ? *(_start + i) : val);
+			this->clear();
+			_alloc.deallocate(_start, this->capacity());
+			_start = new_start;
+			_end_capacity = new_start + next_capacity;
+		} else if ( sz > this->size() )
+			for ( size_type i = this->size(); i < sz; i++ )
+				_alloc.construct(_start + i, val);
+		_end = _start + sz;
+	}
 
 	size_type capacity() const { return (_end_capacity - _start); }
 
@@ -90,19 +109,28 @@ public:
 	void reserve(size_type n);
 
 	////////////////////////////////////ELEMENTS ACCES
-	reference		operator[](size_type n);
+
+	reference operator[](size_type n);
+
 	const_reference operator[](size_type n) const;
-	reference		at(size_type n) { return *(_start + n); }
+
+	reference at(size_type n) { return *(_start + n); }
+
 	const_reference at(size_type n) const;
 
-	reference		front();
+	reference front();
+
 	const_reference front() const;
-	reference		back();
+
+	reference back();
+
 	const_reference back() const;
 
 	////////////////////////////////////MODIFIERS
+
 	// template <class InputIterator>							   //range (1)
 	// void	 assign(InputIterator first, InputIterator last);  //
+
 	void assign(size_type n, const value_type &val);  //fill (2)
 
 	void push_back(const value_type &x) {
@@ -114,8 +142,9 @@ public:
 	}
 
 	iterator insert(iterator position, const value_type &val) {
-		int		  next_capacity = 1;
+		size_type next_capacity = 1;
 		size_type pos_len = &(*position) - _start;
+
 		if ( this->size() < this->capacity() ) {
 			for ( size_type i = 0; i < (this->size() - pos_len); i++ ) {
 				_alloc.construct(_end - i, *(_end - i - 1));
@@ -182,11 +211,10 @@ public:
 	allocator_type get_allocator() const;
 
 private:
-	static const unsigned __bits_per_word = static_cast<unsigned>(sizeof(size_type) * CHAR_BIT);
-	allocator_type		  _alloc;
-	pointer				  _start;
-	pointer				  _end;
-	pointer				  _end_capacity;
+	allocator_type _alloc;
+	pointer		   _start;
+	pointer		   _end;
+	pointer		   _end_capacity;
 };
 
 template <class T, class Alloc>

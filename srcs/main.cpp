@@ -224,6 +224,78 @@ void test8(void) {
 	print_ft(vft2);
 }
 
+void test9(void) {
+	ft::vector<int> vft;
+	vft.push_back(10);
+	vft.push_back(20);
+	vft.push_back(30);
+
+	std::cout << "coucou\n";
+
+	ft::vector<int> v;
+	v = vft;
+	if ( v == vft ) {
+		std::cout << "yo\n";
+	}
+}
+
+void test10(void) {
+	std::vector<int> x1(4, 5);
+	std::vector<int> y1(5, 5);
+
+	ft::vector<int> x2(4, 5);
+	ft::vector<int> y2(5, 5);
+
+	// std::vector<int> x1(1,1);
+	// std::vector<int> y1(2,1);
+
+	// ft::vector<int> x2(1,1);
+	// ft::vector<int> y2(2,1);
+
+	for ( int i = 0; i < 10; i++ ) {
+		std::cout << "i = " << i << " | ";
+		x1.push_back(i);
+		x2.push_back(i);
+		(x1 < y1) ? std::cout << "\e[01;31mx1 < y1\e[0m | " : std::cout << "\e[01;32mx1 > y1\e[0m | ";
+		(x2 < y2) ? std::cout << "\e[01;31mx2 < y2\e[0m\n" : std::cout << "\e[01;32mx2 > y2\e[0m\n";
+		x1.pop_back();
+		x2.pop_back();
+	}
+}
+
+void test11(void) {
+	ft::vector<int> x(5, 5);
+	ft::vector<int> y(x);
+
+	(x == y) ? std::cout << "hotdog\n" : std::cout << "not a hotdog\n";
+
+	y.push_back(42);
+	(x == y) ? std::cout << "hotdog\n" : std::cout << "not a hotdog\n";
+}
+
+void test12(void) {
+	ft::vector<int> x(5, 5);
+
+	for ( int i = 0; i < 5; i++ ) {
+		std::cout << x[i] << "\n";
+	}
+}
+
+void test13(void) {
+	ft::vector<int>	 x;
+	std::vector<int> y;
+
+	for ( int i = 1; i < 6; i++ ) {
+		x.push_back(i);
+		y.push_back(i);
+	}
+	std::cout << "ft  : front : " << x.front() << " | back : " << x.back() << "\n";
+	std::cout << "std : front : " << y.front() << " | back : " << y.back() << "\n";
+
+	print_ft(x);
+	print_std(y);
+}
+
 int main(void) {
 	// test1();
 	// test2();
@@ -233,5 +305,12 @@ int main(void) {
 	// test6();
 	// test7();
 	// test8();
+	// test9();
+	// test10();
+	// test11();
+	// test12();
+	// test13();
+	test14();
+
 	return 0;
 }

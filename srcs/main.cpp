@@ -3,6 +3,7 @@
 #include <string>
 #include <typeinfo>
 #include <vector>
+#include <iterator>
 
 #include "../inc/vector.hpp"
 
@@ -322,6 +323,19 @@ void test14(void) {
 	x.get_allocator().deallocate(start, n);
 }
 
+void test15(void) {
+	ft::vector<std::string> x;
+
+	x.push_back("aaa");
+	x.push_back("bbb");
+	x.push_back("ccc");
+
+	for (ft::vector<std::string>::iterator it = x.begin(); it != x.end(); it++) {
+		std::cout << *it << " ";
+	}
+	std::cout << "\n";
+}
+
 int main(void) {
 	// test1();
 	// test2();
@@ -336,6 +350,7 @@ int main(void) {
 	// test11();
 	// test12();
 	// test13();
-	test14();
+	// test14();
+	test15();
 	return 0;
 }

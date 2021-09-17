@@ -123,7 +123,7 @@ void test4(void) {
 	// 	test4_an(vft, vstd, i, 1);
 	// }
 
-	for ( int i = 0; i < 8; i++) {
+	for ( int i = 0; i < 8; i++ ) {
 		test4_an(vft, vstd, t[i], i + 1);
 	}
 
@@ -261,19 +261,23 @@ void test10(void) {
 }
 
 void test11(void) {
+	std::cout << "DEBUG_1\n";
 	ft::vector<int> x(5, 5);
 	ft::vector<int> y(x);
 
+	// y = x;
+	std::cout << "DEBUG_2\n";
 	(x == y) ? std::cout << "hotdog\n" : std::cout << "not a hotdog\n";
 
 	y.push_back(42);
+	std::cout << "DEBUG_3\n";
 	(x == y) ? std::cout << "hotdog\n" : std::cout << "not a hotdog\n";
 }
 
 void test12(void) {
-	ft::vector<int> x(5, 5);
+	ft::vector<std::string> x(5, "test12");
 
-	for ( int i = 0; i < 5; i++ ) {
+	for ( size_t i = 0; i < 5; i++ ) {
 		std::cout << x[i] << "\n";
 	}
 }
@@ -332,21 +336,43 @@ void test15(void) {
 	std::cout << "\n";
 }
 
+void test16(void) {
+	std::vector<int> x;
+	std::vector<int> y(5, 9);
+	ft::vector<int>	 a;
+	ft::vector<int>	 b(5, 9);
+
+	print_std(x);
+	print_std(y);
+	print_ft(a);
+	print_ft(b);
+	std::cout << "-----------------------------------------------------------------------------------\n";
+
+	std::swap(x, y);
+	ft::swap(a, b);
+
+	print_std(x);
+	print_std(y);
+	print_ft(a);
+	print_ft(b);
+}
+
 int main(void) {
 	// test1();
 	// test2();
 	// test3();
-	test4();
+	// test4();
 	// test5();
 	// test6();
 	// test7();
 	// test8();
 	// test9();
 	// test10();
-	// test11();
+	test11();
 	// test12();
 	// test13();
 	// test14();
 	// test15();
+	// test16();
 	return 0;
 }

@@ -60,8 +60,6 @@ public:
 	}
 
 	vector &operator=(const vector &x) {
-		if (this == &x)
-			return (*this);
 		_dealloc();
 		_start = _alloc.allocate(x.capacity());
 		_end = _start + x.size();
@@ -73,13 +71,21 @@ public:
 	}
 
 	////////////////////////////////////ITERATORS
-	iterator begin() { return (_start); }
+	iterator begin() {
+		return (_start);
+	}
 
-	const_iterator begin() const { return (_start); };
+	const_iterator begin() const {
+		return (_start);
+	};
 
-	iterator end() { return (_end); }
+	iterator end() {
+		return (_end);
+	}
 
-	const_iterator end() const { return (_end); }
+	const_iterator end() const {
+		return (_end);
+	}
 
 	// reverse_iterator	   rbegin();
 	// const_reverse_iterator rbegin() const;
@@ -87,7 +93,9 @@ public:
 	// const_reverse_iterator rend() const;
 
 	////////////////////////////////////CAPACITY
-	size_type size() const { return (_end - _start); }
+	size_type size() const {
+		return (_end - _start);
+	}
 
 	size_type max_size() const {
 		size_type maxVal = std::numeric_limits<size_type>::max() / sizeof(value_type);
@@ -115,9 +123,13 @@ public:
 		_end = _start + sz;
 	}
 
-	size_type capacity() const { return (_end_capacity - _start); }
+	size_type capacity() const {
+		return (_end_capacity - _start);
+	}
 
-	bool empty() const { return (!this->size()); }
+	bool empty() const {
+		return (!this->size());
+	}
 
 	void reserve(size_type n) {
 		pointer	  new_start;
@@ -137,21 +149,37 @@ public:
 
 	////////////////////////////////////ELEMENTS ACCES
 
-	reference operator[](size_type n) { return (at(n)); }
+	reference operator[](size_type n) {
+		return *(_start + n);
+	}
 
-	const_reference operator[](size_type n) const { return (at(n)); }
+	const_reference operator[](size_type n) const {
+		return *(_start + n);
+	}
 
-	reference at(size_type n) { return *(_start + n); }
+	reference at(size_type n) {
+		return *(_start + n);
+	}
 
-	const_reference at(size_type n) const { return *(_start + n); }
+	const_reference at(size_type n) const {
+		return *(_start + n);
+	}
 
-	reference front() { return *(_start); }
+	reference front() {
+		return *(_start);
+	}
 
-	const_reference front() const { return *(_start); }
+	const_reference front() const {
+		return *(_start);
+	}
 
-	reference back() { return *(_end - 1); }
+	reference back() {
+		return *(_end - 1);
+	}
 
-	const_reference back() const { return *(_end - 1); }
+	const_reference back() const {
+		return *(_end - 1);
+	}
 
 	////////////////////////////////////MODIFIERS
 
@@ -254,7 +282,9 @@ public:
 	}
 
 	////////////////////////////////////ALLOCATOR
-	allocator_type get_allocator() const { return _alloc; };
+	allocator_type get_allocator() const {
+		return _alloc;
+	};
 
 private:
 	allocator_type _alloc;
@@ -271,7 +301,9 @@ private:
 // https://www.cplusplus.com/reference/vector/vector/operators/
 
 template <class T, class Alloc>
-void swap(vector<T, Alloc> &x, vector<T, Alloc> &y);
+void swap(vector<T, Alloc> &x, vector<T, Alloc> &y) {
+	x.swap(y);
+}
 
 template <class T, class Alloc>
 bool operator==(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) {

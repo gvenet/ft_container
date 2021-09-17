@@ -4,7 +4,7 @@
 #include <typeinfo>
 #include <vector>
 
-#include "../inc/Vector.hpp"
+#include "../inc/vector.hpp"
 
 static int rf = 20;
 

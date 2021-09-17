@@ -1,9 +1,9 @@
 #include <algorithm>
 #include <iostream>
+#include <iterator>
 #include <string>
 #include <typeinfo>
 #include <vector>
-#include <iterator>
 
 #include "../inc/vector.hpp"
 
@@ -300,23 +300,23 @@ void test13(void) {
 void test14(void) {
 	ft::vector<int> x;
 
-	ft::vector<int>::pointer start;
-	ft::vector<int>::pointer end;
-	ft::vector<int>::pointer end_cap;
+	ft::vector<int>::pointer   start;
+	ft::vector<int>::pointer   end;
+	ft::vector<int>::pointer   end_cap;
 	ft::vector<int>::size_type size;
 	ft::vector<int>::size_type i;
-	size_t n = 10;
+	size_t					   n = 10;
 
 	start = x.get_allocator().allocate(n);
 	end = start;
 	end_cap = start + n;
-	for (i = 0; i < 5; i++) {
+	for ( i = 0; i < 5; i++ ) {
 		x.get_allocator().construct(start + i, 5);
 		end++;
 	}
 	size = end - start;
 	std::cout << size << " " << end_cap - start << " " << std::endl;
-	for (i = 0; i < 5; i++) {
+	for ( i = 0; i < 5; i++ ) {
 		std::cout << *(start + i) << " ";
 	}
 	std::cout << "\n";
@@ -330,8 +330,8 @@ void test15(void) {
 	x.push_back("bbb");
 	x.push_back("ccc");
 
-	for (ft::vector<std::string>::iterator it = x.end() - 1; it != x.begin(); it--) {
-		std::cout << *it << " ";
+	for ( ft::vector<std::string>::iterator it = x.end() - 1; it != x.begin() - 1; it-- ) {
+		std::cout << &(*it) << " " << *it << "\n";
 	}
 	std::cout << "\n";
 }

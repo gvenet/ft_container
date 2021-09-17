@@ -113,23 +113,19 @@ void test4(void) {
 	int				 size = 7;
 	std::vector<int> vstd(size, 3);
 	ft::vector<int>	 vft(size, 3);
+	int				 t[] = {19, 4, 56, 1, 41, 0, 83, 111};
 
 	print_std(vstd);
 	print_ft(vft);
 	std::cout << "\n";
 
-	for ( int i = 2; i < 50; i += 9 ) {
-		test4_an(vft, vstd, i, 1);
-	}
+	// for ( int i = 2; i < 50; i += 9 ) {
+	// 	test4_an(vft, vstd, i, 1);
+	// }
 
-	test4_an(vft, vstd, 19, 1);
-	test4_an(vft, vstd, 4, 2);
-	test4_an(vft, vstd, 56, 3);
-	test4_an(vft, vstd, 1, 4);
-	test4_an(vft, vstd, 41, 5);
-	test4_an(vft, vstd, 0, 6);
-	test4_an(vft, vstd, 83, 7);
-	test4_an(vft, vstd, 111, 8);
+	for ( int i = 0; i < 8; i++) {
+		test4_an(vft, vstd, t[i], i + 1);
+	}
 
 	vstd.resize(5);
 	vft.resize(5);
@@ -340,7 +336,7 @@ int main(void) {
 	// test1();
 	// test2();
 	// test3();
-	// test4();
+	test4();
 	// test5();
 	// test6();
 	// test7();
@@ -351,6 +347,6 @@ int main(void) {
 	// test12();
 	// test13();
 	// test14();
-	test15();
+	// test15();
 	return 0;
 }

@@ -88,20 +88,18 @@ public:
 	}
 
 	reverse_iterator	   rbegin() {
-		return (_end - 1);
+		return (reverse_iterator(this->end()));
 	}
 
-	const_reverse_iterator rbegin() const {
-		return (_end - 1);
-	}
+	// const_reverse_iterator rbegin() const {
+	// }
 	
 	reverse_iterator	   rend() {
-		return (_start);
+		return (reverse_iterator(this->begin()));
 	}
 	
-	const_reverse_iterator rend() const {
-		return (start);
-	}
+	// const_reverse_iterator rend() const {
+	// }
 
 	////////////////////////////////////CAPACITY
 	size_type size() const {

@@ -51,7 +51,7 @@ public:
 	// template <class InputIterator>
 	// explicit vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type());
 
-	vector(const vector &x) {
+	vector(const vector &x) : _start(nullptr), _end(nullptr), _end_capacity(nullptr) {
 		*this = x;
 	}
 
@@ -87,10 +87,21 @@ public:
 		return (_end);
 	}
 
-	// reverse_iterator	   rbegin();
-	// const_reverse_iterator rbegin() const;
-	// reverse_iterator	   rend();
-	// const_reverse_iterator rend() const;
+	reverse_iterator	   rbegin() {
+		return (_end - 1);
+	}
+
+	const_reverse_iterator rbegin() const {
+		return (_end - 1);
+	}
+	
+	reverse_iterator	   rend() {
+		return (_start);
+	}
+	
+	const_reverse_iterator rend() const {
+		return (start);
+	}
 
 	////////////////////////////////////CAPACITY
 	size_type size() const {

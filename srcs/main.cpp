@@ -26,6 +26,8 @@ void test_std(int &i) {
 }
 
 void test1(void) {
+	std::cout << "-------- TEST_1 --------\n";
+	
 	int r = 10;
 
 	for ( int i = 2; i < r; i++ ) {
@@ -70,6 +72,7 @@ void test2_an(ft::vector<T> &vft, std::vector<T> &vstd, T elemToAdd) {
 }
 
 void test2() {
+	std::cout << "-------- TEST_2 --------\n";
 	ft::vector<std::string>	 vft;
 	std::vector<std::string> vstd;
 	for ( int i = 0; i < 10; i++ ) {
@@ -79,6 +82,8 @@ void test2() {
 }
 
 void test3(void) {
+	std::cout << "-------- TEST_3 --------\n";
+
 	ft::vector<int>	 vft;
 	std::vector<int> vstd;
 	int				 nl = 8;
@@ -110,6 +115,8 @@ void test4_an(ft::vector<T> &vft, std::vector<T> &vstd, size_t sizeToAdd, T elem
 }
 
 void test4(void) {
+	std::cout << "-------- TEST_4 --------\n";
+
 	int				 size = 7;
 	std::vector<int> vstd(size, 3);
 	ft::vector<int>	 vft(size, 3);
@@ -141,6 +148,8 @@ void test4(void) {
 }
 
 void test5(void) {
+	std::cout << "-------- TEST_5 --------\n";
+
 	size_t						cap = 7;
 	std::vector<int>			vstd;
 	std::vector<int>::size_type sstd;
@@ -172,6 +181,8 @@ void test5(void) {
 }
 
 void test6(void) {
+	std::cout << "-------- TEST_6 --------\n";
+
 	size_t			 sr = 0;
 	ft::vector<int>	 vft;
 	std::vector<int> vstd;
@@ -192,6 +203,8 @@ void test6(void) {
 	}
 }
 void test7(void) {
+	std::cout << "-------- TEST_7 --------\n";
+
 	std::vector<int> vstd;
 	ft::vector<int>	 vft;
 	int				 t[] = {10, 20, 15, 40};
@@ -204,6 +217,8 @@ void test7(void) {
 	}
 }
 void test8(void) {
+	std::cout << "-------- TEST_8 --------\n";
+
 	std::vector<int> vstd1(5, 100);
 	std::vector<int> vstd2(1, 200);
 	print_std(vstd1);
@@ -222,6 +237,8 @@ void test8(void) {
 }
 
 void test9(void) {
+	std::cout << "-------- TEST_9 --------\n";
+	
 	ft::vector<int> vft;
 	vft.push_back(10);
 	vft.push_back(20);
@@ -237,6 +254,8 @@ void test9(void) {
 }
 
 void test10(void) {
+	std::cout << "-------- TEST_10 --------\n";
+
 	std::vector<int> x1(4, 5);
 	std::vector<int> y1(5, 5);
 
@@ -261,20 +280,20 @@ void test10(void) {
 }
 
 void test11(void) {
-	std::cout << "DEBUG_1\n";
+	std::cout << "-------- TEST_11 --------\n";
+
 	ft::vector<int> x(5, 5);
 	ft::vector<int> y(x);
 
-	// y = x;
-	std::cout << "DEBUG_2\n";
 	(x == y) ? std::cout << "hotdog\n" : std::cout << "not a hotdog\n";
 
 	y.push_back(42);
-	std::cout << "DEBUG_3\n";
 	(x == y) ? std::cout << "hotdog\n" : std::cout << "not a hotdog\n";
 }
 
 void test12(void) {
+	std::cout << "-------- TEST_12 --------\n";
+
 	ft::vector<std::string> x(5, "test12");
 
 	for ( size_t i = 0; i < 5; i++ ) {
@@ -283,6 +302,8 @@ void test12(void) {
 }
 
 void test13(void) {
+	std::cout << "-------- TEST_13 --------\n";
+
 	ft::vector<int>	 x;
 	std::vector<int> y;
 
@@ -298,6 +319,8 @@ void test13(void) {
 }
 
 void test14(void) {
+	std::cout << "-------- TEST_14 --------\n";
+
 	ft::vector<int> x;
 
 	ft::vector<int>::pointer   start;
@@ -324,6 +347,8 @@ void test14(void) {
 }
 
 void test15(void) {
+	std::cout << "-------- TEST_15 --------\n";
+	
 	ft::vector<std::string> x;
 
 	x.push_back("aaa");
@@ -337,6 +362,8 @@ void test15(void) {
 }
 
 void test16(void) {
+	std::cout << "-------- TEST_16 --------\n";
+	
 	std::vector<int> x;
 	std::vector<int> y(5, 9);
 	ft::vector<int>	 a;
@@ -357,6 +384,20 @@ void test16(void) {
 	print_ft(b);
 }
 
+void test17(void) {
+	ft::vector<int> x;
+	ft::vector<int>::reverse_iterator it; 
+
+	for (int i = 0 ; i < 10 ; i++) {
+		x.push_back(i);
+	}
+	for (it = x.rbegin(); it != x.rend(); it++) {
+		std::cout << *it << " ";
+	}
+	std::cout << "\n";
+	// print_std(x);
+}
+
 int main(void) {
 	// test1();
 	// test2();
@@ -368,11 +409,12 @@ int main(void) {
 	// test8();
 	// test9();
 	// test10();
-	test11();
+	// test11();
 	// test12();
 	// test13();
 	// test14();
 	// test15();
 	// test16();
+	test17();
 	return 0;
 }

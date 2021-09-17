@@ -211,6 +211,11 @@ operator-(const ft::random_access_iterator<T_L> lhs,
 	return (lhs.base() - rhs.base());
 }
 
+template <class T>
+class reverse_iterator : public iterator {
+	
+};
+
 }  // namespace ft
 
 #endif

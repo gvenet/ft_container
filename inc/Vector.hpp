@@ -60,6 +60,8 @@ public:
 	}
 
 	vector &operator=(const vector &x) {
+		if (this == &x)
+			return (*this);
 		_dealloc();
 		_start = _alloc.allocate(x.capacity());
 		_end = _start + x.size();

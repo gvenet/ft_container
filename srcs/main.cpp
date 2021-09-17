@@ -330,7 +330,7 @@ void test15(void) {
 	x.push_back("bbb");
 	x.push_back("ccc");
 
-	for (ft::vector<std::string>::iterator it = x.begin(); it != x.end(); it++) {
+	for (ft::vector<std::string>::iterator it = x.end() - 1; it != x.begin(); it--) {
 		std::cout << *it << " ";
 	}
 	std::cout << "\n";

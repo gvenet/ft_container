@@ -41,11 +41,17 @@ public:
 	}
 	virtual ~random_access_iterator() { }
 
-	pointer base() const { return (this->_elem); }
+	pointer base() const {
+		return (this->_elem);
+	}
 
-	reference operator*(void) const { return (*_elem); }
+	reference operator*(void) const {
+		return (*_elem);
+	}
 
-	pointer operator->(void) { return &(this->operator*()); }
+	pointer operator->(void) {
+		return &(this->operator*());
+	}
 
 	random_access_iterator& operator++(void) {
 		_elem++;
@@ -69,9 +75,13 @@ public:
 		return (rtn);
 	}
 
-	random_access_iterator operator+(difference_type n) const { return (_elem + n); }
+	random_access_iterator operator+(difference_type n) const {
+		return (_elem + n);
+	}
 
-	random_access_iterator operator-(difference_type n) const { return (_elem - n); }
+	random_access_iterator operator-(difference_type n) const {
+		return (_elem - n);
+	}
 
 	random_access_iterator& operator+=(difference_type n) {
 		_elem += n;
@@ -83,9 +93,13 @@ public:
 		return (*this);
 	}
 
-	reference operator[](difference_type n) { return (*(operator+(n))); }
+	reference operator[](difference_type n) {
+		return (*(operator+(n)));
+	}
 
-	operator random_access_iterator<const T>() const { return (random_access_iterator<const T>(this->_elem)); }
+	operator random_access_iterator<const T>() const {
+		return (random_access_iterator<const T>(this->_elem));
+	}
 
 private:
 	pointer _elem;

@@ -373,7 +373,7 @@ void test16(void) {
 	print_std(y);
 	print_ft(a);
 	print_ft(b);
-	std::cout << "-----------------------------------------------------------------------------------\n";
+	std::cout << "-------------------------\n";
 
 	std::swap(x, y);
 	ft::swap(a, b);
@@ -384,37 +384,37 @@ void test16(void) {
 	print_ft(b);
 }
 
-void test17(void) {
-	ft::vector<int> x;
-	ft::vector<int>::reverse_iterator it; 
+// void test17(void) {
+// 	ft::vector<int> x;
+// 	ft::vector<int>::reverse_iterator it; 
 
-	for (int i = 0 ; i < 10 ; i++) {
-		x.push_back(i);
-	}
-	for (it = x.rbegin(); it != x.rend(); it++) {
-		std::cout << *it << " ";
-	}
-	std::cout << "\n";
-	// print_std(x);
-}
+// 	for (int i = 0 ; i < 10 ; i++) {
+// 		x.push_back(i);
+// 	}
+// 	for (it = x.rbegin(); it != x.rend(); it++) {
+// 		std::cout << *it << " ";
+// 	}
+// 	std::cout << "\n";
+// 	// print_std(x);
+// }
 
 int main(void) {
-	// test1();
-	// test2();
-	// test3();
-	// test4();
-	// test5();
-	// test6();
-	// test7();
-	// test8();
-	// test9();
-	// test10();
-	// test11();
-	// test12();
-	// test13();
-	// test14();
-	// test15();
-	// test16();
-	test17();
+	test1();
+	test2();
+	test3();
+	test4();
+	test5();
+	test6();
+	test7();
+	test8();
+	test9();
+	test10();
+	test11();
+	test12();
+	test13();
+	test14();
+	test15();
+	test16();
+	// test17();
 	return 0;
 }

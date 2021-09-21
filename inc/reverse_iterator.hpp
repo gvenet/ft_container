@@ -34,47 +34,59 @@ public:
 		Iterator tmp = _current;
 		return *--tmp;
 	}
+
 	pointer operator->() const {
 		return (&(operator*()));
 	}
+
 	reverse_iterator& operator++() {
 		--_current;
 		return *this;
 	}
+
 	reverse_iterator operator++(int) {
 		reverse_iterator tmp(*this);
 		--_current;
 		return tmp;
 	}
+
 	reverse_iterator& operator--() {
 		++_current;
 		return *this;
 	}
+
 	reverse_iterator operator--(int) {
 		reverse_iterator tmp(*this);
 		++_current;
 		return tmp;
 	}
+
 	reverse_iterator operator+(difference_type n) const {
 		return reverse_iterator(_current - n);
 	}
+
 	reverse_iterator& operator+=(difference_type n) {
 		_current -= n;
 		return *this;
 	}
+
 	reverse_iterator operator-(difference_type n) const {
 		return reverse_iterator(_current + n);
 	}
+
 	reverse_iterator& operator-=(difference_type n) {
 		_current += n;
 		return *this;
 	}
+
 	reference operator[](difference_type n) const {
 		return *(*this + n);
 	}
 
 private:
 	Iterator _it;
+
+protected:
 	Iterator _current;
 };
 

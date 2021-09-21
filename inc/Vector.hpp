@@ -35,7 +35,7 @@ public:
 		: _alloc(alloc), _start(nullptr), _end(nullptr), _end_capacity(nullptr) { }
 
 	vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type())
-		: _alloc(alloc), _start(nullptr), _end(nullptr), _end_capacity(nullptr) {
+		: _alloc(alloc) {
 		_start = _alloc.allocate(n);
 		_end_capacity = _start + n;
 		_end = _start;
@@ -45,20 +45,24 @@ public:
 		}
 	}
 
-	// template <class InputIterator>
-	// explicit vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type())
-	// 	: _alloc(alloc), _start(nullptr), _end(nullptr), _end_capacity(nullptr) {
-	// 	size_type n = last - first;
+	template <class InputIterator>
+	explicit vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type(),
+		   typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = nullptr)
+		: _alloc(alloc) {
+				if ( !(is_valid = ft::is_ft_iterator_tagged<typename ft::iterator_traits<InputIterator>::iterator_category>::value) )
+			throw(ft::InvalidIteratorException<typename ft::is_ft_iterator_tagged<typename ft::iterator_traits<InputIterator>::iterator_category>::type>());
+		
+		size_type n = last - first;
 
-	// 	_start = _alloc.allocate(n);
-	// 	_end = _start;
-	// 	while ( n-- ) {
-	// 		_alloc.construct(_end, *(first));
-	// 		_end++;
-	// 		first++;
-	// 	}
-	// 	_end_capacity = _end;
-	// }
+		_start = _alloc.allocate(n);
+		_end = _start;
+		while ( n-- ) {
+			_alloc.construct(_end, *(first));
+			_end++;
+			first++;
+		}
+		_end_capacity = _end;
+	}
 
 	vector(const vector &x) : _start(nullptr), _end(nullptr), _end_capacity(nullptr) {
 		*this = x;

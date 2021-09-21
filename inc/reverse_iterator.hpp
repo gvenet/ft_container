@@ -15,14 +15,14 @@ public:
 	typedef typename ft::iterator_traits<Iterator>::pointer			  pointer;
 	typedef typename ft::iterator_traits<Iterator>::reference		  reference;
 
-	reverse_iterator() : _it(), _current() { }
+	reverse_iterator() : _current() { }
 
-	explicit reverse_iterator(Iterator it) : _it(it), _current(it) { }
+	explicit reverse_iterator(Iterator it) : _current(it) { }
 
-	reverse_iterator(const reverse_iterator<Iterator>& cpy) : _it(cpy.base()), _current(cpy.base()) { }
+	reverse_iterator(const reverse_iterator<Iterator>& rev_it) :  _current(rev_it.base()) { }
 
-	reverse_iterator& operator=(const reverse_iterator<Iterator>& cpy) {
-		_it = _current = cpy.base();
+	reverse_iterator& operator=(const reverse_iterator<Iterator>& rev_it) {
+		_current = rev_it.base();
 		return *this;
 	}
 
@@ -84,15 +84,37 @@ public:
 	}
 
 private:
-	Iterator _it;
-
-protected:
 	Iterator _current;
 };
 
 template <class _Iter1, class _Iter2>
+bool operator==(const reverse_iterator<_Iter1>& x, const reverse_iterator<_Iter2>& y) {
+	return x.base() == y.base();
+}
+
+template <class _Iter1, class _Iter2>
+bool operator<(const reverse_iterator<_Iter1>& x, const reverse_iterator<_Iter2>& y) {
+	return x.base() > y.base();
+}
+
+template <class _Iter1, class _Iter2>
 bool operator!=(const reverse_iterator<_Iter1>& x, const reverse_iterator<_Iter2>& y) {
 	return x.base() != y.base();
+}
+
+template <class _Iter1, class _Iter2>
+bool operator>(const reverse_iterator<_Iter1>& x, const reverse_iterator<_Iter2>& y) {
+	return x.base() < y.base();
+}
+
+template <class _Iter1, class _Iter2>
+bool operator>=(const reverse_iterator<_Iter1>& x, const reverse_iterator<_Iter2>& y) {
+	return x.base() <= y.base();
+}
+
+template <class _Iter1, class _Iter2>
+bool operator<=(const reverse_iterator<_Iter1>& x, const reverse_iterator<_Iter2>& y) {
+	return x.base() >= y.base();
 }
 
 }  // namespace ft

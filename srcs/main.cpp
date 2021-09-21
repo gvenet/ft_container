@@ -353,20 +353,41 @@ void test16(void) {
 }
 
 void test17(void) {
-	ft::vector<int> x;
+	ft::vector<int>					  x;
 	ft::vector<int>::reverse_iterator it;
+	ft::vector<int> *				  y;
 
-	for (int i = 0 ; i < 10 ; i++) {
+	y = &x;
+	for ( int i = 0; i < 10; i++ ) {
 		x.push_back(i);
+		y->push_back(i);
 	}
-	for (it = x.rbegin(); it != x.rend(); it++) {
+
+	for ( it = x.rbegin(); it != x.rend(); it++ ) {
 		std::cout << *it << " ";
 	}
 	std::cout << "\n";
 	print(x, FT);
 }
 
-#include <iterator>
+// void test18(void) {
+// 	ft::vector<int> x;
+
+// 	for ( int i = 0; i < 16; i++ ) {
+// 		x.push_back(i);
+// 	}
+
+// 	ft::vector<int> y(x.begin() + 2, x.end() - 2);
+// 	print(x, STD);
+// 	print(y, STD);
+
+// 	ft::vector<int>::reverse_iterator rit;
+// 	for (rit = y.rbegin(); rit != y.rend(); rit++) {
+// 		std::cout << *rit <<" ";
+// 	}
+// 	std::cout << "\n";
+
+// }
 
 int main(void) {
 	// test1();
@@ -386,5 +407,6 @@ int main(void) {
 	// test15();
 	// test16();
 	test17();
+	// test18();
 	return 0;
 }

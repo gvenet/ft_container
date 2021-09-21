@@ -9,8 +9,9 @@
 
 #include "iterator.hpp"
 #include "iterator_traits.hpp"
-#include "reverse_iterator.hpp"
 #include "random_access_iterator.hpp"
+#include "reverse_iterator.hpp"
+#include "utils.hpp"
 
 namespace ft {
 
@@ -31,17 +32,10 @@ public:
 	typedef typename allocator_type::difference_type	 difference_type;
 
 	vector(const allocator_type &alloc = allocator_type())
-		: _alloc(alloc),
-		  _start(nullptr),
-		  _end(nullptr),
-		  _end_capacity(nullptr) { }
+		: _alloc(alloc), _start(nullptr), _end(nullptr), _end_capacity(nullptr) { }
 
-	vector(size_type n, const value_type &val = value_type(),
-		   const allocator_type &alloc = allocator_type())
-		: _alloc(alloc),
-		  _start(nullptr),
-		  _end(nullptr),
-		  _end_capacity(nullptr) {
+	vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type())
+		: _alloc(alloc), _start(nullptr), _end(nullptr), _end_capacity(nullptr) {
 		_start = _alloc.allocate(n);
 		_end_capacity = _start + n;
 		_end = _start;
@@ -52,7 +46,19 @@ public:
 	}
 
 	// template <class InputIterator>
-	// explicit vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type());
+	// explicit vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type())
+	// 	: _alloc(alloc), _start(nullptr), _end(nullptr), _end_capacity(nullptr) {
+	// 	size_type n = last - first;
+
+	// 	_start = _alloc.allocate(n);
+	// 	_end = _start;
+	// 	while ( n-- ) {
+	// 		_alloc.construct(_end, *(first));
+	// 		_end++;
+	// 		first++;
+	// 	}
+	// 	_end_capacity = _end;
+	// }
 
 	vector(const vector &x) : _start(nullptr), _end(nullptr), _end_capacity(nullptr) {
 		*this = x;
@@ -90,17 +96,17 @@ public:
 		return (_end);
 	}
 
-	reverse_iterator	   rbegin() {
+	reverse_iterator rbegin() {
 		return (reverse_iterator(this->end()));
 	}
 
 	const_reverse_iterator rbegin() const {
 	}
-	
-	reverse_iterator	   rend() {
+
+	reverse_iterator rend() {
 		return (reverse_iterator(this->begin()));
 	}
-	
+
 	const_reverse_iterator rend() const {
 	}
 

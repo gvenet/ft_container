@@ -352,19 +352,21 @@ void test16(void) {
 	print(b, FT);
 }
 
-// void test17(void) {
-// 	ft::vector<int> x;
-// 	ft::vector<int>::reverse_iterator it;
+void test17(void) {
+	ft::vector<int> x;
+	ft::vector<int>::reverse_iterator it;
 
-// 	for (int i = 0 ; i < 10 ; i++) {
-// 		x.push_back(i);
-// 	}
-// 	for (it = x.rbegin(); it != x.rend(); it++) {
-// 		std::cout << *it << " ";
-// 	}
-// 	std::cout << "\n";
-// 	// print(x);
-// }
+	for (int i = 0 ; i < 10 ; i++) {
+		x.push_back(i);
+	}
+	for (it = x.rbegin(); it != x.rend(); it++) {
+		std::cout << *it << " ";
+	}
+	std::cout << "\n";
+	print(x, FT);
+}
+
+#include <iterator>
 
 int main(void) {
 	// test1();
@@ -383,6 +385,6 @@ int main(void) {
 	// test14();
 	// test15();
 	// test16();
-	// test17();
+	test17();
 	return 0;
 }

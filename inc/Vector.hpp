@@ -8,9 +8,9 @@
 #include <memory>
 
 #include "iterator.hpp"
-// #include "iterator_traits.hpp"
-// #include "reverse_iterator.hpp"
-
+#include "iterator_traits.hpp"
+#include "reverse_iterator.hpp"
+#include "random_access_iterator.hpp"
 
 namespace ft {
 
@@ -90,19 +90,19 @@ public:
 		return (_end);
 	}
 
-	// reverse_iterator	   rbegin() {
-		// return (reverse_iterator(this->end()));
-	// }
+	reverse_iterator	   rbegin() {
+		return (reverse_iterator(this->end()));
+	}
 
-	// const_reverse_iterator rbegin() const {
-	// }
+	const_reverse_iterator rbegin() const {
+	}
 	
-	// reverse_iterator	   rend() {
-		// return (reverse_iterator(this->begin()));
-	// }
+	reverse_iterator	   rend() {
+		return (reverse_iterator(this->begin()));
+	}
 	
-	// const_reverse_iterator rend() const {
-	// }
+	const_reverse_iterator rend() const {
+	}
 
 	////////////////////////////////////CAPACITY
 	size_type size() const {

@@ -1,7 +1,7 @@
 #ifndef ITERATOR_TRAITS_HPP
 #define ITERATOR_TRAITS_HPP
 
-#include "iterator.hpp"
+#include "random_access_iterator.hpp"
 
 namespace ft {
 

@@ -8,6 +8,9 @@
 #include <memory>
 
 #include "iterator.hpp"
+#include "iterator_traits.hpp"
+#include "reverse_iterator.hpp"
+
 
 namespace ft {
 
@@ -22,8 +25,8 @@ public:
 	typedef typename allocator_type::const_pointer		 const_pointer;
 	typedef ft::random_access_iterator<value_type>		 iterator;
 	typedef ft::random_access_iterator<const value_type> const_iterator;
-	// typedef ft::reverse_iterator<iterator>				 reverse_iterator;
-	// typedef ft::reverse_iterator<const_iterator>		 const_reverse_iterator;
+	typedef ft::reverse_iterator<iterator>				 reverse_iterator;
+	typedef ft::reverse_iterator<const_iterator>		 const_reverse_iterator;
 	typedef typename allocator_type::size_type			 size_type;
 	typedef typename allocator_type::difference_type	 difference_type;
 

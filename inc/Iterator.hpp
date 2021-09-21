@@ -2,12 +2,12 @@
 #define ITERATOR_HPP
 
 #include <stddef.h>
+// #include "iterator_traits.hpp"
 
 namespace ft {
 
-template <class Category, class T, class Distance = ptrdiff_t, class Pointer = T*, class Reference = T&>
-class Iterator {
-public:
+template <class Category, class T, class Distance = std::ptrdiff_t, class Pointer = T*, class Reference = T&>
+struct Iterator {
 	typedef T		  value_type;
 	typedef Distance  difference_type;
 	typedef Pointer	  pointer;
@@ -215,12 +215,49 @@ operator-(const ft::random_access_iterator<T_L> lhs,
 	return (lhs.base() - rhs.base());
 }
 
-template <class Iterator>
-class reverse_iterator {
-	
-	private:
-	Iterator iter;
-};
+// template <class Iterator>
+// struct iterator_traits {
+// 	typedef typename Iterator::difference_type	 difference_type;
+// 	typedef typename Iterator::value_type		 value_type;
+// 	typedef typename Iterator::pointer			 pointer;
+// 	typedef typename Iterator::reference		 reference;
+// 	typedef typename Iterator::iterator_category iterator_category;
+// };
+
+// template <class T>
+// class iterator_traits<T*> {
+// 	typedef std::ptrdiff_t				   difference_type;
+// 	typedef T							   value_type;
+// 	typedef T*							   pointer;
+// 	typedef T&							   reference;
+// 	typedef ft::random_access_iterator_tag iterator_category;
+// };
+
+// template <class T>
+// class iterator_traits<const T*> {
+// 	typedef std::ptrdiff_t				   difference_type;
+// 	typedef T							   value_type;
+// 	typedef T const*					   pointer;
+// 	typedef T const&					   reference;
+// 	typedef ft::random_access_iterator_tag iterator_category;
+// };
+
+// template <class Iterator>
+// class reverse_iterator {
+// public:
+// 	typedef Iterator												  iterator_type;
+// 	typedef typename ft::iterator_traits<Iterator>::iterator_category iterator_category;
+// 	typedef typename ft::iterator_traits<Iterator>::value_type		  value_type;
+// 	typedef typename ft::iterator_traits<Iterator>::difference_type	  difference_type;
+// 	typedef typename ft::iterator_traits<Iterator>::pointer			  pointer;
+// 	typedef typename ft::iterator_traits<Iterator>::reference		  reference;
+
+// 	reverse_iterator();
+
+// 	explicit reverse_iterator(iterator_type it);
+
+// 	reverse_iterator(const reverse_iterator<Iterator>& rev_it);
+// };
 
 }  // namespace ft
 

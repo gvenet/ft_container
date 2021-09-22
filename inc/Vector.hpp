@@ -46,11 +46,9 @@ public:
 	}
 
 	template <class InputIterator>
-	explicit vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type(),
-		   typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = nullptr)
+	vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type(),
+		   typename ft::enable_if<ft::is_iterator<InputIterator>::value, InputIterator>::type* = nullptr)
 		: _alloc(alloc) {
-				if ( !(is_valid = ft::is_ft_iterator_tagged<typename ft::iterator_traits<InputIterator>::iterator_category>::value) )
-			throw(ft::InvalidIteratorException<typename ft::is_ft_iterator_tagged<typename ft::iterator_traits<InputIterator>::iterator_category>::type>());
 		
 		size_type n = last - first;
 

@@ -45,22 +45,20 @@ public:
 		}
 	}
 
-	template <class InputIterator>
-	vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type(),
-		   typename ft::enable_if<ft::is_iterator<InputIterator>::value, InputIterator>::type* = nullptr)
-		: _alloc(alloc) {
-		
-		size_type n = last - first;
-
-		_start = _alloc.allocate(n);
-		_end = _start;
-		while ( n-- ) {
-			_alloc.construct(_end, *(first));
-			_end++;
-			first++;
-		}
-		_end_capacity = _end;
-	}
+	// template <class InputIterator>
+	// vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type())
+	// : _alloc(alloc) {
+	// size_type n = last - first;
+	//
+	// _start = _alloc.allocate(n);
+	// _end = _start;
+	// while ( n-- ) {
+	// _alloc.construct(_end, *(first));
+	// _end++;
+	// first++;
+	// }
+	// _end_capacity = _end;
+	// }
 
 	vector(const vector &x) : _start(nullptr), _end(nullptr), _end_capacity(nullptr) {
 		*this = x;
@@ -269,7 +267,14 @@ public:
 		return (iterator(_start + pos_len));
 	}  // single element (1)
 
-	// void insert(iterator position, size_type n, const value_type &val);		  // fill (2)
+	void insert(iterator position, size_type n, const value_type &val) {
+		for ( size_type i = 0; i < n; i++ ) {
+			std::cout << "TEST_N_   " << i << "   _N_TEST\n";
+			this->insert(position, val);
+		}
+		std::cout << "TEST_V_   " << val - 1 << "   _V_TEST\n";
+	}  // fill (2)
+
 	// template <class InputIterator>											  // range (3)
 	// void insert(iterator position, InputIterator first, InputIterator last);  //
 

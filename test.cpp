@@ -1,38 +1,73 @@
 #include <iostream>
-#include <string>
-
-namespace ft {
-
-template <typename T = float>
-class test {
-public:
-	test(T const &a, T const &b, T const &c) : _a(a), _b(b), _c(c) { }
-	~test() { }
-
-	T const &getA(void) { return _a; };
-	T const &getB(void) { return _b; };
-	T const &getC(void) { return _c; };
-
-private:
-	T const _a;
-	T const _b;
-	T const _c;
-
-	test() { }
-};
-
-}  // namespace ft
+#include <stack>
+#include <vector>
+#include <exception>
 
 template <typename T>
-std::ostream &operator<<(std::ostream &os, ft::test<T> &rhs) {
-	os << "A: " << rhs.getA() << "\nB: " << rhs.getB() << "\nC: " << rhs.getC() << "\n";
-	return os;
-}
+class MutantStack : public std::stack<T>
+{
+public:
+	MutantStack() : std::stack<T>(){}
+	MutantStack(const T &cpy) : std::stack<T>(cpy){}
+	virtual ~MutantStack(){}
 
-int main(void) {
-	ft::test<int> x(2, 4, 6);
-	ft::test<>	  y(2.1, 4.1, 6.1);
+	MutantStack<T> &operator=(MutantStack<T> const &s);
 
-	std::cout << x << "\n" << y << "\n";
+	typedef typename std::stack<T>::container_type::iterator iterator;
+	typedef typename std::stack<T>::container_type::const_iterator const_iterator;
+
+	iterator begin(void) {return this->c.begin();}
+	const_iterator cbegin(void) {return this->c.cbegin();}
+	iterator end(void) {return this->c.end();}
+	const_iterator cend(void) {return this->c.cend();}
+};
+
+
+
+int main()
+{
+	MutantStack<int> mstack;
+	mstack.push(5);
+	mstack.push(17);
+	std::cout << "mstack size =>\t" << mstack.size() << std::endl;
+	std::cout << "mstack top =>\t" << mstack.top() << std::endl;
+	mstack.pop();
+	std::cout << "mstack pop\n";
+	std::cout << "mstack size =>\t" << mstack.size() << std::endl;
+	std::cout << "mstack top =>\t" << mstack.top() << std::endl
+			  << std::endl;
+	mstack.push(3);
+	mstack.push(9);
+	mstack.push(123);
+	mstack.push(737); //[...] mstack.push(0);
+	
+	MutantStack<int>::iterator it = mstack.begin();
+	MutantStack<int>::iterator ite = mstack.end();
+	++it;
+	--it;
+	
+	std::cout << "***********\nmstack top =>\t" << mstack.top() << std::endl;
+	std::cout << "mstack =>   \n";
+	while (it != ite)
+	{
+		std::cout << *it << " | ";
+		++it;
+	}
+
+	std::stack<int> s1(mstack);
+	std::stack<int> s2;
+	s2 = s1;
+	std::cout << "\n\n************\ns1 top =>\t" << s1.top() << std::endl;
+	for (size_t i = 0; i < 4; i++)
+	{
+		s1.pop();
+		std::cout << "s1 pop\n";
+		std::cout << "s1 top =>\t" << s1.top() << std::endl;
+	}
+
+	mstack.pop();
+	std::cout << "\n***************\nms pop" << "\nms top =>\t" << mstack.top() << "\ns1 top =>\t" << s1.top() << "\ns2 top =>\t" << s2.top() << "\n";
+	std::cout << "\n\n************\n\n";
+
 	return 0;
 }

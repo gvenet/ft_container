@@ -26,16 +26,15 @@ struct is_same<T, T> {
 	static const bool value = true;
 };
 
-// is_iterator
-template <typename T, typename = void>
-struct is_iterator {
-	static const bool value = false;
-};
-
-template <typename T>
-struct is_iterator<T, typename ft::enable_if<!std::is_same<typename ft::iterator_traits<T>::value_type, void>::value>::type> {
-	static const bool value = true;
-};
+// template <class C>
+// void print(C &v, std::string ns) {
+// 	typename C::iterator it;
+// 	std::cout << ns << "  | s : " << v.size() << "\t| c : " << v.capacity() << "\t| val : ";
+// 	for ( it = v.begin(); it != v.end(); it++ ) {
+// 		std::cout << *it << " ";
+// 	}
+// 	std::cout << std::endl;
+// }
 
 }  // namespace ft
 

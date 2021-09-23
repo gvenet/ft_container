@@ -46,15 +46,15 @@ template <class T>
 struct is_same<T, T> : true_type {
 };
 
-// template <class T, class = void>
-// struct is_integral : false_type {
-// };
+template <class T, class = void>
+struct is_integral : false_type {
+};
 
-// template <typename T>
-// struct is_integral<T, void_t<typename T::result_type>> : true_type {
-// };
+template <typename T>
+struct is_integral<T, typename T::result_type> : true_type {
+};
 
-//nice little chip print newbie fonction
+//nice_little_cheap_print_newbie_fonction
 template <class C>
 void print(C &v, std::string ns) {
 	typename C::iterator it;

@@ -45,20 +45,21 @@ public:
 		}
 	}
 
-	// template <class InputIterator>
-	// vector(InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type())
-	// : _alloc(alloc) {
-	// size_type n = last - first;
-	//
-	// _start = _alloc.allocate(n);
-	// _end = _start;
-	// while ( n-- ) {
-	// _alloc.construct(_end, *(first));
-	// _end++;
-	// first++;
-	// }
-	// _end_capacity = _end;
-	// }
+	template <class InputIterator>
+	vector(InputIterator		 first,
+		   InputIterator		 last,
+		   const allocator_type &alloc = allocator_type())
+		: _alloc(alloc) {
+		size_type n = last - first;
+
+		_start = _alloc.allocate(n);
+		_end = _start;
+		for ( size_type i = 0; i < n; i++ ) {
+			_alloc.construct(_start + i, 0);
+			_end++;
+		}
+		_end_capacity = _end;
+	}
 
 	vector(const vector &x) : _start(nullptr), _end(nullptr), _end_capacity(nullptr) {
 		*this = x;
@@ -101,6 +102,7 @@ public:
 	}
 
 	const_reverse_iterator rbegin() const {
+		return (const_reverse_iterator(this->end()));
 	}
 
 	reverse_iterator rend() {
@@ -108,6 +110,7 @@ public:
 	}
 
 	const_reverse_iterator rend() const {
+		return (const_reverse_iterator(this->begin()));
 	}
 
 	////////////////////////////////////CAPACITY
@@ -268,7 +271,7 @@ public:
 	}  // single element (1)
 
 	void insert(iterator position, size_type n, const value_type &val) {
-		if (!this->size()) {
+		if ( !this->size() ) {
 			_start = _alloc.allocate(1);
 			_end = _end_capacity = _start;
 		}
@@ -291,7 +294,24 @@ public:
 		return (iterator(_start + pos_len));
 	}
 
-	// iterator erase(iterator first, iterator last);
+	iterator erase(iterator first, iterator last) {
+		size_type first_len = &(*first) - _start;
+		size_type it_range = (last - first);
+		size_type new_size = this->size() - it_range;
+		size_type new_capacity = this->capacity();
+		pointer	  new_start;
+
+		new_start = _alloc.allocate(new_capacity);
+		for ( size_type i = 0; i < new_size; i++ ) {
+			_alloc.construct(new_start + i, (i < first_len) ? *(_start + i) : *(_start + i + it_range));
+		}
+		this->_dealloc();
+		_end_capacity = new_start + new_capacity;
+		_end = new_start + new_size;
+		_start = new_start;
+
+		return (iterator(_start));
+	}
 
 	void swap(vector &x) {
 		vector<T> tmp;

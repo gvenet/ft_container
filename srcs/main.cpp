@@ -8,16 +8,6 @@
 #include "../inc/utils.hpp"
 #include "../inc/vector.hpp"
 
-// template <class C>
-// void ft::print(C &v, std::string ns) {
-// 	typename C::iterator it;
-// 	std::cout << ns << "  | s : " << v.size() << "\t| c : " << v.capacity() << "  \t| val : ";
-// 	for ( it = v.begin(); it != v.end(); it++ ) {
-// 		std::cout << *it << " ";
-// 	}
-// 	std::cout << std::endl;
-// }
-
 template <class C>
 void test(C &v, int &i) {
 	v.reserve(i);
@@ -381,33 +371,30 @@ void test18(void) {
 
 	// ft::vector<int>::reverse_iterator rit;
 	// for ( rit = y.rbegin(); rit != y.rend(); rit++ ) {
-		// std::cout << *rit << " ";
+	// std::cout << *rit << " ";
 	// }
 	// std::cout << "\n";
 }
 
 void test19(void) {
-	ft::vector<int>			a;
-	ft::vector<std::string> c(9);
+	ft::vector<int> a;
 
 	a.reserve(9);
 	for ( int i = 0; i < 9; i++ ) {
 		a.push_back(i);
 	}
-	// ft::vector<int> b(a.begin(), a.end() - 5);
+
+	ft::vector<int> b(a.begin(), a.end() - 5);
+	// ft::vector<int> c(5, 3);
 
 	ft::print(a, ft::FT);
-	// ft::print(b, ft::FT);
+	ft::print(b, ft::FT);
+	// ft::print(c, ft::FT);
 }
 
 template <class C>
 void test20_an(C &a, int i, std::string ns) {
 	a.insert(a.begin(), i, std::to_string(i));
-
-	// for ( int n = 0; n < i; n++ ) {
-	// a.insert(a.begin(), std::to_string(i));
-	// }
-
 	a.insert(a.begin(), "_");
 	ft::print(a, ns);
 }
@@ -421,6 +408,31 @@ void test20(void) {
 		test20_an(b, i, ft::FT);
 		std::cout << "\n";
 	}
+}
+
+template <class C>
+void test21_an(C &v, std::string ns) {
+	v.erase(v.end() - 3, v.end() - 1);
+	ft::print(v, ns);
+}
+
+void test21(void) {
+	std::vector<int> x;
+	ft::vector<int>	 y;
+
+	for ( int i = 0; i < 30; i++ ) {
+		x.push_back(i);
+		y.push_back(i);
+	}
+	ft::print(x, ft::STD);
+	ft::print(y, ft::FT);
+
+	for (int i = 0; i < 14; i++ ) {
+		test21_an(x, ft::STD);
+		test21_an(y, ft::FT);
+	}
+
+
 }
 
 int main(void) {
@@ -442,8 +454,9 @@ int main(void) {
 	// test16();
 	// test17();
 	// test18();
-	// test19();
+	test19(); //(it, it) <=> (int, int) a faire
 	// test20();
+	// test21();
 
 	return 0;
 }

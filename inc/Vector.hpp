@@ -268,11 +268,14 @@ public:
 	}  // single element (1)
 
 	void insert(iterator position, size_type n, const value_type &val) {
-		for ( size_type i = 0; i < n; i++ ) {
-			std::cout << "TEST_N_   " << i << "   _N_TEST\n";
-			this->insert(position, val);
+		if (!this->size()) {
+			_start = _alloc.allocate(1);
+			_end = _end_capacity = _start;
 		}
-		std::cout << "TEST_V_   " << val - 1 << "   _V_TEST\n";
+		for ( size_type i = 0; i < n; i++ ) {
+			position = this->insert(position, val);
+		}
+
 	}  // fill (2)
 
 	// template <class InputIterator>											  // range (3)

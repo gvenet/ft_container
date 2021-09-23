@@ -5,20 +5,18 @@
 #include <typeinfo>
 #include <vector>
 
+#include "../inc/utils.hpp"
 #include "../inc/vector.hpp"
 
-#define FT " ft\t"
-#define STD "std\t"
-
-template <class C>
-void print(C &v, std::string ns) {
-	typename C::iterator it;
-	std::cout << ns << "  | s : " << v.size() << "\t| c : " << v.capacity() << "  \t| val : ";
-	for ( it = v.begin(); it != v.end(); it++ ) {
-		std::cout << *it << " ";
-	}
-	std::cout << std::endl;
-}
+// template <class C>
+// void ft::print(C &v, std::string ns) {
+// 	typename C::iterator it;
+// 	std::cout << ns << "  | s : " << v.size() << "\t| c : " << v.capacity() << "  \t| val : ";
+// 	for ( it = v.begin(); it != v.end(); it++ ) {
+// 		std::cout << *it << " ";
+// 	}
+// 	std::cout << std::endl;
+// }
 
 template <class C>
 void test(C &v, int &i) {
@@ -46,7 +44,7 @@ void test1(void) {
 template <class C, typename T>
 void test2_an(C &v, T elemToAdd, std::string ns) {
 	v.insert(v.begin(), elemToAdd);
-	print(v, ns);
+	ft::print(v, ns);
 	std::cout << std::endl;
 }
 
@@ -57,8 +55,8 @@ void test2() {
 	std::cout << "-------- TEST_2 --------\n";
 	for ( int i = 0; i < 10; i++ ) {
 		std::string s = std::to_string(i);
-		test2_an(vstd, s, FT);
-		test2_an(vft, s, STD);
+		test2_an(vstd, s, ft::FT);
+		test2_an(vft, s, ft::STD);
 	}
 }
 
@@ -67,14 +65,14 @@ void test_3_an1(C &v, T &tab, int &nl, std::string ns) {
 	for ( int i = 0; i < nl; i++ ) {
 		v.insert(v.end(), tab[i]);
 	}
-	print(v, ns);
+	ft::print(v, ns);
 }
 
 template <class C>
 void test_3_an2(C &v, int &nl, std::string ns) {
 	for ( int i = 0; i < nl; i++ ) {
 		v.erase(v.begin() + (nl - i - 1));
-		print(v, ns);
+		ft::print(v, ns);
 	}
 }
 
@@ -85,16 +83,16 @@ void test3(void) {
 	int				 nl = 8;
 
 	std::cout << "-------- TEST_3 --------\n";
-	test_3_an1(vft, tab, nl, FT);
-	test_3_an1(vstd, tab, nl, STD);
-	test_3_an2(vft, nl, FT);
-	test_3_an2(vstd, nl, STD);
+	test_3_an1(vft, tab, nl, ft::FT);
+	test_3_an1(vstd, tab, nl, ft::STD);
+	test_3_an2(vft, nl, ft::FT);
+	test_3_an2(vstd, nl, ft::STD);
 }
 
 template <class C, typename T>
 void test4_an(C &v, int sizeToAdd, T elemToAdd, std::string ns) {
 	v.resize(sizeToAdd, elemToAdd);
-	print(v, ns);
+	ft::print(v, ns);
 	std::cout << "\n";
 }
 
@@ -106,8 +104,8 @@ void test4(void) {
 	ft::vector<int>	 vft(size, 3);
 	int				 t[] = {19, 4, 56, 1, 41, 0, 83, 111};
 
-	print(vstd, STD);
-	print(vft, FT);
+	ft::print(vstd, ft::STD);
+	ft::print(vft, ft::FT);
 	std::cout << "\n";
 
 	// for ( int i = 2; i < 50; i += 9 ) {
@@ -115,20 +113,20 @@ void test4(void) {
 	// }
 
 	for ( int i = 0; i < 8; i++ ) {
-		test4_an(vft, t[i], i + 1, FT);
-		test4_an(vstd, t[i], i + 1, STD);
+		test4_an(vft, t[i], i + 1, ft::FT);
+		test4_an(vstd, t[i], i + 1, ft::STD);
 	}
 
 	vstd.resize(5);
 	vft.resize(5);
-	print(vstd, STD);
-	print(vft, FT);
+	ft::print(vstd, ft::STD);
+	ft::print(vft, ft::FT);
 	std::cout << "\n";
 
 	vstd.resize(15);
 	vft.resize(15);
-	print(vstd, STD);
-	print(vft, FT);
+	ft::print(vstd, ft::STD);
+	ft::print(vft, ft::FT);
 	std::cout << "\n";
 }
 
@@ -164,7 +162,7 @@ void test6_an(C &v, int i, size_t sr, std::string ns) {
 	v.reserve(sr);
 	v.insert(v.begin(), i);
 	v.insert(v.end() - 1, i);
-	print(v, ns);
+	ft::print(v, ns);
 }
 
 void test6(void) {
@@ -177,8 +175,8 @@ void test6(void) {
 	for ( int i = 0; i < 2; i++ ) {
 		sr = i * 32;
 		for ( int i = 0; i < 4; i++ ) {
-			test6_an(vft, i, sr, FT);
-			test6_an(vstd, i, sr, STD);
+			test6_an(vft, i, sr, ft::FT);
+			test6_an(vstd, i, sr, ft::STD);
 			std::cout << "\n";
 		}
 	}
@@ -193,18 +191,18 @@ void test7(void) {
 	for ( int i = 0; i < 4; i++ ) {
 		vstd.assign(t[i], i);
 		vft.assign(t[i], i);
-		print(vstd, STD);
-		print(vft, FT);
+		ft::print(vstd, ft::STD);
+		ft::print(vft, ft::FT);
 	}
 }
 
 template <class C>
 void test8_an(C &v1, C &v2, std::string ns) {
-	print(v1, ns);
-	print(v2, ns);
+	ft::print(v1, ns);
+	ft::print(v2, ns);
 	v1.swap(v2);
-	print(v1, ns);
-	print(v2, ns);
+	ft::print(v1, ns);
+	ft::print(v2, ns);
 }
 
 void test8(void) {
@@ -214,8 +212,8 @@ void test8(void) {
 	ft::vector<int>	 vft2(1, 200);
 
 	std::cout << "-------- TEST_8 --------\n";
-	test8_an(vft1, vft2, STD);
-	test8_an(vft1, vft2, FT);
+	test8_an(vft1, vft2, ft::STD);
+	test8_an(vft1, vft2, ft::FT);
 }
 
 void test9(void) {
@@ -284,8 +282,8 @@ void test13(void) {
 		x.push_back(i);
 		y.push_back(i);
 	}
-	print(x, FT);
-	print(y, STD);
+	ft::print(x, ft::FT);
+	ft::print(y, ft::STD);
 	std::cout << "ft  : front : " << x.front() << " | back : " << x.back() << "\n";
 	std::cout << "std : front : " << y.front() << " | back : " << y.back() << "\n";
 }
@@ -337,19 +335,19 @@ void test16(void) {
 	ft::vector<int>	 b(5, 9);
 
 	std::cout << "-------- TEST_16 --------\n";
-	print(x, STD);
-	print(y, STD);
-	print(a, FT);
-	print(b, FT);
+	ft::print(x, ft::STD);
+	ft::print(y, ft::STD);
+	ft::print(a, ft::FT);
+	ft::print(b, ft::FT);
 	std::cout << "-------------------------\n";
 
 	std::swap(x, y);
 	ft::swap(a, b);
 
-	print(x, STD);
-	print(y, STD);
-	print(a, FT);
-	print(b, FT);
+	ft::print(x, ft::STD);
+	ft::print(y, ft::STD);
+	ft::print(a, ft::FT);
+	ft::print(b, ft::FT);
 }
 
 void test17(void) {
@@ -367,61 +365,60 @@ void test17(void) {
 		std::cout << *it << " ";
 	}
 	std::cout << "\n";
-	print(x, FT);
+	ft::print(x, ft::FT);
 }
 
-// void test18(void) {
-// ft::vector<int> x;
-//
-// for ( int i = 0; i < 16; i++ ) {
-// x.push_back(i);
-// }
-//
-// ft::vector<int> y(x.begin() + 2, x.end() - 2);
-// print(x, STD);
-// print(y, STD);
-//
-// ft::vector<int>::reverse_iterator rit;
-// for (rit = y.rbegin(); rit != y.rend(); rit++) {
-// std::cout << *rit <<" ";
-// }
-// std::cout << "\n";
-//
-// }
+void test18(void) {
+	ft::vector<int> x;
 
-// void test19(void) {
-// 	ft::vector<int>			a;
-// 	ft::vector<std::string> c(9);
+	for ( int i = 0; i < 16; i++ ) {
+		x.push_back(i);
+	}
 
-// 	a.reserve(9);
-// 	for ( int i = 0; i < 9; i++ ) {
-// 		a.push_back(i);
-// 	}
-// 	ft::vector<int> b(a.begin(), a.end() - 5);
+	// ft::vector<int> y(x.begin() + 2, x.end() - 2);
+	// ft::print(x, ft::STD);
+	// ft::print(y, ft::STD);
 
-// 	print(a, FT);
-// 	print(b, FT);
-// }
+	// ft::vector<int>::reverse_iterator rit;
+	// for ( rit = y.rbegin(); rit != y.rend(); rit++ ) {
+		// std::cout << *rit << " ";
+	// }
+	// std::cout << "\n";
+}
+
+void test19(void) {
+	ft::vector<int>			a;
+	ft::vector<std::string> c(9);
+
+	a.reserve(9);
+	for ( int i = 0; i < 9; i++ ) {
+		a.push_back(i);
+	}
+	// ft::vector<int> b(a.begin(), a.end() - 5);
+
+	ft::print(a, ft::FT);
+	// ft::print(b, ft::FT);
+}
 
 template <class C>
 void test20_an(C &a, int i, std::string ns) {
-	a.insert(a.begin(), i, i);
-	// a.insert(a.begin() + 2, 0);
+	a.insert(a.begin(), i, std::to_string(i));
 
 	// for ( int n = 0; n < i; n++ ) {
-	// 	a.insert(a.begin(), i);
+	// a.insert(a.begin(), std::to_string(i));
 	// }
 
-	print(a, ns);
+	a.insert(a.begin(), "_");
+	ft::print(a, ns);
 }
 
 void test20(void) {
-	std::vector<int> a(2);
-	ft::vector<int>	 b(2);
+	std::vector<std::string> a;
+	ft::vector<std::string>	 b;
 
 	for ( int i = 0; i != 9; i++ ) {
-		// test20_an(a, i, STD);
-		test20_an(b, i, FT);
+		test20_an(a, i, ft::STD);
+		test20_an(b, i, ft::FT);
 		std::cout << "\n";
 	}
 }
@@ -446,7 +443,7 @@ int main(void) {
 	// test17();
 	// test18();
 	// test19();
-	test20();
+	// test20();
 
 	return 0;
 }

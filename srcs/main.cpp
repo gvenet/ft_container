@@ -482,28 +482,43 @@ void test22() {
 	test22_an<ft::vector<int> >(ft::FT);
 }
 
+template <class C>
+void test23_an(int px1, int px2, int py1, int py2) {
+	C x(px1,px2);
+	C y(py1,py2);
+
+	std::cout << std::boolalpha << (x < y) << std::endl;
+}
+
+void test23() {
+
+	
+
+}
+
 int main(void) {
-	test1();
-	test2();
-	test3();
-	test4();
-	test5();
-	test6();
-	test7();
-	test8();
-	test9();
-	test10();
-	test11();
-	test12();
-	test13();
-	test14();
-	test15();
-	test16();
-	test17();
-	test18();
-	test19();
-	test20();
-	test21();
-	test22();
+	// test1();
+	// test2();
+	// test3();
+	// test4();
+	// test5();
+	// test6();
+	// test7();
+	// test8();
+	// test9();
+	// test10();
+	// test11();
+	// test12();
+	// test13();
+	// test14();
+	// test15();
+	// test16();
+	// test17();
+	// test18();
+	// test19();
+	// test20();
+	// test21();
+	// test22();
+	test23();
 	return 0;
 }

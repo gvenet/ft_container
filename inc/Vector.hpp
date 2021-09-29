@@ -14,6 +14,7 @@
 #include "reverse_iterator.hpp"
 #include "type_traits.hpp"
 #include "utils.hpp"
+#include "algorithm.hpp"
 
 namespace ft {
 
@@ -391,18 +392,12 @@ bool operator!=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) {
 
 template <class T, class Alloc>
 bool operator<(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) {
-	typename vector<T>::const_iterator lhsIt = lhs.begin();
-	typename vector<T>::const_iterator rhsIt = rhs.begin();
-
-	while ( lhsIt != lhs.end() ) {
-		if ( rhsIt == rhs.end() || *rhsIt < *lhsIt )
-			return false;
-		else if ( *lhsIt < *rhsIt )
-			return true;
-		++lhsIt;
-		++rhsIt;
-	}
-	return (rhsIt != rhs.end());
+	typename vector<T>::const_iterator lhsItb = lhs.begin();
+	typename vector<T>::const_iterator lhsIte = lhs.end();
+	typename vector<T>::const_iterator rhsItb = rhs.begin();
+	typename vector<T>::const_iterator rhsIte = rhs.end();
+	
+	return ft::lexicographical_compare(lhsItb, lhsIte, rhsItb, rhsIte);
 }
 
 template <class T, class Alloc>

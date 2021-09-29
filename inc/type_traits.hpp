@@ -34,20 +34,6 @@ struct is_same<T, T> : true_type {
 };
 
 //is_integral
-
-template <class T>
-struct remove_const { typedef T type; };
-
-template <class T>
-struct remove_volatile {
-	typedef T type;
-};
-
-template <class T>
-struct remove_cv {
-	typedef typename remove_volatile<typename remove_const<T>::type>::type type;
-};
-
 template <class T>
 struct is_integral_base : false_type { };
 template <>
@@ -86,8 +72,8 @@ template <>
 struct is_integral_base<__uint128_t> : true_type { };
 
 template <class T>
-struct is_integral
-	: is_integral_base<typename remove_cv<T>::type> { };
+struct is_integral : is_integral_base<T> {
+};
 
 }  // namespace ft
 #endif

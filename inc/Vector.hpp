@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include <memory>
+#include <ostream>
 
 #include "iterator.hpp"
 #include "iterator_traits.hpp"
@@ -52,10 +53,10 @@ public:
 	vector(InputIterator		 first,
 		   InputIterator		 last,
 		   const allocator_type &alloc = allocator_type(),
-		   typename std::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type * = nullptr)
+		   typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type * = nullptr)
 		: _alloc(alloc) {
 		size_type n = last - first;
-		iterator it = first;
+		iterator  it = first;
 
 		_start = _alloc.allocate(n);
 		_end = _start;
@@ -209,8 +210,22 @@ public:
 
 	////////////////////////////////////MODIFIERS
 
-	// template <class InputIterator>							   //range (1)
-	// void	 assign(InputIterator first, InputIterator last);  //
+	template <class InputIterator>
+	void assign(InputIterator first,
+				InputIterator last,
+				typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type * = nullptr) {
+		pointer	  new_start;
+		size_type n = last - first;
+
+		new_start = _alloc.allocate(n);
+		for ( size_type i = 0; i < n; i++ ) {
+			_alloc.construct(new_start + i, *(first + i));
+		}
+		_dealloc();
+		_start = new_start;
+		_end = _start + n;
+		_end_capacity = _end;
+	}  // range(1)
 
 	void assign(size_type n, const value_type &val) {
 		pointer new_start;

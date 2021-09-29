@@ -365,15 +365,33 @@ void test18(void) {
 		x.push_back(i);
 	}
 
-	// ft::vector<int> y(x.begin() + 2, x.end() - 2);
-	// ft::print(x, ft::STD);
-	// ft::print(y, ft::STD);
+	ft::vector<int> y(x.begin() + 2, x.end() - 2);
+	ft::print(x, ft::FT);
+	ft::print(y, ft::FT);
 
-	// ft::vector<int>::reverse_iterator rit;
-	// for ( rit = y.rbegin(); rit != y.rend(); rit++ ) {
-	// std::cout << *rit << " ";
-	// }
-	// std::cout << "\n";
+	ft::vector<int>::reverse_iterator rit;
+	std::cout << "\t\t\t\t\t\t";
+	for ( rit = y.rbegin(); rit != y.rend(); rit++ ) {
+		std::cout << *rit << " ";
+	}
+	std::cout << "\n\n";
+
+	std::vector<int> x2;
+
+	for ( int i = 0; i < 16; i++ ) {
+		x2.push_back(i);
+	}
+
+	std::vector<int> y2(x2.begin() + 2, x2.end() - 2);
+	ft::print(x2, ft::STD);
+	ft::print(y2, ft::STD);
+
+	std::vector<int>::reverse_iterator rit2;
+	std::cout << "\t\t\t\t\t\t";
+	for ( rit2 = y2.rbegin(); rit2 != y2.rend(); rit2++ ) {
+		std::cout << *rit2 << " ";
+	}
+	std::cout << "\n";
 }
 
 void test19(void) {
@@ -385,14 +403,14 @@ void test19(void) {
 	}
 
 	ft::vector<int>::iterator it = a.begin();
-	ft::vector<int> b(it, it + 5);
-	ft::vector<int> c(5, 9);
-	ft::vector<std::string> d(5, "tata");
-	ft::vector<std::string> e;
-	std::string t[] = {"aaa", "bbb", "ccc", "ddd", "eee", "fff"};
-	for (int i = 0; i < 6; i++)
+	ft::vector<int>			  b(it, it + 5);
+	ft::vector<int>			  c(5, 9);
+	ft::vector<std::string>	  d(5, "tata");
+	ft::vector<std::string>	  e;
+	std::string				  t[] = {"aaa", "bbb", "ccc", "ddd", "eee", "fff"};
+	for ( int i = 0; i < 6; i++ )
 		e.push_back(t[i]);
-	ft::vector<std::string> f(e.begin() + 1, e.end() -1);
+	ft::vector<std::string> f(e.begin() + 1, e.end() - 1);
 
 	ft::print(a, ft::FT);
 	ft::print(b, ft::FT);
@@ -437,11 +455,36 @@ void test21(void) {
 	ft::print(x, ft::STD);
 	ft::print(y, ft::FT);
 
-	for (int i = 0; i < 14; i++ ) {
+	for ( int i = 0; i < 14; i++ ) {
 		test21_an(x, ft::STD);
 		test21_an(y, ft::FT);
 	}
+}
 
+template <class C>
+void test22_an(C &x, C &y, std::string ns) {
+	for ( int i = 0; i < 20; i++ )
+		x.push_back(i);
+	y.assign(x.begin(), x.end() - 10);
+	ft::print(x, ns);
+	ft::print(y, ns);
+	y.assign(5, 5);
+	ft::print(y, ns);
+	y.assign(15, 0);
+	ft::print(y, ns);
+	y.assign(x.begin(), x.end() + 10);
+	ft::print(y, ns);
+}
+
+void test22() {
+	std::vector<int> x1;
+	std::vector<int> y1;
+	ft::vector<int> x2;
+	ft::vector<int> y2;
+
+	test22_an(x1, y1, ft::STD);
+	std::cout << "\n";
+	test22_an(x2, y2, ft::FT);
 
 }
 
@@ -464,9 +507,9 @@ int main(void) {
 	// test16();
 	// test17();
 	// test18();
-	test19(); //(it, it) <=> (int, int) a faire
+	// test19();
 	// test20();
 	// test21();
-
+	test22();
 	return 0;
 }

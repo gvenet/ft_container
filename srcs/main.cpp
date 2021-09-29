@@ -482,18 +482,35 @@ void test22() {
 	test22_an<ft::vector<int> >(ft::FT);
 }
 
-template <class C>
-void test23_an(int px1, int px2, int py1, int py2) {
-	C x(px1,px2);
-	C y(py1,py2);
-
-	std::cout << std::boolalpha << (x < y) << std::endl;
+int r(void) {
+	return ((rand() % 100) + 1);
 }
 
+struct rdm {
+	rdm() : a(r()), b(r()), c(r()), d(r()) {
+		// std::cout << "\n" << a << " " << b << " " << c << " " << d << "\n";
+	}
+	int a, b, c, d;
+};
+
+template <class C>
+bool t23a(rdm p) {
+	C x(p.a, p.b);
+	C y(p.c, p.d);
+
+	return (x < y);
+}
+
+
 void test23() {
+	typedef std::vector<int> c1;
+	typedef ft::vector<int>	 c2;
 
-	
-
+	srand((unsigned int)time(NULL));
+	for ( int i = 0; i < 20; i++ ) {
+		rdm p;
+		(t23a<c1>(p) == t23a<c2>(p)) ? std::cout << "ok\n" : std::cout << "not ok\n";
+	}
 }
 
 int main(void) {

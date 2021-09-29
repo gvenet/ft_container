@@ -384,12 +384,22 @@ void test19(void) {
 		a.push_back(i);
 	}
 
-	ft::vector<int> b(a.begin(), a.end() - 5);
-	// ft::vector<int> c(5, 3);
+	ft::vector<int>::iterator it = a.begin();
+	ft::vector<int> b(it, it + 5);
+	ft::vector<int> c(5, 9);
+	ft::vector<std::string> d(5, "tata");
+	ft::vector<std::string> e;
+	std::string t[] = {"aaa", "bbb", "ccc", "ddd", "eee", "fff"};
+	for (int i = 0; i < 6; i++)
+		e.push_back(t[i]);
+	ft::vector<std::string> f(e.begin() + 1, e.end() -1);
 
 	ft::print(a, ft::FT);
 	ft::print(b, ft::FT);
-	// ft::print(c, ft::FT);
+	ft::print(c, ft::FT);
+	ft::print(d, ft::FT);
+	ft::print(e, ft::FT);
+	ft::print(f, ft::FT);
 }
 
 template <class C>

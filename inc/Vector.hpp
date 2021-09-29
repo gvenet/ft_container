@@ -11,6 +11,7 @@
 #include "iterator_traits.hpp"
 #include "random_access_iterator.hpp"
 #include "reverse_iterator.hpp"
+#include "type_traits.hpp"
 #include "utils.hpp"
 
 namespace ft {
@@ -34,7 +35,9 @@ public:
 	vector(const allocator_type &alloc = allocator_type())
 		: _alloc(alloc), _start(nullptr), _end(nullptr), _end_capacity(nullptr) { }
 
-	vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type())
+	vector(size_type			 n,
+		   const value_type &	 val = value_type(),
+		   const allocator_type &alloc = allocator_type())
 		: _alloc(alloc) {
 		_start = _alloc.allocate(n);
 		_end_capacity = _start + n;
@@ -48,14 +51,16 @@ public:
 	template <class InputIterator>
 	vector(InputIterator		 first,
 		   InputIterator		 last,
-		   const allocator_type &alloc = allocator_type())
+		   const allocator_type &alloc = allocator_type(),
+		   typename std::enable_if<!std::is_integral<InputIterator>::value, InputIterator>::type * = nullptr)
 		: _alloc(alloc) {
 		size_type n = last - first;
+		iterator it = first;
 
 		_start = _alloc.allocate(n);
 		_end = _start;
 		for ( size_type i = 0; i < n; i++ ) {
-			_alloc.construct(_start + i, 0);
+			_alloc.construct(_start + i, *(first + i));
 			_end++;
 		}
 		_end_capacity = _end;

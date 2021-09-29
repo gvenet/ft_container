@@ -501,6 +501,9 @@ bool t23a(rdm p) {
 	return (x < y);
 }
 
+void ok(bool test) {
+	(test) ? std::cout << "ok\n" : std::cout << "not ok\n";
+}
 
 void test23() {
 	typedef std::vector<int> c1;
@@ -509,7 +512,7 @@ void test23() {
 	srand((unsigned int)time(NULL));
 	for ( int i = 0; i < 20; i++ ) {
 		rdm p;
-		(t23a<c1>(p) == t23a<c2>(p)) ? std::cout << "ok\n" : std::cout << "not ok\n";
+		ok((t23a<c1>(p) == t23a<c2>(p)));
 	}
 }
 

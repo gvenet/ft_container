@@ -2,18 +2,10 @@
 #define MAP_HPP
 
 #include <limits.h>
-
 #include <functional>
-#include <map>
 #include <memory>
 
-#include "../utils/algorithm.hpp"
-#include "../utils/iterator.hpp"
-#include "../utils/iterator_traits.hpp"
-#include "../utils/pair.hpp"
-#include "../utils/random_access_iterator.hpp"
-#include "../utils/reverse_iterator.hpp"
-#include "../utils/type_traits.hpp"
+#include "../utils/utils.hpp"
 
 namespace ft {
 

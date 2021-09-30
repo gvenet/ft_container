@@ -2,6 +2,13 @@
 #define UTILS_HPP
 
 #include <string>
+#include "algorithm.hpp"
+#include "iterator_traits.hpp"
+#include "iterator.hpp"
+#include "pair.hpp"
+#include "random_access_iterator.hpp"
+#include "reverse_iterator.hpp"
+#include "type_traits.hpp"
 
 namespace ft {
 

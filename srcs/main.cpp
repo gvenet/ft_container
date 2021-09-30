@@ -11,7 +11,6 @@
 #include "../inc/containers/map.hpp"
 #include "../inc/containers/stack.hpp"
 #include "../inc/containers/vector.hpp"
-#include "../inc/utils/pair.hpp"
 #include "../inc/utils/utils.hpp"
 
 template <class C>
@@ -627,7 +626,7 @@ int main(void) {
 	// test23();
 	// test24();
 	// test25();
-	test26();
+	// test26();
 
 	return 0;
 }

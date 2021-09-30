@@ -1,16 +1,9 @@
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
-#include <limits.h>
 #include <memory>
 
-#include "../utils/iterator.hpp"
-#include "../utils/iterator_traits.hpp"
-#include "../utils/random_access_iterator.hpp"
-#include "../utils/reverse_iterator.hpp"
-#include "../utils/type_traits.hpp"
-#include "../utils/algorithm.hpp"
-
+#include "../utils/utils.hpp"
 namespace ft {
 
 template <class T, class Alloc = std::allocator<T> >

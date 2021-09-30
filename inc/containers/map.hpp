@@ -166,9 +166,6 @@ template <class Key, class T, class Compare, class Allocator>
 bool operator<=(const map<Key, T, Compare, Allocator>& x,
 				const map<Key, T, Compare, Allocator>& y);
 
-// specialized algorithms:
-template <class Key, class T, class Compare, class Allocator>
-void swap(map<Key, T, Compare, Allocator>& x, map<Key, T, Compare, Allocator>& y) noexcept(noexcept(x.swap(y)));
 
 }  // namespace ft
 

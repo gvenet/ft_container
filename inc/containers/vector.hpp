@@ -2,18 +2,13 @@
 #define VECTOR_HPP
 
 #include <limits.h>
-#include <math.h>
-
-#include <iostream>
 #include <memory>
-#include <ostream>
 
 #include "../utils/iterator.hpp"
 #include "../utils/iterator_traits.hpp"
 #include "../utils/random_access_iterator.hpp"
 #include "../utils/reverse_iterator.hpp"
 #include "../utils/type_traits.hpp"
-// #include "../utils/utils.hpp"
 #include "../utils/algorithm.hpp"
 
 namespace ft {

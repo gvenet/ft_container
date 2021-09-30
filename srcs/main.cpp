@@ -482,14 +482,13 @@ void test22() {
 	test22_an<ft::vector<int> >(ft::FT);
 }
 
+//darkest test23 challenge
 int r(void) {
 	return ((rand() % 100) + 1);
 }
 
 struct rdm {
-	rdm() : a(r()), b(r()), c(r()), d(r()) {
-		// std::cout << "\n" << a << " " << b << " " << c << " " << d << "\n";
-	}
+	rdm() : a(r()), b(r()), c(r()), d(r()) { }
 	int a, b, c, d;
 };
 
@@ -501,19 +500,20 @@ bool t23a(rdm p) {
 	return (x < y);
 }
 
-void ok(bool test) {
-	(test) ? std::cout << "ok\n" : std::cout << "not ok\n";
-}
-
 void test23() {
 	typedef std::vector<int> c1;
 	typedef ft::vector<int>	 c2;
 
 	srand((unsigned int)time(NULL));
-	for ( int i = 0; i < 20; i++ ) {
+	int i = 6000;
+	while ( i-- ) {
 		rdm p;
-		ok((t23a<c1>(p) == t23a<c2>(p)));
+		if ( t23a<c1>(p) != t23a<c2>(p) ) {
+			std::cout << "failed\n";
+			return;
+		}
 	}
+	std::cout << "test23 ok\n";
 }
 
 int main(void) {

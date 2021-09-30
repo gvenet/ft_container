@@ -1,6 +1,8 @@
 #ifndef ALGORITHM_HPP
 #define ALGORITHM_HPP
 
+#include "type_traits.hpp"
+
 namespace ft {
 
 template <class InputIterator1, class InputIterator2>

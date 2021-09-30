@@ -552,8 +552,8 @@ void test24(void) {
 		vt_ft		  v_tab_ft = container_tab_gen<vt_ft, vft>(pts);
 		print_vt(v_tab_std, ft::STD);
 		print_vt(v_tab_ft, ft::FT);
-		std::cout << std::boolalpha << ft::lexicographical_compare(v_tab_ft[0].begin(),v_tab_ft[0].end(), v_tab_ft[1].begin(),v_tab_ft[1].end()) << std::endl;
-		std::cout << std::boolalpha << ft::lexicographical_compare(20,v_tab_ft[0].end(), v_tab_ft[1].begin(),v_tab_ft[1].end()) << std::endl;
+		std::cout << std::boolalpha << ft::lexicographical_compare(v_tab_ft[0].begin(), v_tab_ft[0].end(), v_tab_ft[1].begin(), v_tab_ft[1].end()) << std::endl;
+		std::cout << std::boolalpha << std::lexicographical_compare(v_tab_std[0].begin(), v_tab_std[0].end(), v_tab_std[1].begin(), v_tab_std[1].end()) << std::endl;
 		std::cout << "\n";
 	}
 }

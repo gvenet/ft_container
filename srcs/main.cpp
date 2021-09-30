@@ -483,37 +483,79 @@ void test22() {
 }
 
 //darkest test23 challenge
-int r(void) {
-	return ((rand() % 100) + 1);
+int rdm_gen(int range) {
+	return ((rand() % range) + 1);
 }
 
-struct rdm {
-	rdm() : a(r()), b(r()), c(r()), d(r()) { }
+struct random_points {
+	random_points(int range) : a(rdm_gen(range)),
+							   b(rdm_gen(range)),
+							   c(rdm_gen(range)),
+							   d(rdm_gen(range)) { }
 	int a, b, c, d;
 };
 
 template <class C>
-bool t23a(rdm p) {
-	C x(p.a, p.b);
-	C y(p.c, p.d);
-
+bool test23_an(random_points &pts) {
+	C x(pts.a, pts.b);
+	C y(pts.c, pts.d);
 	return (x < y);
 }
 
 void test23() {
-	typedef std::vector<int> c1;
-	typedef ft::vector<int>	 c2;
+	typedef std::vector<int> vstd;
+	typedef ft::vector<int>	 vft;
 
+	std::cout << "\n-------- TEST_23 --------\n";
 	srand((unsigned int)time(NULL));
 	int i = 6000;
 	while ( i-- ) {
-		rdm p;
-		if ( t23a<c1>(p) != t23a<c2>(p) ) {
+		random_points pts(100);
+		if ( test23_an<vstd>(pts) != test23_an<vft>(pts) ) {
 			std::cout << "failed\n";
 			return;
 		}
 	}
 	std::cout << "test23 ok\n";
+}
+
+template <class C, class U>
+C container_tab_gen(random_points &pts) {
+	C vec_t;
+	U v1(pts.a, pts.b);
+	U v2(pts.b, pts.c);
+
+	vec_t.push_back(v1);
+	vec_t.push_back(v2);
+	return vec_t;
+}
+
+template <class C>
+void print_vt(C &container, std::string ns) {
+	typename C::iterator it;
+	for ( it = container.begin(); it != container.end(); it++ ) {
+		ft::print(*it, ns);
+	}
+}
+
+void test24(void) {
+	srand((unsigned int)time(NULL));
+	typedef std::vector<int>  vstd;
+	typedef std::vector<vstd> vt_std;
+	typedef ft::vector<int>	  vft;
+	typedef ft::vector<vft>	  vt_ft;
+	int						  counter = 4;
+
+	while ( counter-- ) {
+		random_points pts(20);
+		vt_std		  v_tab_std = container_tab_gen<vt_std, vstd>(pts);
+		vt_ft		  v_tab_ft = container_tab_gen<vt_ft, vft>(pts);
+		print_vt(v_tab_std, ft::STD);
+		print_vt(v_tab_ft, ft::FT);
+		std::cout << std::boolalpha << ft::lexicographical_compare(v_tab_ft[0].begin(),v_tab_ft[0].end(), v_tab_ft[1].begin(),v_tab_ft[1].end()) << std::endl;
+		std::cout << std::boolalpha << ft::lexicographical_compare(20,v_tab_ft[0].end(), v_tab_ft[1].begin(),v_tab_ft[1].end()) << std::endl;
+		std::cout << "\n";
+	}
 }
 
 int main(void) {
@@ -539,6 +581,7 @@ int main(void) {
 	// test20();
 	// test21();
 	// test22();
-	test23();
+	// test23();
+	test24();
 	return 0;
 }

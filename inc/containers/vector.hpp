@@ -8,13 +8,13 @@
 #include <memory>
 #include <ostream>
 
-#include "iterator.hpp"
-#include "iterator_traits.hpp"
-#include "random_access_iterator.hpp"
-#include "reverse_iterator.hpp"
-#include "type_traits.hpp"
-#include "utils.hpp"
-#include "algorithm.hpp"
+#include "../utils/iterator.hpp"
+#include "../utils/iterator_traits.hpp"
+#include "../utils/random_access_iterator.hpp"
+#include "../utils/reverse_iterator.hpp"
+#include "../utils/type_traits.hpp"
+// #include "../utils/utils.hpp"
+#include "../utils/algorithm.hpp"
 
 namespace ft {
 

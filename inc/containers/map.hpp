@@ -1,15 +1,14 @@
 #ifndef MAP_HPP
 #define MAP_HPP
 
-#include <limits.h>
-#include <functional>
+#include <map>
 #include <memory>
 
 #include "../utils/utils.hpp"
 
 namespace ft {
 
-template <class Key, class T, class Compare = std::less<Key>, class Allocator = std::allocator<ft::pair<const Key, T> > >
+template <class Key, class T, class Compare = ft::less<Key>, class Allocator = std::allocator<ft::pair<const Key, T> > >
 class map {
 public:
 	// types:
@@ -30,7 +29,7 @@ public:
 	typedef ft::reverse_iterator<const_iterator>		 const_reverse_iterator;
 
 	class value_compare
-		: public std::binary_function<value_type, value_type, bool> {
+		: public ft::binary_function<value_type, value_type, bool> {
 		friend class map;
 
 	protected:
@@ -42,8 +41,8 @@ public:
 	};
 
 	// default (1)
-	explicit map(const key_compare&	   comp = key_compare(),
-				 const allocator_type& alloc = allocator_type());
+	map(const key_compare&	  comp = key_compare(),
+		const allocator_type& alloc = allocator_type());
 	// range (2)
 	template <class InputIterator>
 	map(InputIterator first, InputIterator last,

@@ -2,13 +2,17 @@
 #define UTILS_HPP
 
 #include <string>
+#include <limits.h>
+
 #include "algorithm.hpp"
-#include "iterator_traits.hpp"
 #include "iterator.hpp"
+#include "iterator_traits.hpp"
 #include "pair.hpp"
 #include "random_access_iterator.hpp"
 #include "reverse_iterator.hpp"
 #include "type_traits.hpp"
+#include "functional.hpp"
+
 
 namespace ft {
 

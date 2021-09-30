@@ -5,10 +5,13 @@
 #include <stack>
 #include <string>
 #include <typeinfo>
+#include <utility>
 #include <vector>
 
+#include "../inc/containers/map.hpp"
 #include "../inc/containers/stack.hpp"
 #include "../inc/containers/vector.hpp"
+#include "../inc/utils/pair.hpp"
 #include "../inc/utils/utils.hpp"
 
 template <class C>
@@ -579,6 +582,25 @@ void test25(void) {
 	std::cout << s2.top() << "\n";
 }
 
+void test26(void) {
+	ft::pair<int, int> a;
+	ft::pair<int, int> b;
+
+	a.first = 27;
+	a.second = 42;
+
+	b = a;
+	std::cout << a.first << a.second << "\n";
+	std::cout << b.first << b.second << "\n";
+
+	ft::pair<int, int> c(b);
+	std::cout << c.first << c.second << "\n";
+
+	ft::pair<std::string, int> d("toto", 42);
+	std::cout << d.first << d.second << "\n";
+
+}
+
 int main(void) {
 	// test1();
 	// test2();
@@ -604,7 +626,8 @@ int main(void) {
 	// test22();
 	// test23();
 	// test24();
-	test25();
+	// test25();
+	test26();
 
 	return 0;
 }

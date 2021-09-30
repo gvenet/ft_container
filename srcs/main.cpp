@@ -539,6 +539,7 @@ void print_vt(C &container, std::string ns) {
 }
 
 void test24(void) {
+	std::cout << "\n-------- TEST_24 --------\n";
 	srand((unsigned int)time(NULL));
 	typedef std::vector<int>  vstd;
 	typedef std::vector<vstd> vt_std;

@@ -15,44 +15,43 @@ public:
 	typedef typename container_type::size_type		 size_type;
 
 protected:
-	container_type c;
+	container_type _c;
 
 public:
-	stack(const container_type& ctnr = container_type()) : c(ctnr) { }
+	stack(const container_type& ctnr = container_type()) : _c(ctnr) { }
 	~stack() { }
 
-	template <class C>
-	C& operator=(const C& other) {
-		c = other.c;
+	stack& operator=(const stack& other) {
+		_c = other._c;
 		return *this;
 	}
 
-	bool empty() const { return c.empty(); }
+	bool empty() const { return _c.empty(); }
 
-	size_type size() const { return c.size(); }
+	size_type size() const { return _c.size(); }
 
-	reference		top() { return c.back(); }
+	reference		top() { return _c.back(); }
 	
-	const_reference top() const { return c.back(); }
+	const_reference top() const { return _c.back(); }
 
-	void push(const value_type& x) { c.push_back(x); }
+	void push(const value_type& x) { _c.push_back(x); }
 
-	void pop() { c.pop_back(); }
+	void pop() { _c.pop_back(); }
 };
 
 template <class T, class Container>
 bool operator==(const stack<T, Container>& x, const stack<T, Container>& y) {
-	return x.c == y.c;
+	return x._c == y._c;
 }
 
 template <class T, class Container>
 bool operator<(const stack<T, Container>& x, const stack<T, Container>& y) {
-	return x.c < y.c;
+	return x._c < y._c;
 }
 
 template <class T, class Container>
 bool operator!=(const stack<T, Container>& x, const stack<T, Container>& y) {
-	return !(x.c == y.c);
+	return !(x._c == y._c);
 }
 
 template <class T, class Container>

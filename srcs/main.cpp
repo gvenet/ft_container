@@ -176,6 +176,7 @@ void test6(void) {
 		}
 	}
 }
+
 void test7(void) {
 	std::cout << "\n-------- TEST_7 --------\n";
 
@@ -486,7 +487,6 @@ void test22() {
 	test22_an<ft::vector<int> >(ft::FT);
 }
 
-//darkest test23 challenge
 int rdm_gen(int range) {
 	return ((rand() % range) + 1);
 }
@@ -582,6 +582,7 @@ void test25(void) {
 }
 
 void test26(void) {
+	std::cout << "\n-------- TEST_26 --------\n";
 	ft::pair<int, int> a;
 	ft::pair<int, int> b;
 
@@ -599,6 +600,25 @@ void test26(void) {
 	std::cout << d.first << d.second << "\n";
 
 }
+
+void test27(void) {
+	std::cout << "\n-------- TEST_27 --------\n";
+	typedef std::string T1;
+	typedef int T2;
+
+	std::map< T1,T2> a;
+	std::pair<T1,T2> p;
+	std::string tab[] = {"f", "jkds", "pe", "ldld", "jkfd", "s", "nm", "n", "naa", "a"};
+
+	for (int i = 9; i > 0; i--) {
+		p.first = tab[i];
+		p.second = -(i - 10);
+		std::cout << p.first << "\t<=>\t" << p.second << "\n";
+		a.insert(p);
+	}
+	ft::print(a, ft::STD);
+}
+
 
 int main(void) {
 	// test1();
@@ -627,6 +647,6 @@ int main(void) {
 	// test24();
 	// test25();
 	// test26();
-
+	test27();
 	return 0;
 }

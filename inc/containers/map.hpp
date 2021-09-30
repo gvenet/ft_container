@@ -40,6 +40,7 @@ public:
 		bool operator()(const value_type& x, const value_type& y) const;
 	};
 
+public:
 	// default (1)
 	map(const key_compare&	  comp = key_compare(),
 		const allocator_type& alloc = allocator_type());

@@ -598,27 +598,51 @@ void test26(void) {
 
 	ft::pair<std::string, int> d("toto", 42);
 	std::cout << d.first << d.second << "\n";
-
 }
 
 void test27(void) {
 	std::cout << "\n-------- TEST_27 --------\n";
 	typedef std::string T1;
-	typedef int T2;
+	typedef int			T2;
 
-	std::map< T1,T2> a;
-	std::pair<T1,T2> p;
-	std::string tab[] = {"f", "jkds", "pe", "ldld", "jkfd", "s", "nm", "n", "naa", "a"};
+	std::map<T1, T2>  a;
+	std::pair<T1, T2> p;
+	std::string		  tab[] = {"f", "jkds", "pe", "ldld", "jkfd", "s", "nm", "n", "naa", "a"};
 
-	for (int i = 9; i > 0; i--) {
+	for ( int i = 9; i > 0; i-- ) {
 		p.first = tab[i];
 		p.second = -(i - 10);
 		std::cout << p.first << "\t<=>\t" << p.second << "\n";
 		a.insert(p);
 	}
 	ft::print(a, ft::STD);
+	std::cout << "\n\n";
+	for ( std::map<T1, T2>::reverse_iterator rit = a.rbegin(); rit != a.rend(); rit++ ) {
+		std::cout << rit->first << "\t<=>\t" << rit->second << "\n";
+	}
 }
 
+void test28(void) {
+	srand((unsigned int)time(NULL));
+	typedef std::pair<int, int> T;
+
+	std::vector<T>				v;
+	T							p;
+	int							count = 10;
+
+	while ( count-- ) {
+		p.first = rdm_gen(100);
+		p.second = rdm_gen(100);
+		v.push_back(p);
+		std::sort(v.begin(), v.end());
+	}
+
+	std::vector<T>::iterator it;
+
+	for ( it = v.begin(); it != v.end(); it++ ) {
+		std::cout << it->first << "\t" << it->second << "\n";
+	}
+}
 
 int main(void) {
 	// test1();
@@ -647,6 +671,7 @@ int main(void) {
 	// test24();
 	// test25();
 	// test26();
-	test27();
+	// test27();
+	test28();
 	return 0;
 }

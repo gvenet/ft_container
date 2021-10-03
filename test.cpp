@@ -10,12 +10,15 @@ int main(void) {
 	binary_search_tree<int> x;
 	int						rdm;
 
-	for ( int i = 0; i < 23; i++ ) {
+	for ( int i = 0; i < 5; i++ ) {
 		rdm = rand() % 2000 + 1;
-		std::cout << i << "\t" << rdm << "\n";
-		x.insert(rdm );
+		x.insert(rdm);
 	}
 	x.insert(1000);
+	for ( int i = 0; i < 5; i++ ) {
+		rdm = rand() % 2000 + 1;
+		x.insert(rdm);
+	}
 	// x.printTreeInOrder();
 
 	// std::cout << std::boolalpha << x.search(42) << " " << x.search(0) << "\n";

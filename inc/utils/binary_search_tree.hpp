@@ -157,8 +157,10 @@ private:
 		if ( node == NULL )
 			return NULL;
 		if ( node->value == key ) {
-			if ( node->left == NULL && node->right == NULL )
+			if ( node->left == NULL && node->right == NULL ) {
 				delete node;
+				node = NULL;
+			}
 			else if ( node->left == NULL && node->right != NULL ) {
 				node->right->parent = node->parent;
 				node = node->right;
@@ -179,8 +181,7 @@ private:
 
 public:
 	void remove(value_type key) {
-		bst_node<value_type>* keyNode = search(_root, key);
-		keyNode = remove(keyNode, key);
+		_root = remove(_root, key);
 	}
 
 private:

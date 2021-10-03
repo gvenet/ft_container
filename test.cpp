@@ -1,16 +1,31 @@
+#include <random>
+
 #include "inc/utils/binary_search_tree.hpp"
 #include "iostream"
 
 using namespace ft;
 
 int main(void) {
+	srand((unsigned int)time(NULL));
+	binary_search_tree<int> x;
+	int						rdm;
 
-bst_node<int> *root = new bst_node<int>(1);
-root->right = new bst_node<int>(4);
-root->left = new bst_node<int>(2);
-root->left->left = new bst_node<int>(3);
+	for ( int i = 0; i < 23; i++ ) {
+		rdm = rand() % 2000 + 1;
+		std::cout << i << "\t" << rdm << "\n";
+		x.insert(rdm );
+	}
+	x.insert(1000);
+	// x.printTreeInOrder();
 
-std::cout<< root->value << " " << root->left->value << " " << root->left->left->value << "\n";
+	// std::cout << std::boolalpha << x.search(42) << " " << x.search(0) << "\n";
+	// std::cout << x.findMin() << " " << x.findMax() << "\n";
+	// std::cout << x.successor(6) << "\n";
+	// std::cout << x.predecessor(265) << "\n\n";
 
+	x.printTreeInOrder();
+	x.remove(1000);
+	x.printTreeInOrder();
 
+	return 0;
 }

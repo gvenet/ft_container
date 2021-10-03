@@ -626,21 +626,46 @@ void test28(void) {
 	srand((unsigned int)time(NULL));
 	typedef std::pair<int, int> T;
 
-	std::vector<T>				v;
-	T							p;
-	int							count = 10;
+	std::vector<T> v;
+	T			   p;
+	int			   count = 3;
 
 	while ( count-- ) {
-		p.first = rdm_gen(100);
+		p.first = rdm_gen(10);
 		p.second = rdm_gen(100);
 		v.push_back(p);
-		std::sort(v.begin(), v.end());
 	}
 
-	std::vector<T>::iterator it;
+	for ( std::vector<T>::iterator vit = v.begin(); vit != v.end(); vit++ ) {
+		std::cout << vit->first << "\t" << vit->second << "\n";
+	}
 
-	for ( it = v.begin(); it != v.end(); it++ ) {
-		std::cout << it->first << "\t" << it->second << "\n";
+	std::cout << "\n";
+	std::map<int, int> m(v.begin(), v.end());
+	for ( std::map<int, int>::iterator mit = m.begin(); mit != m.end(); mit++ ) {
+		std::cout << mit->first << "\t" << mit->second << "\n";
+	}
+
+	std::cout << "\n";
+	std::map<int, int> mc(m);
+	for ( std::map<int, int>::reverse_iterator mit2 = m.rbegin(); mit2 != m.rend(); mit2++ ) {
+		std::cout << mit2->first << "\t" << mit2->second << "\n";
+	}
+
+	std::map<T, T> mp;
+	T			   p1, p2;
+
+	for ( int i = 0; i < 3; i++ ) {
+		p1.first = 1 + i;
+		p1.second = 10 + i;
+		p2.first = 100 + i;
+		p2.second = 1000 + i;
+		mp[p1] = p2;
+		mp.insert(std::make_pair(p1,p2));
+	}
+	std::cout << "\n";
+	for ( std::map<T, T>::iterator mp_it = mp.begin(); mp_it != mp.end(); mp_it++ ) {
+		std::cout << mp_it->first.first << " <=> " << mp_it->first.second << " || " << mp_it->second.first << " <=> " << mp_it->second.second << "\n";
 	}
 }
 

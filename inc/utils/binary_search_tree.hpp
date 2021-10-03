@@ -27,7 +27,7 @@ public:
 	typedef Compare	  value_compare;
 	typedef Allocator allocator_type;
 
-	binary_search_tree() : _root(nullptr) { }
+	binary_search_tree() : _root() { }
 
 public:
 	bst_node<value_type>* insert(bst_node<value_type>* node, value_type key) {
@@ -87,7 +87,7 @@ public:
 
 private:
 	value_type findMin(bst_node<value_type>* node) {
-		if ( node->left == nullptr )
+		if ( !node->left )
 			return node->value;
 		else
 			return findMin(node->left);
@@ -100,7 +100,7 @@ public:
 
 private:
 	value_type findMax(bst_node<value_type>* node) {
-		if ( node->right == nullptr )
+		if ( !node->right )
 			return node->value;
 		else
 			return findMax(node->right);
@@ -113,12 +113,12 @@ public:
 
 private:
 	value_type successor(bst_node<value_type>* node) {
-		if ( node->right != nullptr ) {
+		if ( node->right ) {
 			return findMin(node->right);
 		} else {
 			bst_node<value_type>* parentNode = node->parent;
 			bst_node<value_type>* currentNode = node;
-			while ( (parentNode != nullptr) && (currentNode == parentNode->right) ) {
+			while ( (parentNode) && (currentNode == parentNode->right) ) {
 				currentNode = parentNode;
 				parentNode = currentNode->parent;
 			}
@@ -134,13 +134,12 @@ public:
 
 private:
 	value_type predecessor(bst_node<value_type>* node) {
-		if ( node->left != nullptr ) {
+		if ( node->left ) {
 			return findMax(node->left);
 		} else {
 			bst_node<value_type>* parentNode = node->parent;
 			bst_node<value_type>* currentNode = node;
-			while ( (parentNode != nullptr) &&
-					(currentNode == parentNode->left) ) {
+			while ( (parentNode) && (currentNode == parentNode->left) ) {
 				currentNode = parentNode;
 				parentNode = currentNode->parent;
 			}
@@ -156,16 +155,16 @@ public:
 
 private:
 	bst_node<value_type>* remove(bst_node<value_type>* node, value_type key) {
-		if ( node == nullptr )
+		if ( !node )
 			return nullptr;
 		if ( node->value == key ) {
-			if ( node->left == nullptr && node->right == nullptr ) {
+			if ( !node->left && !node->right ) {
 				delete node;
 				node = nullptr;
-			} else if ( node->left == nullptr && node->right != nullptr ) {
+			} else if ( !node->left && node->right ) {
 				node->right->parent = node->parent;
 				node = node->right;
-			} else if ( node->left != nullptr && node->right == nullptr ) {
+			} else if ( node->left && !node->right ) {
 				node->left->parent = node->parent;
 				node = node->left;
 			} else {

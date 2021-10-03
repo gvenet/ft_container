@@ -47,9 +47,8 @@ int main(void) {
 	x.insert(5);
 	x.insert(3);
 
-	// x.printTreeInOrder();
-	x.clean();
-	x.insert(42);
 	x.printTreeInOrder();
+	// x.clean();
+	// while (1);
 	return 0;
 }

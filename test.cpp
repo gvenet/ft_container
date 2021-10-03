@@ -12,11 +12,16 @@ int main(void) {
 
 	for ( int i = 0; i < 5; i++ ) {
 		rdm = rand() % 2000 + 1;
+		std::cout << rdm << "\n";
 		x.insert(rdm);
 	}
+	
 	x.insert(1000);
+	std::cout << "1000\n";
+
 	for ( int i = 0; i < 5; i++ ) {
 		rdm = rand() % 2000 + 1;
+		std::cout << rdm << "\n";
 		x.insert(rdm);
 	}
 	// x.printTreeInOrder();

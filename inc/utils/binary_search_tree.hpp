@@ -52,7 +52,7 @@ public:
 
 private:
 	void printTreeInOrder(bst_node<value_type>* node) {
-		if ( node == NULL )
+		if ( !node )
 			return;
 		printTreeInOrder(node->left);
 		std::cout << node->value << " ";
@@ -61,14 +61,16 @@ private:
 
 public:
 	void printTreeInOrder() {
+		if ( !_root )
+			return;
 		printTreeInOrder(_root);
 		std::cout << std::endl;
 	}
 
 private:
 	bst_node<value_type>* search(bst_node<value_type>* node, value_type key) {
-		if ( node == NULL )
-			return NULL;
+		if ( !node )
+			return nullptr;
 		else if ( node->value == key )
 			return node;
 		else if ( node->value < key )
@@ -80,12 +82,12 @@ private:
 public:
 	bool search(value_type key) {
 		bst_node<value_type>* result = search(_root, key);
-		return result == NULL ? false : true;
+		return result == nullptr ? false : true;
 	}
 
 private:
 	value_type findMin(bst_node<value_type>* node) {
-		if ( node->left == NULL )
+		if ( node->left == nullptr )
 			return node->value;
 		else
 			return findMin(node->left);
@@ -98,7 +100,7 @@ public:
 
 private:
 	value_type findMax(bst_node<value_type>* node) {
-		if ( node->right == NULL )
+		if ( node->right == nullptr )
 			return node->value;
 		else
 			return findMax(node->right);
@@ -111,12 +113,12 @@ public:
 
 private:
 	value_type successor(bst_node<value_type>* node) {
-		if ( node->right != NULL ) {
+		if ( node->right != nullptr ) {
 			return findMin(node->right);
 		} else {
 			bst_node<value_type>* parentNode = node->parent;
 			bst_node<value_type>* currentNode = node;
-			while ( (parentNode != NULL) && (currentNode == parentNode->right) ) {
+			while ( (parentNode != nullptr) && (currentNode == parentNode->right) ) {
 				currentNode = parentNode;
 				parentNode = currentNode->parent;
 			}
@@ -132,12 +134,12 @@ public:
 
 private:
 	value_type predecessor(bst_node<value_type>* node) {
-		if ( node->left != NULL ) {
+		if ( node->left != nullptr ) {
 			return findMax(node->left);
 		} else {
 			bst_node<value_type>* parentNode = node->parent;
 			bst_node<value_type>* currentNode = node;
-			while ( (parentNode != NULL) &&
+			while ( (parentNode != nullptr) &&
 					(currentNode == parentNode->left) ) {
 				currentNode = parentNode;
 				parentNode = currentNode->parent;
@@ -154,17 +156,16 @@ public:
 
 private:
 	bst_node<value_type>* remove(bst_node<value_type>* node, value_type key) {
-		if ( node == NULL )
-			return NULL;
+		if ( node == nullptr )
+			return nullptr;
 		if ( node->value == key ) {
-			if ( node->left == NULL && node->right == NULL ) {
+			if ( node->left == nullptr && node->right == nullptr ) {
 				delete node;
-				node = NULL;
-			}
-			else if ( node->left == NULL && node->right != NULL ) {
+				node = nullptr;
+			} else if ( node->left == nullptr && node->right != nullptr ) {
 				node->right->parent = node->parent;
 				node = node->right;
-			} else if ( node->left != NULL && node->right == NULL ) {
+			} else if ( node->left != nullptr && node->right == nullptr ) {
 				node->left->parent = node->parent;
 				node = node->left;
 			} else {
@@ -182,6 +183,23 @@ private:
 public:
 	void remove(value_type key) {
 		_root = remove(_root, key);
+	}
+
+private:
+private:
+	void clean(bst_node<value_type>* node) {
+		if ( node->left )
+			clean(node->left);
+		if ( node->right )
+			clean(node->right);
+		delete node;
+		node = nullptr;
+		return;
+	}
+
+public:
+	void clean() {
+		clean(_root);
 	}
 
 private:

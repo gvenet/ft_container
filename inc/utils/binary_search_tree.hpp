@@ -4,232 +4,197 @@
 #include <iostream>
 #include <memory>
 
+#include "BST_node.hpp"
 #include "functional.hpp"
 
 namespace ft {
 
-template <typename T, class Allocator = std::allocator<T> >
-struct bst_node {
-	typedef T								 value_type;
-	typedef Allocator						 allocator_type;
-	typedef typename allocator_type::pointer pointer;
-
-	value_type	   value;
-	bst_node*	   left;
-	bst_node*	   right;
-	bst_node*	   parent;
-	allocator_type _alloc;
-	pointer		   _alloc_ptr;
-
-	bst_node(value_type _value, const allocator_type& alloc = allocator_type())
-		: value(_value),
-		  left(),
-		  right(),
-		  parent(),
-		  _alloc(alloc) { }
-};
-
-template <class T, class Compare = ft::less<T>, class Allocator = std::allocator<T> >
-class binary_search_tree {
+template <class T, class Compare = ft::less<T>, class Node = ft::BST_Node<T>, class Type_Alloc = std::allocator<T>, class Node_Alloc = std::allocator<Node> >
+class Binary_search_tree {
 public:
-	typedef T								 value_type;
-	typedef Compare							 value_compare;
-	typedef Allocator						 allocator_type;
-	typedef bst_node<value_type>			 node_type;
-	typedef typename allocator_type::pointer pointer;
+	typedef Binary_search_tree					  self;
+	typedef self&								  self_reference;
+	typedef T									  value_type;
+	typedef Node								  node_type;
+	typedef Node*								  node_pointer;
+	typedef Node_Alloc							  node_alloc;
+	// typedef ft::BST_iterator<Node, Compare>		  iterator;
+	// typedef ft::BST_const_iterator<Node, Compare> const_iterator;
+	typedef size_t								  size_type;
 
-	binary_search_tree() : _root() { }
-
-	~binary_search_tree() {
-		clean(_root);
+	Binary_search_tree(const node_alloc& node_alloc_init = node_alloc())
+		: _node_alloc(node_alloc_init) {
+		_last_node = _node_alloc.allocate(1);
+		_node_alloc.construct(_last_node, node_type(_last_node, _last_node, _last_node));
+	}
+	~Binary_search_tree() {
+		_node_alloc.destroy(_last_node);
+		_node_alloc.deallocate(_last_node, 1);
 	}
 
-public:
-	node_type* insert(node_type* node, value_type key) {
-		if ( !node ) {
-			*node = new_node(key);
-		} else if ( key == node->value ) {
-			return node;
-		} else if ( key < node->value ) {
-			node->left = insert(node->left, key);
-			node->left->parent = node;
-		} else {
-			node->right = insert(node->right, key);
-			node->right->parent = node;
-		}
-		return node;
-	}
+	// ft::pair<iterator, bool> insertPair(value_type to_insert) {
+		// Node* new_node = _node_alloc.allocate(1);
+		// Node* prev_node = _last_node;
+		// Node* start_node = _last_node->parent;
 
-public:
-	void insert(value_type key) {
-		_root = insert(_root, key);
-	}
+		// side == false = left; side == true = right;
+		// bool side = true;
 
-private:
-	void printTreeInOrder(node_type* node) {
-		if ( !node )
-			return;
-		printTreeInOrder(node->left);
-		std::cout << node->value << " ";
-		printTreeInOrder(node->right);
-	}
+		// while ( start_node != _last_node ) {
+		// 	int curkey = start_node->value.first;
+		// 	if ( curkey == to_insert.first )
+				// return (ft::make_pair(iterator(start_node, _last_node), false));
+		// 	prev_node = start_node;
+		// 	if ( to_insert.first > curkey ) {
+		// 		side = true;
+		// 		start_node = start_node->right;
+		// 	} else {
+		// 		side = false;
+		// 		start_node = start_node->left;
+		// 	}
+		// }
+		// _node_alloc.construct(new_node, Node(to_insert, prev_node, _last_node, _last_node));
 
-public:
-	void printTreeInOrder() {
-		if ( !_root )
-			return;
-		printTreeInOrder(_root);
-		std::cout << std::endl;
-	}
+		// if ( prev_node == _last_node )
+		// 	_last_node->parent = new_node;
+		// else if ( side == true )
+		// 	prev_node->right = new_node;
+		// else
+		// 	prev_node->left = new_node;
 
-private:
-	node_type* search(node_type* node, value_type key) {
-		if ( !node )
-			return nullptr;
-		else if ( node->value == key )
-			return node;
-		else if ( node->value < key )
-			return search(node->right, key);
-		else
-			return search(node->left, key);
-	}
+		// _last_node->left = _BST_get_lower_node(_last_node->parent);
+		// _last_node->right = _BST_get_higher_node(_last_node->parent);
+		// _last_node->value.first += 1;
+		// return (ft::make_pair(iterator(new_node, _last_node), true));
+	// }
 
-public:
-	bool search(value_type key) {
-		node_type* result = search(_root, key);
-		return result == nullptr ? false : true;
-	}
+	void removeByKey(value_type to_remove) { _removeByKey(_last_node->parent, to_remove); }
 
-private:
-	value_type findMin(node_type* node) {
-		if ( !node->left )
-			return node->value;
-		else
-			return findMin(node->left);
-	}
+	node_pointer searchByKey(value_type to_remove) {
+		node_pointer node = _last_node->parent;
 
-public:
-	value_type findMin() {
-		return findMin(_root);
-	}
-
-private:
-	value_type findMax(node_type* node) {
-		if ( !node->right )
-			return node->value;
-		else
-			return findMax(node->right);
-	}
-
-public:
-	value_type findMax() {
-		return findMax(_root);
-	}
-
-private:
-	value_type successor(node_type* node) {
-		if ( node->right ) {
-			return findMin(node->right);
-		} else {
-			node_type* parentNode = node->parent;
-			node_type* currentNode = node;
-			while ( (parentNode) && (currentNode == parentNode->right) ) {
-				currentNode = parentNode;
-				parentNode = currentNode->parent;
-			}
-			return parentNode->value;
-		}
-	}
-
-public:
-	value_type successor(value_type key) {
-		node_type* keyNode = search(_root, key);
-		return successor(keyNode);
-	}
-
-private:
-	value_type predecessor(node_type* node) {
-		if ( node->left ) {
-			return findMax(node->left);
-		} else {
-			node_type* parentNode = node->parent;
-			node_type* currentNode = node;
-			while ( (parentNode) && (currentNode == parentNode->left) ) {
-				currentNode = parentNode;
-				parentNode = currentNode->parent;
-			}
-			return parentNode->value;
-		}
-	}
-
-public:
-	value_type predecessor(value_type key) {
-		node_type* keyNode = search(_root, key);
-		return predecessor(keyNode);
-	}
-
-private:
-	node_type* remove(node_type* node, value_type key) {
-		if ( !node )
-			return nullptr;
-		if ( node->value == key ) {
-			if ( !node->left && !node->right ) {
-				delete_node(node);
-				node = nullptr;
-			} else if ( !node->left && node->right ) {
-				node->right->parent = node->parent;
-				node = node->right;
-			} else if ( node->left && !node->right ) {
-				node->left->parent = node->parent;
+		while ( node != _last_node ) {
+			if ( node->value.first == to_remove.first )
+				return (node);
+			if ( node->value.first > to_remove.first )
 				node = node->left;
-			} else {
-				value_type successorKey = successor(key);
-				node->value = successorKey;
-				node->right = remove(node->right, successorKey);
-			}
-		} else if ( node->value < key )
-			node->right = remove(node->right, key);
+			else
+				node = node->right;
+		}
+		return (node);
+	}
+
+	void swap(self& x) {
+		if ( &x == this )
+			return;
+
+		node_pointer save = this->_last_node;
+		this->_last_node = x._last_node;
+		x._last_node = save;
+	}
+
+	size_type max_size() const { return (node_alloc().max_size()); }
+
+	// last_node parent = root of tree, last_node right = last node, last_node left = first node
+	node_pointer _last_node;
+	node_alloc	 _node_alloc;
+
+private:
+	node_pointer _BST_get_lower_node(node_pointer root) {
+		while ( root != _last_node && root->left != _last_node )
+			root = root->left;
+		return (root);
+	}
+
+	node_pointer _BST_get_higher_node(node_pointer root) {
+		while ( root != _last_node && root->right != _last_node )
+			root = root->right;
+		return (root);
+	}
+
+	void _replaceNodeInParent(node_pointer node, node_pointer new_node) {
+		if ( node->parent != _last_node ) {
+			if ( _last_node->parent == node )
+				_last_node->parent = new_node;
+
+			if ( node == node->parent->left )
+				node->parent->left = new_node;
+			else
+				node->parent->right = new_node;
+		} else
+			_last_node->parent = new_node;
+
+		_last_node->left = _BST_get_lower_node(_last_node->parent);
+		_last_node->right = _BST_get_higher_node(_last_node->parent);
+		_last_node->value.first -= 1;
+
+		new_node->parent = node->parent;
+
+		_node_alloc.destroy(node);
+		_node_alloc.deallocate(node, 1);
+	}
+
+	void _replaceDoubleChildren(node_pointer& to_remove, node_pointer new_node) {
+		if ( new_node->parent != _last_node ) {
+			if ( new_node->parent != to_remove )
+				new_node->parent->left = new_node->right;
+		}
+
+		new_node->parent = to_remove->parent;
+		if ( to_remove->left != new_node )
+			new_node->left = to_remove->left;
+		if ( to_remove->right != new_node )
+			new_node->right = to_remove->right;
+
+		if ( to_remove->parent != _last_node ) {
+			if ( to_remove->parent->left == to_remove )
+				to_remove->parent->left = new_node;
+			else if ( to_remove->parent->right == to_remove )
+				to_remove->parent->right = new_node;
+		} else
+			_last_node->parent = new_node;
+
+		if ( to_remove->left != _last_node && to_remove->left != new_node )
+			to_remove->left->parent = new_node;
+		if ( to_remove->right != _last_node && to_remove->right != new_node )
+			to_remove->right->parent = new_node;
+
+		if ( to_remove->parent != _last_node ) {
+			to_remove->left = _last_node;
+			to_remove->right = _last_node;
+			to_remove->parent = new_node;
+		}
+
+		_last_node->left = _BST_get_lower_node(_last_node->parent);
+		_last_node->right = _BST_get_higher_node(_last_node->parent);
+		_last_node->value.first -= 1;
+
+		_node_alloc.destroy(to_remove);
+		_node_alloc.deallocate(to_remove, 1);
+	}
+
+	void _removeByKey(node_pointer node, value_type to_remove) {
+		if ( to_remove.first < node->value.first ) {
+			_removeByKey(node->left, to_remove);
+			return;
+		}
+
+		if ( to_remove.first > node->value.first ) {
+			_removeByKey(node->right, to_remove);
+			return;
+		}
+
+		if ( node->left != _last_node && node->right != _last_node ) {
+			node_pointer successor = _BST_get_lower_node(node->right);
+			_replaceDoubleChildren(node, successor);
+			return;
+		} else if ( node->left != _last_node )
+			_replaceNodeInParent(node, node->left);
+		else if ( node->right != _last_node )
+			_replaceNodeInParent(node, node->right);
 		else
-			node->left = remove(node->left, key);
-		return node;
+			_replaceNodeInParent(node, _last_node);
 	}
-
-public:
-	void remove(value_type key) {
-		_root = remove(_root, key);
-	}
-
-private:
-private:
-	void clean(node_type* node) {
-		if ( node->left )
-			clean(node->left);
-		if ( node->right )
-			clean(node->right);
-		delete_node(node);
-		node = nullptr;
-		return;
-	}
-
-	void clean() {
-		clean(_root);
-	}
-
-	node_type new_node(value_type key) {
-		node_type node(key);
-
-		node._alloc_ptr = node._alloc.allocate(1);
-		node._alloc.construct(node._alloc_ptr, key);
-		return node;
-	}
-
-	void delete_node(node_type* node) {
-		node->_alloc.destroy(node->_alloc_ptr);
-		node->_alloc.deallocate(node->_alloc_ptr, 1);
-	}
-
-private:
-	node_type* _root;
 };
 
 }  // namespace ft

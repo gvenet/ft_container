@@ -5,6 +5,7 @@
 #include <memory>
 
 #include "BST_node.hpp"
+#include "binary_search_tree_iterator.hpp"
 #include "functional.hpp"
 
 namespace ft {
@@ -18,8 +19,8 @@ public:
 	typedef Node								  node_type;
 	typedef Node*								  node_pointer;
 	typedef Node_Alloc							  node_alloc;
-	// typedef ft::BST_iterator<Node, Compare>		  iterator;
-	// typedef ft::BST_const_iterator<Node, Compare> const_iterator;
+	typedef ft::BST_iterator<Node, Compare>		  iterator;
+	typedef ft::BST_const_iterator<Node, Compare> const_iterator;
 	typedef size_t								  size_type;
 
 	Binary_search_tree(const node_alloc& node_alloc_init = node_alloc())
@@ -32,41 +33,41 @@ public:
 		_node_alloc.deallocate(_last_node, 1);
 	}
 
-	// ft::pair<iterator, bool> insertPair(value_type to_insert) {
-		// Node* new_node = _node_alloc.allocate(1);
-		// Node* prev_node = _last_node;
-		// Node* start_node = _last_node->parent;
+	ft::pair<iterator, bool> insertPair(value_type to_insert) {
+		node_pointer new_node = _node_alloc.allocate(1);
+		node_pointer prev_node = _last_node;
+		node_pointer start_node = _last_node->parent;
 
 		// side == false = left; side == true = right;
-		// bool side = true;
+		bool side = true;
 
-		// while ( start_node != _last_node ) {
-		// 	int curkey = start_node->value.first;
-		// 	if ( curkey == to_insert.first )
-				// return (ft::make_pair(iterator(start_node, _last_node), false));
-		// 	prev_node = start_node;
-		// 	if ( to_insert.first > curkey ) {
-		// 		side = true;
-		// 		start_node = start_node->right;
-		// 	} else {
-		// 		side = false;
-		// 		start_node = start_node->left;
-		// 	}
-		// }
-		// _node_alloc.construct(new_node, Node(to_insert, prev_node, _last_node, _last_node));
+		while ( start_node != _last_node ) {
+			int curkey = start_node->value.first;
+			if ( curkey == to_insert.first )
+				return (ft::make_pair(iterator(start_node, _last_node), false));
+			prev_node = start_node;
+			if ( to_insert.first > curkey ) {
+				side = true;
+				start_node = start_node->right;
+			} else {
+				side = false;
+				start_node = start_node->left;
+			}
+		}
+		_node_alloc.construct(new_node, Node(to_insert, prev_node, _last_node, _last_node));
 
-		// if ( prev_node == _last_node )
-		// 	_last_node->parent = new_node;
-		// else if ( side == true )
-		// 	prev_node->right = new_node;
-		// else
-		// 	prev_node->left = new_node;
+		if ( prev_node == _last_node )
+			_last_node->parent = new_node;
+		else if ( side == true )
+			prev_node->right = new_node;
+		else
+			prev_node->left = new_node;
 
-		// _last_node->left = _BST_get_lower_node(_last_node->parent);
-		// _last_node->right = _BST_get_higher_node(_last_node->parent);
-		// _last_node->value.first += 1;
-		// return (ft::make_pair(iterator(new_node, _last_node), true));
-	// }
+		_last_node->left = _BST_get_lower_node(_last_node->parent);
+		_last_node->right = _BST_get_higher_node(_last_node->parent);
+		_last_node->value.first += 1;
+		return (ft::make_pair(iterator(new_node, _last_node), true));
+	}
 
 	void removeByKey(value_type to_remove) { _removeByKey(_last_node->parent, to_remove); }
 

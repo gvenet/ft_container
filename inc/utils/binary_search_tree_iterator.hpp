@@ -3,19 +3,19 @@
 
 #include "iterator.hpp"
 #include "iterator_traits.hpp"
-#include "random_access_iterator.hpp"
 #include "pair.hpp"
+#include "random_access_iterator.hpp"
 
 namespace ft {
 
 template <typename T, class Compare>
 class BST_iterator : ft::Iterator<ft::random_access_iterator_tag, T> {
 public:
-	typedef typename T::value_type value_type;
+	typedef typename T::value_type																 value_type;
 	typedef typename ft::Iterator<ft::random_access_iterator_tag, value_type>::iterator_category iterator_category;
-	typedef typename ft::Iterator<ft::random_access_iterator_tag, value_type>::difference_type difference_type;
-	typedef typename ft::Iterator<ft::random_access_iterator_tag, value_type>::pointer pointer;
-	typedef typename ft::Iterator<ft::random_access_iterator_tag, value_type>::reference reference;
+	typedef typename ft::Iterator<ft::random_access_iterator_tag, value_type>::difference_type	 difference_type;
+	typedef typename ft::Iterator<ft::random_access_iterator_tag, value_type>::pointer			 pointer;
+	typedef typename ft::Iterator<ft::random_access_iterator_tag, value_type>::reference		 reference;
 
 	BST_iterator(const Compare& comp = Compare())
 		: _node(),
@@ -33,7 +33,6 @@ public:
 		  _last_node(bst_it._last_node),
 		  _comp() { }
 
-	// Added for subject
 	virtual ~BST_iterator() { }
 
 	BST_iterator& operator=(const BST_iterator& bst_it) {
@@ -150,7 +149,6 @@ public:
 		  _last_node(bst_it._last_node),
 		  _comp() { }
 
-	// Added for subject
 	virtual ~BST_const_iterator() { }
 
 	BST_const_iterator& operator=(const BST_const_iterator& bst_it) {
@@ -233,5 +231,4 @@ public:
 	Compare _comp;
 };
 }  // namespace ft
-
 #endif

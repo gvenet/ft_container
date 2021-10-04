@@ -23,16 +23,21 @@ struct bst_node {
 template <class T, class Compare = ft::less<T>, class Allocator = std::allocator<T> >
 class binary_search_tree {
 public:
-	typedef T		  value_type;
-	typedef Compare	  value_compare;
-	typedef Allocator allocator_type;
+	typedef T					 value_type;
+	typedef Compare				 value_compare;
+	typedef Allocator			 allocator_type;
+	typedef bst_node<value_type> node_type;
 
 	binary_search_tree() : _root() { }
 
+	~binary_search_tree() {
+		clean(_root);
+	}
+
 public:
-	bst_node<value_type>* insert(bst_node<value_type>* node, value_type key) {
+	node_type* insert(node_type* node, value_type key) {
 		if ( !node ) {
-			node = new bst_node<value_type>(key);
+			node = new_node(key);
 		} else if ( key == node->value ) {
 			return node;
 		} else if ( key < node->value ) {
@@ -51,7 +56,7 @@ public:
 	}
 
 private:
-	void printTreeInOrder(bst_node<value_type>* node) {
+	void printTreeInOrder(node_type* node) {
 		if ( !node )
 			return;
 		printTreeInOrder(node->left);
@@ -68,7 +73,7 @@ public:
 	}
 
 private:
-	bst_node<value_type>* search(bst_node<value_type>* node, value_type key) {
+	node_type* search(node_type* node, value_type key) {
 		if ( !node )
 			return nullptr;
 		else if ( node->value == key )
@@ -81,12 +86,12 @@ private:
 
 public:
 	bool search(value_type key) {
-		bst_node<value_type>* result = search(_root, key);
+		node_type* result = search(_root, key);
 		return result == nullptr ? false : true;
 	}
 
 private:
-	value_type findMin(bst_node<value_type>* node) {
+	value_type findMin(node_type* node) {
 		if ( !node->left )
 			return node->value;
 		else
@@ -99,7 +104,7 @@ public:
 	}
 
 private:
-	value_type findMax(bst_node<value_type>* node) {
+	value_type findMax(node_type* node) {
 		if ( !node->right )
 			return node->value;
 		else
@@ -112,12 +117,12 @@ public:
 	}
 
 private:
-	value_type successor(bst_node<value_type>* node) {
+	value_type successor(node_type* node) {
 		if ( node->right ) {
 			return findMin(node->right);
 		} else {
-			bst_node<value_type>* parentNode = node->parent;
-			bst_node<value_type>* currentNode = node;
+			node_type* parentNode = node->parent;
+			node_type* currentNode = node;
 			while ( (parentNode) && (currentNode == parentNode->right) ) {
 				currentNode = parentNode;
 				parentNode = currentNode->parent;
@@ -128,17 +133,17 @@ private:
 
 public:
 	value_type successor(value_type key) {
-		bst_node<value_type>* keyNode = search(_root, key);
+		node_type* keyNode = search(_root, key);
 		return successor(keyNode);
 	}
 
 private:
-	value_type predecessor(bst_node<value_type>* node) {
+	value_type predecessor(node_type* node) {
 		if ( node->left ) {
 			return findMax(node->left);
 		} else {
-			bst_node<value_type>* parentNode = node->parent;
-			bst_node<value_type>* currentNode = node;
+			node_type* parentNode = node->parent;
+			node_type* currentNode = node;
 			while ( (parentNode) && (currentNode == parentNode->left) ) {
 				currentNode = parentNode;
 				parentNode = currentNode->parent;
@@ -149,12 +154,12 @@ private:
 
 public:
 	value_type predecessor(value_type key) {
-		bst_node<value_type>* keyNode = search(_root, key);
+		node_type* keyNode = search(_root, key);
 		return predecessor(keyNode);
 	}
 
 private:
-	bst_node<value_type>* remove(bst_node<value_type>* node, value_type key) {
+	node_type* remove(node_type* node, value_type key) {
 		if ( !node )
 			return nullptr;
 		if ( node->value == key ) {
@@ -186,7 +191,7 @@ public:
 
 private:
 private:
-	void clean(bst_node<value_type>* node) {
+	void clean(node_type* node) {
 		if ( node->left )
 			clean(node->left);
 		if ( node->right )
@@ -196,13 +201,17 @@ private:
 		return;
 	}
 
-public:
 	void clean() {
 		clean(_root);
 	}
 
+	node_type* new_node(value_type key) {
+		node_type* node = new node_type(key);
+		return node;
+	}
+
 private:
-	bst_node<value_type>* _root;
+	node_type* _root;
 };
 
 }  // namespace ft

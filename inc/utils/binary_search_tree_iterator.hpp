@@ -119,13 +119,9 @@ template <typename T, class Compare>
 class BST_const_iterator : ft::Iterator<ft::random_access_iterator_tag, T> {
 public:
 	typedef typename T::value_type value_type;
-
 	typedef typename ft::Iterator<ft::random_access_iterator_tag, value_type>::iterator_category iterator_category;
-
 	typedef typename ft::Iterator<ft::random_access_iterator_tag, value_type>::difference_type difference_type;
-
 	typedef typename ft::Iterator<ft::random_access_iterator_tag, value_type>::pointer pointer;
-
 	typedef typename ft::Iterator<ft::random_access_iterator_tag, value_type>::reference reference;
 
 	BST_const_iterator(const Compare& comp = Compare())

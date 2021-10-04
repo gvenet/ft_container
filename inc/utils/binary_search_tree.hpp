@@ -8,25 +8,35 @@
 
 namespace ft {
 
-template <typename T>
+template <typename T, class Allocator = std::allocator<T> >
 struct bst_node {
-	typedef T value_type;
+	typedef T								 value_type;
+	typedef Allocator						 allocator_type;
+	typedef typename allocator_type::pointer pointer;
 
-	value_type value;
-	bst_node*  left;
-	bst_node*  right;
-	bst_node*  parent;
+	value_type	   value;
+	bst_node*	   left;
+	bst_node*	   right;
+	bst_node*	   parent;
+	allocator_type _alloc;
+	pointer		   _alloc_ptr;
 
-	bst_node(value_type _value) : value(_value), left(), right(), parent() { }
+	bst_node(value_type _value, const allocator_type& alloc = allocator_type())
+		: value(_value),
+		  left(),
+		  right(),
+		  parent(),
+		  _alloc(alloc) { }
 };
 
 template <class T, class Compare = ft::less<T>, class Allocator = std::allocator<T> >
 class binary_search_tree {
 public:
-	typedef T					 value_type;
-	typedef Compare				 value_compare;
-	typedef Allocator			 allocator_type;
-	typedef bst_node<value_type> node_type;
+	typedef T								 value_type;
+	typedef Compare							 value_compare;
+	typedef Allocator						 allocator_type;
+	typedef bst_node<value_type>			 node_type;
+	typedef typename allocator_type::pointer pointer;
 
 	binary_search_tree() : _root() { }
 
@@ -37,7 +47,7 @@ public:
 public:
 	node_type* insert(node_type* node, value_type key) {
 		if ( !node ) {
-			node = new_node(key);
+			*node = new_node(key);
 		} else if ( key == node->value ) {
 			return node;
 		} else if ( key < node->value ) {
@@ -164,7 +174,7 @@ private:
 			return nullptr;
 		if ( node->value == key ) {
 			if ( !node->left && !node->right ) {
-				delete node;
+				delete_node(node);
 				node = nullptr;
 			} else if ( !node->left && node->right ) {
 				node->right->parent = node->parent;
@@ -196,7 +206,7 @@ private:
 			clean(node->left);
 		if ( node->right )
 			clean(node->right);
-		delete node;
+		delete_node(node);
 		node = nullptr;
 		return;
 	}
@@ -205,9 +215,17 @@ private:
 		clean(_root);
 	}
 
-	node_type* new_node(value_type key) {
-		node_type* node = new node_type(key);
+	node_type new_node(value_type key) {
+		node_type node(key);
+
+		node._alloc_ptr = node._alloc.allocate(1);
+		node._alloc.construct(node._alloc_ptr, key);
 		return node;
+	}
+
+	void delete_node(node_type* node) {
+		node->_alloc.destroy(node->_alloc_ptr);
+		node->_alloc.deallocate(node->_alloc_ptr, 1);
 	}
 
 private:

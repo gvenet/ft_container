@@ -1,14 +1,20 @@
+#include <map>
 #include <random>
 
 #include "inc/utils/binary_search_tree.hpp"
+#include "inc/utils/pair.hpp"
 #include "iostream"
 
-using namespace ft;
-
 int main(void) {
+	typedef ft::pair<std::string, std::string> psi;
 
-	Binary_search_tree<int> x;
+	ft::Binary_search_tree<psi> x;
+	psi							p("a", "b");
+
+	x.insertPair(p);
 
 	
+
+
 	return 0;
 }

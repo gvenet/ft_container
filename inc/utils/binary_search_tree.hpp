@@ -10,7 +10,7 @@
 
 namespace ft {
 
-template <class T, class Compare = ft::less<T>, class Node = ft::BST_Node<T>, class Type_Alloc = std::allocator<T>, class Node_Alloc = std::allocator<Node> >
+template <class T, class Compare = ft::less<T>, class Node = ft::BST_Node<T>, class Node_Alloc = std::allocator<Node> >
 class Binary_search_tree {
 public:
 	typedef Binary_search_tree					  self;
@@ -42,11 +42,10 @@ public:
 		bool side = true;
 
 		while ( start_node != _last_node ) {
-			int curkey = start_node->value.first;
-			if ( curkey == to_insert.first )
+			if ( start_node->value.first == to_insert.first )
 				return (ft::make_pair(iterator(start_node, _last_node), false));
 			prev_node = start_node;
-			if ( to_insert.first > curkey ) {
+			if ( to_insert.first > start_node->value.first ) {
 				side = true;
 				start_node = start_node->right;
 			} else {
@@ -65,7 +64,6 @@ public:
 
 		_last_node->left = _BST_get_lower_node(_last_node->parent);
 		_last_node->right = _BST_get_higher_node(_last_node->parent);
-		_last_node->value.first += 1;
 		return (ft::make_pair(iterator(new_node, _last_node), true));
 	}
 
@@ -127,7 +125,6 @@ private:
 
 		_last_node->left = _BST_get_lower_node(_last_node->parent);
 		_last_node->right = _BST_get_higher_node(_last_node->parent);
-		_last_node->value.first -= 1;
 
 		new_node->parent = node->parent;
 
@@ -168,7 +165,6 @@ private:
 
 		_last_node->left = _BST_get_lower_node(_last_node->parent);
 		_last_node->right = _BST_get_higher_node(_last_node->parent);
-		_last_node->value.first -= 1;
 
 		_node_alloc.destroy(to_remove);
 		_node_alloc.deallocate(to_remove, 1);

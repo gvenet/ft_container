@@ -5,6 +5,7 @@
 #include "iterator_traits.hpp"
 #include "pair.hpp"
 #include "random_access_iterator.hpp"
+#include "functional.hpp"
 
 namespace ft {
 

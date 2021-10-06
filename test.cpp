@@ -2,6 +2,8 @@
 #include <random>
 
 #include "inc/utils/binary_search_tree.hpp"
+#include "inc/utils/binary_search_tree_iterator.hpp"
+#include "inc/utils/functional.hpp"
 #include "inc/utils/pair.hpp"
 #include "iostream"
 
@@ -19,13 +21,9 @@ struct rdm {
 };
 
 template <typename I1, typename I2>
-ft::Binary_search_tree<ft::pair<I1, I2> > asgn(I1 i1, I2 i2) {
-	ft::Binary_search_tree<ft::pair<I1, I2> >			x;
-	ft::Binary_search_tree<ft::pair<I1, I2> >::iterator it;
-
+void asgn(I1 i1, I2 i2, ft::Binary_search_tree<ft::pair<I1, I2> > &x) {
 	ft::pair<I1, I2> p(i1, i2);
 	x.insertPair(p);
-	return x;
 }
 
 int main(void) {
@@ -38,8 +36,22 @@ int main(void) {
 	typedef ft::Binary_search_tree<ft::pair<double, std::string> >				 d_s;
 	typedef ft::Binary_search_tree<ft::pair<double, ft::pair<double, double> > > d_dd;
 
-	std::string s = "toto";
-	s_i si = asgn(s, 2);
+	i_i ii;
+	asgn<int, int>(0, 2, ii);
+	asgn<int, int>(1, 9, ii);
+	asgn<int, int>(2, 7, ii);
 
-		return 0;
+	i_i::iterator it0(ii._last_node->left, ii._last_node);
+	i_i::iterator it1(ii._last_node->left->parent, ii._last_node);
+	// i_i::iterator itb(ii._last_node->right, ii._last_node);
+
+	std::cout << it0->first << "\n";
+	std::cout << it1->first << "\n";
+
+	// while ( ite != itb ) {
+	// 	std::cout << ite->first << "\t" << ite->second << "\n";
+	// 	ite++;
+	// }
+
+	return 0;
 }

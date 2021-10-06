@@ -1,6 +1,8 @@
 #ifndef FUNCTIONAL_HPP
 #define FUNCTIONAL_HPP
 
+#include <map>
+
 namespace ft {
 
 template <class _Arg1, class _Arg2, class _Result>

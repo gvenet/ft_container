@@ -4,6 +4,8 @@
 
 #include "../utils/binary_search_tree.hpp"
 #include "../utils/utils.hpp"
+#include "../utils/iterator_traits.hpp"
+#include <iterator>
 
 namespace ft {
 template <class Key, class T, class Compare = ft::less<Key>,
@@ -57,19 +59,16 @@ public:
 		  _comp(comp),
 		  _bst() { }
 
-	// template <class InputIterator>
-	// map(InputIterator first, InputIterator last,
-	// 	const key_compare&	  comp = key_compare(),
-	// 	const allocator_type& alloc = allocator_type(),
-	// 	typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = nullptr)
-	// 	: _alloc(alloc),
-	// 	  _comp(comp),
-	// 	  _bst() {
-	// 	bool is_valid;
-	// 	if ( !(is_valid = ft::is_input_iterator_tagged<typename ft::iterator_traits<InputIterator>::iterator_category>::value) )
-	// 		throw(ft::InvalidIteratorException<typename ft::is_input_iterator_tagged<typename ft::iterator_traits<InputIterator>::iterator_category>::type>());
-	// 	this->insert(first, last);
-	// }
+	template <class InputIterator>
+	map(InputIterator first, InputIterator last,
+		const key_compare&	  comp = key_compare(),
+		const allocator_type& alloc = allocator_type(),
+		typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = nullptr)
+		: _alloc(alloc),
+		  _comp(comp),
+		  _bst() {
+		this->insert(first, last);
+	}
 
 	map(const map& x)
 		: _alloc(x._alloc),
@@ -126,17 +125,14 @@ public:
 		return (_bst.insertPair(val).first);
 	}
 
-	// template <class InputIterator>
-	// void insert(InputIterator first, InputIterator last,
-	// 			typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = nullptr) {
-	// 	bool is_valid;
-	// 	if ( !(is_valid = ft::is_input_iterator_tagged<typename ft::iterator_traits<InputIterator>::iterator_category>::value) )
-	// 		throw(ft::InvalidIteratorException<typename ft::is_input_iterator_tagged<typename ft::iterator_traits<InputIterator>::iterator_category>::type>());
+	template <class InputIterator>
+	void insert(InputIterator first, InputIterator last,
+				typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = nullptr) {
 
-	// 	difference_type n = ft::distance(first, last);
-	// 	while ( n-- )
-	// 		this->insert(*(first++));
-	// }
+		difference_type n = ft::distance(first, last);
+		while ( n-- )
+			this->insert(*(first++));
+	}
 
 	void erase(iterator position) { this->erase((*position).first); }
 

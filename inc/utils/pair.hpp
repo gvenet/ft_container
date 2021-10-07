@@ -63,9 +63,9 @@ bool operator>=(const pair<T1, T2>& lhs, const pair<T1, T2>& rhs) {
 	return !(lhs < rhs);
 }
 
-template <class _T1, class _T2>
-pair<_T1, _T2> make_pair(_T1 __x, _T2 __y) {
-	return pair<_T1, _T2>(__x, __y);
+template <class T1, class T2>
+pair<T1, T2> make_pair(T1 x, T2 y) {
+	return pair<T1, T2>(x, y);
 }
 
 }  // namespace ft

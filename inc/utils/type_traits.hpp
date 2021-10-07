@@ -73,5 +73,19 @@ template <class T>
 struct is_integral : is_integral_base<T> {
 };
 
+template <class T>
+struct is_input_iterator_tagged : true_type {
+
+};
+
+template <class _InputIter>
+typename iterator_traits<_InputIter>::difference_type distance(_InputIter __first, _InputIter __last)
+{
+    typename iterator_traits<_InputIter>::difference_type __r(0);
+    for (; __first != __last; ++__first)
+        ++__r;
+    return __r;
+}
+
 }  // namespace ft
 #endif

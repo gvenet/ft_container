@@ -1,6 +1,7 @@
 #include <algorithm>
 
 #include "../inc/containers/map.hpp"
+#include "../inc/containers/vector.hpp"
 
 void fct(ft::pair<std::string, int> &p) {
 	std::cout << p.first << " " << p.second << "\n";
@@ -26,6 +27,21 @@ void test29() {
 	printMap(m2);
 }
 
+void test30() {
+	typedef ft::vector<int> vi;
+	typedef vi::iterator	vi_it;
+	vi						v;
+
+	v.push_back(42);
+	v.push_back(18);
+	v.push_back(3);
+
+	for ( vi_it vit = v.begin(); vit != v.end(); vit++ ) {
+		std::cout << *vit << "\n";
+	}
+}
+
 int main() {
 	test29();
+	test30();
 }

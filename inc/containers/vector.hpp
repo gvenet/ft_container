@@ -68,7 +68,7 @@ public:
 		_dealloc();
 		_start = _alloc.allocate(x.capacity());
 		_end = _start + x.size();
-		_end_capacity = _start + x.capacity();
+		_end_capacity = _end;
 		for ( size_type i = 0; i < this->size(); i++ ) {
 			_alloc.construct(_start + i, x.at(i));
 		}

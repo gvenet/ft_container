@@ -1,31 +1,27 @@
 #include <algorithm>
-#include <string>
 #include <iostream>
-
+#include <string>
+#include <vector>
 
 #include "../inc/containers/map.hpp"
 #include "../inc/containers/vector.hpp"
 
-
-template <class C>
-void print_map(C &x) {
-	std::cout << x.second << "\t" << x.first << "\n";
-}
-
 int main() {
+	ft::vector<int> x;
 
-	typedef ft::map<std::string, int> msi;
-	typedef ft::pair<std::string, int> psi;
+	x.push_back(42);
+	x.push_back(42);
+	x.push_back(42);
+	x.push_back(42);
 
-	std::string tab[] = {"jkd", "pwls", "pojdjd", "ok", "terere", "kbmf", "kdmcn"};
-	size_t n = sizeof(tab) / sizeof(tab[0]);
+	for(ft::vector<int>::iterator it = x.begin(); it != x.end(); it++) {
+		std::cout << *it << "\n";
 
-	msi m1;
-
-	for (size_t i = 0; i < n; i++) {
-		m1.insert(ft::make_pair(tab[i], i));
 	}
 
-	for_each(m1.begin(), m1.end(), print_map<psi>);
+
+
+
+
 	return 0;
 }

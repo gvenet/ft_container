@@ -11,7 +11,7 @@
 #include "reverse_iterator.hpp"
 #include "type_traits.hpp"
 #include "functional.hpp"
-
+#include <map>
 
 namespace ft {
 

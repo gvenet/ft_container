@@ -3,7 +3,6 @@
 
 #include <string>
 #include <limits.h>
-#include <map>
 #include "algorithm.hpp"
 #include "iterator.hpp"
 #include "iterator_traits.hpp"

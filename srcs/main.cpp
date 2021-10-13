@@ -14,7 +14,7 @@ int main() {
 	x.push_back(42);
 	x.push_back(42);
 
-	for(ft::vector<int>::iterator it = x.begin(); it != x.end(); it++) {
+	for(ft::vector<int>::reverse_iterator it = x.rbegin(); it != x.rend(); it++) {
 		std::cout << *it << "\n";
 
 	}

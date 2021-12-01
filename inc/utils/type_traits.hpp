@@ -1,6 +1,8 @@
 #ifndef TYPE_TRAITS_HPP
 #define TYPE_TRAITS_HPP
 
+#include "iterator_traits.hpp"
+
 namespace ft {
 
 //value_type
@@ -79,9 +81,9 @@ struct is_input_iterator_tagged : true_type {
 };
 
 template <class _InputIter>
-typename iterator_traits<_InputIter>::difference_type distance(_InputIter __first, _InputIter __last)
+typename ft::iterator_traits<_InputIter>::difference_type distance(_InputIter __first, _InputIter __last)
 {
-    typename iterator_traits<_InputIter>::difference_type __r(0);
+    typename ft::iterator_traits<_InputIter>::difference_type __r(0);
     for (; __first != __last; ++__first)
         ++__r;
     return __r;

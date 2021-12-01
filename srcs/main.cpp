@@ -3,7 +3,6 @@
 #include <string>
 #include <vector>
 
-#include "../inc/containers/map.hpp"
 #include "../inc/containers/vector.hpp"
 
 int main() {

@@ -110,6 +110,15 @@ class bst {
 			}
 		}
 
+		iterator insert( iterator position, const value_type& val ) {
+			iterator tmp;
+			_reset_limits();
+			node_pointer cur = position.base();
+			tmp = _insert( val, cur ).first;
+			_assign_limits();
+			return tmp;
+		}
+
 	private:
 		ft::pair<iterator, bool> _insert( const value_type& val, node_pointer& node ) {
 			ft::pair<iterator, bool> ret;

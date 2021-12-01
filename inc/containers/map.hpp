@@ -101,10 +101,7 @@ class map {
 
 		ft::pair<iterator, bool> insert( const value_type& val ) { return _bst.insert( val ); }
 
-		iterator insert( iterator position, const value_type& val ) {
-			(void)position;
-			return insert( val ).first;
-		}
+		iterator insert( iterator position, const value_type& val ) { return _bst.insert( position, val ); }
 
 		template <class InputIterator>
 		void insert( InputIterator first, InputIterator last ) {

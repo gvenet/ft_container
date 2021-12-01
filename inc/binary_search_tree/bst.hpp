@@ -3,12 +3,8 @@
 
 #include <memory>
 
-
-// #include <algorithm> ////////////
-
-
-#include "../utils/algorithm.hpp"
 #include "../containers/vector.hpp"
+#include "../utils/algorithm.hpp"
 #include "bst_iterator.hpp"
 #include "bst_node.hpp"
 #include "bst_reverse_iterator.hpp"
@@ -92,7 +88,7 @@ class bst {
 
 		size_type max_size() const {
 			return ft::min<size_type>( std::allocator_traits<Node_Alloc>::max_size( _nodeAlloc ),
-																	std::numeric_limits<difference_type>::max() );
+																 std::numeric_limits<difference_type>::max() );
 		}
 
 		//// INSERT ////
@@ -210,7 +206,7 @@ class bst {
 		template <class InputIterator>
 		void erase( InputIterator first, InputIterator last ) {
 			typedef ft::vector<InputIterator> vec;
-			vec																 v;
+			vec																v;
 			while ( first != last )
 				v.push_back( first++ );
 			for ( typename vec::iterator it = v.begin(); it != v.end(); it++ )

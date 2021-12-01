@@ -1,8 +1,8 @@
 #ifndef ALGORITHM_HPP
 #define ALGORITHM_HPP
 
-#include "type_traits.hpp"
 #include "functional.hpp"
+#include "type_traits.hpp"
 
 namespace ft {
 
@@ -41,9 +41,8 @@ const _Tp& min( const _Tp& __a, const _Tp& __b, _Compare __comp ) {
 }
 
 template <class _Tp>
-const _Tp& min(const _Tp& __a, const _Tp& __b)
-{
-    return ft::min(__a, __b, ft::less<_Tp>());
+const _Tp& min( const _Tp& __a, const _Tp& __b ) {
+	return ft::min( __a, __b, ft::less<_Tp>() );
 }
 
 } // namespace ft

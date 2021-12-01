@@ -5,35 +5,32 @@
 
 namespace ft {
 
-//value_type
+// value_type
 struct false_type {
-	static const bool value = false;
+		static const bool value = false;
 };
 
 struct true_type {
-	static const bool value = true;
+		static const bool value = true;
 };
 
 // enable_if
 template <bool, class T = void>
-struct enable_if {
-};
+struct enable_if { };
 
 template <class T>
 struct enable_if<true, T> {
-	typedef T type;
+		typedef T type;
 };
 
 // is_same
 template <class T, class U>
-struct is_same : false_type {
-};
+struct is_same : false_type { };
 
 template <class T>
-struct is_same<T, T> : true_type {
-};
+struct is_same<T, T> : true_type { };
 
-//is_integral
+// is_integral
 template <class T>
 struct is_integral_base : false_type { };
 template <>
@@ -72,22 +69,19 @@ template <>
 struct is_integral_base<__uint128_t> : true_type { };
 
 template <class T>
-struct is_integral : is_integral_base<T> {
-};
+struct is_integral : is_integral_base<T> { };
 
 template <class T>
-struct is_input_iterator_tagged : true_type {
-
-};
+struct is_input_iterator_tagged : true_type { };
 
 template <class _InputIter>
-typename ft::iterator_traits<_InputIter>::difference_type distance(_InputIter __first, _InputIter __last)
-{
-    typename ft::iterator_traits<_InputIter>::difference_type __r(0);
-    for (; __first != __last; ++__first)
-        ++__r;
-    return __r;
+typename ft::iterator_traits<_InputIter>::difference_type distance( _InputIter __first,
+																																		_InputIter __last ) {
+	typename ft::iterator_traits<_InputIter>::difference_type __r( 0 );
+	for ( ; __first != __last; ++__first )
+		++__r;
+	return __r;
 }
 
-}  // namespace ft
+} // namespace ft
 #endif

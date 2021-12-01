@@ -9,7 +9,6 @@
 
 namespace ft {
 
-
 template <class C>
 void print( C& v, std::string ns ) {
 	typename C::iterator it;

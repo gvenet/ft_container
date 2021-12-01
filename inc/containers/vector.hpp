@@ -1,10 +1,10 @@
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
-#include <memory>
+#include "../utils/algorithm.hpp"
 #include "../utils/random_access_iterator.hpp"
 #include "../utils/reverse_iterator.hpp"
-#include "../utils/algorithm.hpp"
+#include <memory>
 
 namespace ft {
 

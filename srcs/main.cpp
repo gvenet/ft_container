@@ -258,4 +258,6 @@ int main() {
 	print( x );
 	print( y );
 	print( z );
+
+	std::cout << x.max_size() << "__\n";
 }

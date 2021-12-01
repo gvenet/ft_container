@@ -1,9 +1,8 @@
 #ifndef BST_HPP
 #define BST_HPP
 
-#include <limits>
 #include <memory>
-#include <sys/_types/_key_t.h>
+#include <algorithm>
 
 #include "../containers/vector.hpp"
 #include "bst_iterator.hpp"

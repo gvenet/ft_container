@@ -2,8 +2,9 @@
 #define VECTOR_HPP
 
 #include <memory>
-
-#include "../utils/utils.hpp"
+#include "../utils/random_access_iterator.hpp"
+#include "../utils/reverse_iterator.hpp"
+#include "../utils/algorithm.hpp"
 
 namespace ft {
 

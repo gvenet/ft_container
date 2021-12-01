@@ -2,18 +2,7 @@
 #define UTILS_HPP
 
 #include <iostream>
-#include <limits.h>
 #include <map>
-#include <string>
-
-#include "algorithm.hpp"
-#include "functional.hpp"
-#include "iterator.hpp"
-#include "iterator_traits.hpp"
-#include "pair.hpp"
-#include "random_access_iterator.hpp"
-#include "reverse_iterator.hpp"
-#include "type_traits.hpp"
 
 #define FT = " ft\t";
 #define STD = "std\t";

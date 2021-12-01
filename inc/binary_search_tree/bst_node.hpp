@@ -20,11 +20,11 @@ struct bst_node {
 			parent = nullptr;
 		}
 
-		bool			 is_limit;
 		pointer		 parent;
 		pointer		 left;
 		pointer		 right;
 		value_type value;
+		bool			 is_limit;
 };
 
 } // namespace ft

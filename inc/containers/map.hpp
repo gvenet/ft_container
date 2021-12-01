@@ -41,12 +41,13 @@ class map {
 				}
 		};
 
-		map( const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type() ) {
-		}
+		map( const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type() )
+				: _comp( comp ), _alloc( alloc ), _bst() { }
 
 		template <class InputIterator>
 		map( InputIterator first, InputIterator last, const key_compare& comp = key_compare(),
-				 const allocator_type& alloc = allocator_type() ) {
+				 const allocator_type& alloc = allocator_type() )
+				: _comp( comp ), _alloc( alloc ), _bst() {
 			insert( first, last );
 		}
 
@@ -99,7 +100,10 @@ class map {
 
 		std::pair<iterator, bool> insert( const value_type& val ) { return _bst.insert( val ); }
 
-		iterator insert( iterator position, const value_type& val ) { return insert( val ).first; }
+		iterator insert( iterator position, const value_type& val ) {
+			(void)position;
+			return insert( val ).first;
+		}
 
 		template <class InputIterator>
 		void insert( InputIterator first, InputIterator last ) {
@@ -182,7 +186,9 @@ class map {
 		allocator_type get_allocator() const { return _bst.get_allocator(); }
 
 	private:
-		__bst _bst;
+		key_compare		 _comp;
+		allocator_type _alloc;
+		__bst					 _bst;
 };
 
 } // namespace ft

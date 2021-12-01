@@ -38,6 +38,14 @@ bool equal(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2) {
 	return true;
 }
 
+template <class _Tp, class _Compare>
+const _Tp&
+min(const _Tp& __a, const _Tp& __b, _Compare __comp)
+{
+    return __comp(__b, __a) ? __b : __a;
+}
+
+
 }  // namespace ft
 
 #endif

@@ -2,8 +2,12 @@
 #define BST_HPP
 
 #include <memory>
-#include <algorithm>
 
+
+// #include <algorithm> ////////////
+
+
+#include "../utils/algorithm.hpp"
 #include "../containers/vector.hpp"
 #include "bst_iterator.hpp"
 #include "bst_node.hpp"
@@ -87,7 +91,7 @@ class bst {
 		}
 
 		size_type max_size() const {
-			return std::min<size_type>( std::allocator_traits<Node_Alloc>::max_size( _nodeAlloc ),
+			return ft::min<size_type>( std::allocator_traits<Node_Alloc>::max_size( _nodeAlloc ),
 																	std::numeric_limits<difference_type>::max() );
 		}
 

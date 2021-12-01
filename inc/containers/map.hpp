@@ -4,16 +4,17 @@
 #include <memory>
 
 #include "../binary_search_tree/bst.hpp"
+#include "../utils/pair.hpp"
 
 namespace ft {
 
-template <class Key, class T, class Compare = std::less<Key>,
-					class Alloc = std::allocator<std::pair<const Key, T> > >
+template <class Key, class T, class Compare = ft::less<Key>,
+					class Alloc = std::allocator<ft::pair<const Key, T> > >
 class map {
 	public:
-		typedef Key								key_type;
-		typedef T									mapped_type;
-		typedef std::pair<Key, T> value_type;
+		typedef Key							 key_type;
+		typedef T								 mapped_type;
+		typedef ft::pair<Key, T> value_type;
 
 	private:
 		typedef ft::bst<value_type, Compare> __bst;
@@ -28,7 +29,7 @@ class map {
 		typedef Compare																 key_compare;
 
 		class _LIBCPP_TEMPLATE_VIS value_compare
-				: public std::binary_function<value_type, value_type, bool> {
+				: public ft::binary_function<value_type, value_type, bool> {
 				friend class map;
 
 			protected:
@@ -89,7 +90,7 @@ class map {
 
 		mapped_type& operator[]( const key_type& k ) {
 			iterator tmp = find( k );
-			insert( std::make_pair( k, mapped_type() ) );
+			insert( ft::make_pair( k, mapped_type() ) );
 			tmp = find( k );
 			return tmp->second;
 		}
@@ -98,7 +99,7 @@ class map {
 
 		//// INSERT ////
 
-		std::pair<iterator, bool> insert( const value_type& val ) { return _bst.insert( val ); }
+		ft::pair<iterator, bool> insert( const value_type& val ) { return _bst.insert( val ); }
 
 		iterator insert( iterator position, const value_type& val ) {
 			(void)position;
@@ -175,12 +176,12 @@ class map {
 			return _bst.find( tmp );
 		}
 
-		std::pair<iterator, iterator> equal_range( const key_type& k ) {
-			return std::make_pair( lower_bound( k ), upper_bound( k ) );
+		ft::pair<iterator, iterator> equal_range( const key_type& k ) {
+			return ft::make_pair( lower_bound( k ), upper_bound( k ) );
 		}
 
-		std::pair<const_iterator, const_iterator> equal_range( const key_type& k ) const {
-			return std::make_pair( lower_bound( k ), upper_bound( k ) );
+		ft::pair<const_iterator, const_iterator> equal_range( const key_type& k ) const {
+			return ft::make_pair( lower_bound( k ), upper_bound( k ) );
 		}
 
 		allocator_type get_allocator() const { return _bst.get_allocator(); }

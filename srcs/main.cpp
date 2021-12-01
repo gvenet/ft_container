@@ -10,20 +10,21 @@
 #include <vector>
 
 #include "../inc/containers/map.hpp"
+#include "../inc/containers/vector.hpp"
 
 #define SEED srand( (unsigned)time( 0 ) );
 #define S 10
 #define R 5
 
-bool is_in_vec3( int to_find, std::vector<int>& vec3 ) {
-	for ( std::vector<int>::iterator it = vec3.begin(); it != vec3.end(); it++ )
+bool is_in_vec3( int to_find, ft::vector<int>& vec3 ) {
+	for ( ft::vector<int>::iterator it = vec3.begin(); it != vec3.end(); it++ )
 		if ( *it == to_find )
 			return true;
 	return false;
 }
 
-std::vector<int> random_tab( int size ) {
-	typedef std::vector<int> vector;
+ft::vector<int> random_tab( int size ) {
+	typedef ft::vector<int> vector;
 
 	vector vec1;
 	vector vec2;
@@ -37,7 +38,7 @@ std::vector<int> random_tab( int size ) {
 	while ( ++i < size ) {
 		int value_tmp = INT_MAX;
 		int index_tmp = 0;
-		for ( std::vector<int>::iterator it = vec2.begin(); it != vec2.end(); it++ ) {
+		for ( ft::vector<int>::iterator it = vec2.begin(); it != vec2.end(); it++ ) {
 			int index = -( vec2.begin() - it );
 			if ( *it < value_tmp && !is_in_vec3( index, vec3 ) ) {
 				value_tmp = *it;
@@ -61,13 +62,13 @@ void print( M m ) {
 template <class M>
 M routine_random( int size ) {
 	SEED;
-	std::vector<int> vec = random_tab( size );
-	M								 m;
+	ft::vector<int> vec = random_tab( size );
+	M								m;
 
 	for ( size_t i = 0; i < vec.size(); i++ ) {
-		m.insert( std::make_pair( vec[i], i ) );
+		m.insert( ft::make_pair( vec[i], i ) );
 	}
-	for ( std::vector<int>::iterator it = vec.begin(); it != vec.end(); it++ )
+	for ( ft::vector<int>::iterator it = vec.begin(); it != vec.end(); it++ )
 		std::cout << *it << " ";
 	std::cout << "\t";
 
@@ -80,7 +81,7 @@ M routine( int* t, int s ) {
 
 	for ( int i = 0; i < s; i++ ) {
 		std::cout << t[i] << " ";
-		m.insert( std::make_pair( t[i], i ) );
+		m.insert( ft::make_pair( t[i], i ) );
 	}
 	std::cout << "\t";
 
@@ -91,7 +92,7 @@ template <class M>
 void test1( M mymap ) {
 
 	std::cout << "mymap contains:\n";
-	std::pair<int, int>	 highest = *mymap.rbegin();
+	ft::pair<int, int>	 highest = *mymap.rbegin();
 	typename M::iterator it = mymap.begin();
 	do {
 		std::cout << it->first << " => " << it->second << '\n';
@@ -102,7 +103,7 @@ template <class M>
 void test2( M m ) {
 	for ( typename M::iterator it = m.begin(); it != m.end(); it++ ) {
 		m.erase( it );
-		// std::cout << &(*it) << "__" << it->first << "__" << std::boolalpha << it.base()->is_limit <<
+		// std::cout << &(*it) << "__" << it->first << "__" << ft::boolalpha << it.base()->is_limit <<
 		// "\n"; std::cout << m.get_root() << "\n";
 		print( m );
 		// std::cout << &(*it) << "\n" << &(*m.end()) << "\n";
@@ -121,9 +122,9 @@ template <class M>
 void test4() {
 	M m;
 
-	m.insert( std::make_pair( 5, 60 ) );
-	m.insert( std::make_pair( 2, 70 ) );
-	m.insert( std::make_pair( 9, 20 ) );
+	m.insert( ft::make_pair( 5, 60 ) );
+	m.insert( ft::make_pair( 2, 70 ) );
+	m.insert( ft::make_pair( 9, 20 ) );
 
 	const M cpy( m );
 
@@ -139,9 +140,9 @@ template <class M>
 void test5() {
 	M m;
 
-	m.insert( std::make_pair( 5, 60 ) );
-	m.insert( std::make_pair( 2, 70 ) );
-	m.insert( std::make_pair( 9, 20 ) );
+	m.insert( ft::make_pair( 5, 60 ) );
+	m.insert( ft::make_pair( 2, 70 ) );
+	m.insert( ft::make_pair( 9, 20 ) );
 
 	const M cpy( m );
 
@@ -158,7 +159,7 @@ void test5() {
 
 template <class M>
 void test7( M m ) {
-	std::pair<typename M::iterator, typename M::iterator> equ;
+	ft::pair<typename M::iterator, typename M::iterator> equ;
 	equ = m.equal_range( 9 );
 	std::cout << equ.first->first << " " << equ.second->first << " _ ";
 	equ = m.equal_range( 4 );
@@ -175,12 +176,12 @@ void test7( M m ) {
 
 template <class M>
 void test8( M mymap ) {
-	int												 psize;
-	std::pair<const int, int>* p;
+	int												psize;
+	ft::pair<const int, int>* p;
 
 	p = mymap.get_allocator().allocate( 5 );
 
-	psize = sizeof( std::map<char, int>::value_type ) * 5;
+	psize = sizeof( ft::map<char, int>::value_type ) * 5;
 
 	std::cout << psize << " bytes\n";
 
@@ -191,8 +192,8 @@ template <class M>
 void test6( M m ) {
 	// print( m );
 
-	typedef std::vector<int> vec;
-	vec											 data;
+	typedef ft::vector<int> vec;
+	vec											data;
 
 	int count = m.size();
 	for ( int i = 0; i < 2; i++ )
@@ -208,8 +209,8 @@ void test6( M m ) {
 }
 
 int main() {
-	// typedef std::map<int, int> std_map;
-	typedef ft::map<int, int>	 fft_map;
+	// typedef ft::map<int, int> std_map;
+	typedef ft::map<int, int> fft_map;
 	// test2( routine<std_map>() );
 	// test2 (routine<ft_map>());
 
@@ -238,13 +239,13 @@ int main() {
 
 	// for ( ft_map::reverse_iterator cit = x.rbegin(); cit != x.rend(); cit++ )
 	// 	std::cout << cit->first << " ";
-	// std::cout << std::endl;
+	// std::cout << ft::endl;
 
 	fft_map x;
 	for ( int i = 10; i < 50; i += 10 )
-		x.insert( std::make_pair( i, i * 10 ) );
-	x.insert( x.end(), std::make_pair( 50, 500 ) );
-	x.insert( x.end(), std::make_pair( 60, 600 ) );
+		x.insert( ft::make_pair( i, i * 10 ) );
+	x.insert( x.end(), ft::make_pair( 50, 500 ) );
+	x.insert( x.end(), ft::make_pair( 60, 600 ) );
 	fft_map y( x.begin(), x.end() );
 	fft_map z( y );
 

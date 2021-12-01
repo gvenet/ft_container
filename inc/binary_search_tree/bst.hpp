@@ -5,6 +5,7 @@
 
 #include "../containers/vector.hpp"
 #include "../utils/algorithm.hpp"
+#include "../utils/pair.hpp"
 #include "bst_iterator.hpp"
 #include "bst_node.hpp"
 #include "bst_reverse_iterator.hpp"
@@ -94,8 +95,8 @@ class bst {
 		//// INSERT ////
 
 	public:
-		std::pair<iterator, bool> insert( const value_type& val ) {
-			std::pair<iterator, bool> tmp;
+		ft::pair<iterator, bool> insert( const value_type& val ) {
+			ft::pair<iterator, bool> tmp;
 			_reset_limits();
 			tmp = _insert( val, _root );
 			_assign_limits();
@@ -110,8 +111,8 @@ class bst {
 		}
 
 	private:
-		std::pair<iterator, bool> _insert( const value_type& val, node_pointer& node ) {
-			std::pair<iterator, bool> ret;
+		ft::pair<iterator, bool> _insert( const value_type& val, node_pointer& node ) {
+			ft::pair<iterator, bool> ret;
 
 			if ( !node || node->is_limit == true ) {
 				node = nullptr;
@@ -125,7 +126,7 @@ class bst {
 				ret = _insert( val, node->right );
 				node->right->parent = node;
 			}
-			return std::make_pair( node, ret.second );
+			return ft::make_pair( node, ret.second );
 		}
 
 		void _reset_limits() {
@@ -138,8 +139,7 @@ class bst {
 		void _assign_limits() {
 			if ( !_root ) {
 				value_type init = value_type();
-				value_type init2 = std::make_pair( 7777, 0 );
-				_firstNode->limit_node_init( init2 );
+				_firstNode->limit_node_init( init );
 				_lastNode->limit_node_init( init );
 			} else {
 				node_pointer min = _findMin();

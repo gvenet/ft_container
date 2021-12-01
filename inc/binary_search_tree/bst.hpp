@@ -3,7 +3,7 @@
 
 #include <memory>
 
-#include "../containers/vector.hpp"
+#include "../vector.hpp"
 #include "../utils/algorithm.hpp"
 #include "../utils/pair.hpp"
 #include "bst_iterator.hpp"
@@ -230,7 +230,7 @@ class bst {
 				_root = nullptr;
 			} else {
 				_reset_limits();
-				_erase( position.get_value() );
+				_erase( *position );
 			}
 			_assign_limits();
 			return 1;

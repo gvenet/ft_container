@@ -9,11 +9,11 @@ namespace ft {
 
 template <class Iter>
 struct iterator_traits {
-		typedef Iter											 value_type;
-		typedef value_type*								 pointer;
-		typedef value_type&								 reference;
-		typedef std::ptrdiff_t						 difference_type;
-		typedef bidirectional_iterator_tag iterator_category;
+		typedef typename Iter::value_type				 value_type;
+		typedef typename Iter::pointer					 pointer;
+		typedef typename Iter::reference				 reference;
+		typedef typename Iter::difference_type	 difference_type;
+		typedef typename Iter::iterator_category iterator_category;
 };
 
 template <class T>

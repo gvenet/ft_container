@@ -3,8 +3,8 @@
 
 #include <memory>
 
-#include "../binary_search_tree/bst.hpp"
-#include "../utils/pair.hpp"
+#include "binary_search_tree/bst.hpp"
+#include "utils/pair.hpp"
 
 namespace ft {
 

@@ -9,7 +9,8 @@
 #include <string>
 #include <vector>
 
-#include "map.hpp"
+#include "../inc/map.hpp"
+#include "../inc/vector.hpp"
 
 #define S 30
 #define R 3
@@ -45,15 +46,15 @@ void rm( int x, T& b ) {
 	print( b );
 }
 
-bool is_in_vec3( int to_find, std::vector<int>& vec3 ) {
-	for ( std::vector<int>::iterator it = vec3.begin(); it != vec3.end(); it++ )
+bool is_in_vec3( int to_find, ft::vector<int>& vec3 ) {
+	for ( ft::vector<int>::iterator it = vec3.begin(); it != vec3.end(); it++ )
 		if ( *it == to_find )
 			return true;
 	return false;
 }
 
-std::vector<int> random_tab( int size ) {
-	typedef std::vector<int> vector;
+ft::vector<int> random_tab( int size ) {
+	typedef ft::vector<int> vector;
 
 	vector vec1;
 	vector vec2;
@@ -67,7 +68,7 @@ std::vector<int> random_tab( int size ) {
 	while ( ++i < size ) {
 		int value_tmp = INT_MAX;
 		int index_tmp = 0;
-		for ( std::vector<int>::iterator it = vec2.begin(); it != vec2.end(); it++ ) {
+		for ( ft::vector<int>::iterator it = vec2.begin(); it != vec2.end(); it++ ) {
 			int index = -( vec2.begin() - it );
 			if ( *it < value_tmp && !is_in_vec3( index, vec3 ) ) {
 				value_tmp = *it;
@@ -84,7 +85,7 @@ template <class T>
 void test_remove1( int size, int rep ) {
 	srand( (unsigned)time( 0 ) );
 	typedef T								 map;
-	typedef std::vector<int> vector;
+	typedef ft::vector<int> vector;
 	typedef vector::iterator iterator;
 
 	vector vec;
@@ -94,7 +95,7 @@ void test_remove1( int size, int rep ) {
 		vec = random_tab( size );
 		print_vec( vec );
 		for ( iterator it = vec.begin(); it != vec.end(); it++ )
-			b.insert( std::make_pair( *it, 0 ) );
+			b[*it];
 		std::cout << "\n\t\t\t";
 		print( b );
 		vec = random_tab( size );
@@ -113,7 +114,7 @@ void t_2() {
 	map				x;
 
 	for ( int i = 0; i < s; i++ )
-		x.insert( std::make_pair( tab[i], 0 ) );
+		x[tab[i]] = 0;
 	std::cout << "\n";
 	typename T::iterator it;
 	// std::cout << "\t\t\t\t\t\t";
@@ -137,7 +138,7 @@ template <class T>
 void test_remove2( int size, int rep ) {
 	srand( (unsigned)time( 0 ) );
 	typedef T								 map;
-	typedef std::vector<int> vector;
+	typedef ft::vector<int> vector;
 	typedef vector::iterator iterator;
 
 	vector vec;
@@ -147,7 +148,7 @@ void test_remove2( int size, int rep ) {
 		vec = random_tab( size );
 		print_vec( vec );
 		for ( iterator it = vec.begin(); it != vec.end(); it++ )
-			b.insert( std::make_pair( *it, 0 ) );
+			b[*it];
 		std::cout << "\n\t\t\t";
 		print( b );
 		// for ( typename map::iterator it = b.begin(); it != b.end(); it++ ) {

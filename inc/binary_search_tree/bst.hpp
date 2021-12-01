@@ -106,7 +106,7 @@ class bst {
 		template <class InputIterator>
 		void insert( InputIterator first, InputIterator last ) {
 			for ( ; first != last; first++ ) {
-				insert( first.get_value() );
+				insert( *first );
 			}
 		}
 

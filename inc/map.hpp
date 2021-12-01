@@ -12,9 +12,9 @@ template <class Key, class T, class Compare = ft::less<Key>,
 					class Alloc = std::allocator<ft::pair<const Key, T> > >
 class map {
 	public:
-		typedef Key							 key_type;
-		typedef T								 mapped_type;
-		typedef ft::pair<Key, T> value_type;
+		typedef Key										 key_type;
+		typedef T											 mapped_type;
+		typedef ft::pair<const Key, T> value_type;
 
 	private:
 		typedef ft::bst<value_type, Compare> __bst;
@@ -101,7 +101,9 @@ class map {
 
 		ft::pair<iterator, bool> insert( const value_type& val ) { return _bst.insert( val ); }
 
-		iterator insert( iterator position, const value_type& val ) { return _bst.insert( position, val ); }
+		iterator insert( iterator position, const value_type& val ) {
+			return _bst.insert( position, val );
+		}
 
 		template <class InputIterator>
 		void insert( InputIterator first, InputIterator last ) {

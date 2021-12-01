@@ -1,23 +1,17 @@
+#include <iostream>
 
 #include "../inc/map.hpp"
-#include <iostream>
+#include "../inc/utils/pair.hpp"
 #include <map>
 
 int main() {
-	typedef ft::map<int, int> fft_map;
 
-	fft_map m;
+	// ft::pair<const int, int>* addr;
+	ft::map<int, int> m;
 
-	for ( int i = 10; i < 60; i += 10 )
-		m[i] = i * 10;
+	// m[1] = 10;
+	
+	// addr = &*m.begin();
 
-	for ( fft_map::iterator it = m.begin(); it != m.end(); it++ )
-		std::cout << it->first << "_" << it->second << " ";
-	std::cout << "\n";
-
-	std::cout << m.insert( m.lower_bound( 20 ), ft::make_pair( 55, 550 ) )->first << "__\n";
-
-	for ( fft_map::reverse_iterator it = m.rbegin(); it != m.rend(); it++ )
-		std::cout << it->first << "_" << it->second << " ";
-	std::cout << "\n";
+	// std::cout << (*addr).first << "\n";
 }

@@ -308,9 +308,9 @@ class bst {
 		node_pointer _find_by_value( node_pointer node, value_type value ) {
 			if ( !node )
 				return nullptr;
-			else if ( node->value == value ) {
+			else if ( node->value.first == value.first ) {
 				return node;
-			} else if ( node->value < value ) {
+			} else if ( node->value.first < value.first ) {
 				return _find_by_value( node->right, value );
 			} else {
 				return _find_by_value( node->left, value );

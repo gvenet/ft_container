@@ -2,7 +2,7 @@
 #define BST_REVERSE_ITERATOR_HPP
 
 #include "bst_iterator.hpp"
-#include "../utils/iterator_traits.hpp"
+#include "../iterator/iterator_traits.hpp"
 
 namespace ft {
 template <class Node>

@@ -1,9 +1,9 @@
-#ifndef MAP
-#define MAP
+#ifndef MAP_HPP
+#define MAP_HPP
 
 #include <memory>
 
-#include "bst.hpp"
+#include "../binary_search_tree/bst.hpp"
 
 namespace ft {
 

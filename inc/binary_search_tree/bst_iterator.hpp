@@ -1,7 +1,7 @@
-#ifndef ITER
-#define ITER
+#ifndef BST_ITERATOR_HPP
+#define BST_ITERATOR_HPP
 
-#include "iterator_traits.hpp"
+#include "../utils/iterator_traits.hpp"
 
 namespace ft {
 template <class Node>

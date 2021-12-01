@@ -1,15 +1,11 @@
-#ifndef BST
-#define BST
+#ifndef BST_HPP
+#define BST_HPP
 
-#include <vector>
-
-#include <algorithm>
-#include <iostream>
 #include <limits>
 #include <memory>
 #include <sys/_types/_key_t.h>
-#include <utility>
 
+#include "../containers/vector.hpp"
 #include "bst_iterator.hpp"
 #include "bst_node.hpp"
 #include "bst_reverse_iterator.hpp"
@@ -210,7 +206,7 @@ class bst {
 	public:
 		template <class InputIterator>
 		void erase( InputIterator first, InputIterator last ) {
-			typedef std::vector<InputIterator> vec;
+			typedef ft::vector<InputIterator> vec;
 			vec																 v;
 			while ( first != last )
 				v.push_back( first++ );

@@ -1,8 +1,8 @@
-#ifndef REV_ITER
-#define REV_ITER
+#ifndef BST_REVERSE_ITERATOR_HPP
+#define BST_REVERSE_ITERATOR_HPP
 
 #include "bst_iterator.hpp"
-#include "iterator_traits.hpp"
+#include "../utils/iterator_traits.hpp"
 
 namespace ft {
 template <class Node>

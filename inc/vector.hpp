@@ -244,11 +244,34 @@ class vector {
 			for ( size_type i = 0; i < n; i++ ) {
 				position = this->insert( position, val );
 			}
+		}
 
-		} // fill (2)
+		template <class InputIterator>
+		void
+		insert( iterator position, InputIterator first, InputIterator last,
+						typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* =
+								nullptr ) {
+			pointer		new_start;
+			pointer		new_end;
+			pointer		new_end_capacity;
+			size_type new_size = this->size() + ( last - first );
+			size_type pos_bound = position.base() - _start;
+			size_type i = 0;
 
-		// template <class InputIterator>											  // range (3)
-		// void insert(iterator position, InputIterator first, InputIterator last);  //
+			new_start = _alloc.allocate( new_size );
+			new_end = new_start;
+			new_end_capacity = new_start + new_size;
+			for ( ; i < pos_bound; i++ )
+				_alloc.construct( new_end++, *( _start + i ) );
+			for ( ; first != last; first++ )
+				_alloc.construct( new_end++, *first );
+			for ( ; i < this->size(); i++ )
+				_alloc.construct( new_end++, *( _start + i ) );
+			this->_dealloc();
+			_start = new_start;
+			_end = new_end;
+			_end_capacity = new_end_capacity;
+		}
 
 		iterator erase( iterator position ) {
 			size_type pos_len = &( *position ) - _start;

@@ -15,23 +15,16 @@ class bst_reverse_iterator {
 				difference_type;
 
 		bst_reverse_iterator() : _elem() { }
-
 		bst_reverse_iterator( Node* node ) : _elem( node ) { }
-
 		bst_reverse_iterator( bst_iterator<Node> it ) : _elem( it.base() ) { }
-
 		bst_reverse_iterator( const bst_reverse_iterator& op ) { *this = op; }
-
 		bst_reverse_iterator& operator=( const bst_reverse_iterator& op ) {
 			_elem = op._elem;
 			return *this;
 		}
-
 		reference operator*() const { return const_cast<reference>( _elem->value ); }
-
-		pointer operator->() const { return &( const_cast<reference>( _elem->value ) ); }
-
-		Node* base() const { return _elem; }
+		pointer		operator->() const { return &( const_cast<reference>( _elem->value ) ); }
+		Node*			base() const { return _elem; }
 
 		bst_reverse_iterator& operator--( void ) {
 			if ( _elem->right ) {

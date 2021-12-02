@@ -9,9 +9,19 @@ int main() {
 	// ft::pair<const int, int>* addr;
 	ft::map<int, int> m;
 
-	// m[1] = 10;
-	
-	// addr = &*m.begin();
+	int tab[] = { 1, 0, 9, 8, 2, 3, 4, 5, 6, 7 };
+	for ( int i = 0; i < 10; i++ )
+		m.insert( ft::make_pair( tab[i], tab[i] * 10 ) );
 
-	// std::cout << (*addr).first << "\n";
+	m.erase( 1 );
+
+	for ( ft::map<int, int>::iterator it = m.begin(); it != m.end(); it++ )
+		std::cout << it->first << "_" << it->second << " ";
+	std::cout << "\n";
+
+	m.clear();
+
+	for ( ft::map<int, int>::iterator it = m.begin(); it != m.end(); it++ )
+		std::cout << it->first << "_" << it->second << " ";
+	std::cout << "\n";
 }

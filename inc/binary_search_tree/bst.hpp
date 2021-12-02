@@ -3,9 +3,9 @@
 
 #include <memory>
 
-#include "../vector.hpp"
 #include "../utils/algorithm.hpp"
 #include "../utils/pair.hpp"
+#include "../vector.hpp"
 #include "bst_iterator.hpp"
 #include "bst_node.hpp"
 #include "bst_reverse_iterator.hpp"
@@ -31,9 +31,9 @@ class bst {
 
 		bst( Node_Alloc nodeAlloc = Node_Alloc() ) : _nodeAlloc( nodeAlloc ), _root(), _comp() {
 			_lastNode = _nodeAlloc.allocate( 1 );
-			_nodeAlloc.construct( _lastNode, Node( true ) );
+			_nodeAlloc.construct( _lastNode, Node( value_type(), true ) );
 			_firstNode = _nodeAlloc.allocate( 1 );
-			_nodeAlloc.construct( _firstNode, Node( true ) );
+			_nodeAlloc.construct( _firstNode, Node( value_type(), true ) );
 		}
 
 		~bst() {
@@ -126,7 +126,7 @@ class bst {
 			if ( !node || node->is_limit == true ) {
 				node = nullptr;
 				node = _nodeAlloc.allocate( 1 );
-				_nodeAlloc.construct( node, Node( val ) );
+				_nodeAlloc.construct( node, Node( val, false ) );
 				ret.second = true;
 			} else if ( val.first < node->value.first ) {
 				ret = _insert( val, node->left );
@@ -147,17 +147,16 @@ class bst {
 
 		void _assign_limits() {
 			if ( !_root ) {
-				value_type init = value_type();
-				_firstNode->limit_node_init( init );
-				_lastNode->limit_node_init( init );
+				_nodeAlloc.construct( _firstNode, Node( value_type(), true ) );
+				_nodeAlloc.construct( _lastNode, Node( value_type(), true ) );
 			} else {
 				node_pointer min = _findMin();
 				node_pointer max = _findMax();
 				min->left = _firstNode;
-				_firstNode->limit_node_init( min->value );
+				_nodeAlloc.construct( _firstNode, Node( min->value, true ) );
 				_firstNode->parent = min;
 				max->right = _lastNode;
-				_lastNode->limit_node_init( max->value );
+				_nodeAlloc.construct( _lastNode, Node( max->value, true ) );
 				_lastNode->parent = max;
 			}
 		}
@@ -223,7 +222,7 @@ class bst {
 		}
 
 		size_type erase( iterator position ) {
-			node_pointer cur = position.base();
+			node_pointer cur( position.base() );
 			if ( cur->left && cur->left->is_limit == true && cur->right &&
 					 cur->right->is_limit == true ) {
 				_nodeAlloc.deallocate( _root, 1 );
@@ -238,7 +237,7 @@ class bst {
 
 	private:
 		void _erase( value_type value ) {
-			node_pointer toRm = _find_by_value( _root, value );
+			node_pointer toRm( _find_by_value( _root, value ) );
 			if ( !toRm->left && !toRm->right ) {
 				if ( toRm != _root ) {
 					_assign_child( toRm, nullptr );
@@ -250,8 +249,9 @@ class bst {
 			} else if ( !toRm->left && toRm->right ) {
 				_has_one_child( toRm, toRm->right );
 			} else {
-				node_pointer succ = _successor( toRm );
-				toRm->value = succ->value;
+				node_pointer succ( _successor( toRm ) );
+				_nodeAlloc.construct( toRm,
+															Node( toRm->parent, toRm->left, toRm->right, succ->value, false ) );
 				if ( succ->right )
 					succ->right->parent = succ->parent;
 				_assign_child( succ, succ->right );

@@ -10,15 +10,17 @@ struct bst_node {
 
 		bst_node() : parent(), left(), right(), value(), is_limit( false ) { }
 
-		bst_node( bool b ) : parent(), left(), right(), value(), is_limit( b ) { }
+		bst_node( pointer p, pointer l, pointer r, const value_type& val, bool b )
+				: parent( p ), left( l ), right( r ), value( val ), is_limit( b ) { }
 
-		bst_node( const value_type& val ) : parent(), left(), right(), value( val ), is_limit( false ) { }
+		bst_node( const value_type& val, bool b )
+				: parent(), left(), right(), value( val ), is_limit( b ) { }
 
-		void limit_node_init( value_type& val ) {
-			is_limit = true;
-			value = val;
-			parent = nullptr;
-		}
+		// void limit_node_init( value_type& val ) {
+		// 	is_limit = true;
+		// 	value = val;
+		// 	parent = nullptr;
+		// }
 
 		pointer		 parent;
 		pointer		 left;

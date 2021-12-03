@@ -121,7 +121,7 @@ class bst {
 
 	private:
 		ft::pair<iterator, bool> _insert( const value_type& val, node_pointer& node ) {
-			ft::pair<iterator, bool> ret = ft::make_pair(node, false);
+			ft::pair<iterator, bool> ret = ft::make_pair( node, false );
 
 			if ( !node ) {
 				node = _nodeAlloc.allocate( 1 );
@@ -271,16 +271,27 @@ class bst {
 
 		void _assign_child( node_pointer& toRm, node_pointer child ) {
 			node_pointer parent = toRm->parent;
-			if ( _comp(toRm->value.first, parent->value.first ) )
+			if ( _comp( toRm->value.first, parent->value.first ) )
 				parent->left = child;
 			else
 				parent->right = child;
 		}
 
+		//// SWAP ////
+	public:
+		void swap( bst& x ) {
+			std::swap( _firstNode, x._firstNode );
+			std::swap( _lastNode, x._lastNode );
+			std::swap( _root, x._root );
+		}
+
 		//// CLEAR ////
 
 	public:
-		void clear() { erase( begin(), end() ); }
+		void clear() {
+			if ( !_root )
+				erase( begin(), end() );
+		}
 
 		//// UTILS ////
 

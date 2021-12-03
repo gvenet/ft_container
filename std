@@ -1,21 +1,10 @@
 bin/EX00 [32mrdy 2 use[0m
 --------------------------------------------
 
-Map is of size 1: (chat,ça va ?)
-
-Should be ordered : (0,0), (1,1), (2,2), (3,3), (4,4)
-
-Map is : (0,0), (1,1), (2,2), (3,3), (4,4)
-Iterator is ponting at (2,2)
-Erasing keys 1 and 3
-Iterator is ponting at (2,2)
-it++;
-Iterator is ponting at (4,4)
-it--; it--;
-Iterator is ponting at (0,0)
-
 Before swap:
 m1 = (0,0) and m2 = 
+Address of (0,0) : 0x7ff3e3c02aac
 After swap:
 m1 = and m2 = (0,0)
+Address of (0,0) : 0x7ff3e3c02aac
 Address before and after are equal ? true

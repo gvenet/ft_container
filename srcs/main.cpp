@@ -99,7 +99,7 @@ void test_swap_move_only_pointers() {
 	print_container( m1 );
 	std::cout << " and m2 = ";
 	print_container_nl( m2 );
-	// std::cout << "Address of " << *m1.begin() << " : " << &*m1.begin() << std::endl;
+	std::cout << "Address of " << *m1.begin() << " : " << &*m1.begin() << std::endl;
 	addr1 = &( *m1.begin() );
 	m1.swap( m2 );
 	std::cout << "After swap:" << std::endl;
@@ -107,18 +107,19 @@ void test_swap_move_only_pointers() {
 	print_container( m1 );
 	std::cout << "and m2 = ";
 	print_container_nl( m2 );
-	// std::cout << "Address of " << *m2.begin() << " : " << &*m2.begin() << std::endl;
+	std::cout << "Address of " << *m2.begin() << " : " << &*m2.begin() << std::endl;
 	addr2 = &( *m2.begin() );
 	std::cout << "Address before and after are equal ? " << ( addr1 == addr2 ) << std::endl;
 }
 
 int main() {
 	std::boolalpha( std::cout );
-	test_only_one_key();
-	std::cout << std::endl;
-	test_container_ordered();
-	std::cout << std::endl;
-	test_iterator_valid();
-	std::cout << std::endl;
 	test_swap_move_only_pointers();
 }
+
+
+// int main() {
+// 	map<int, int>					m1;
+
+// 	m1.clear();
+// }

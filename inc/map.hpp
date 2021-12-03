@@ -120,10 +120,8 @@ class map {
 
 		//// SWAP ////
 
-		void swap( map& x ) {
-			map tmp( x );
-			x = *this;
-			*this = tmp;
+		void swap( map &x ) {
+			_bst.swap(x._bst);
 		}
 
 		//// CLEAR ////

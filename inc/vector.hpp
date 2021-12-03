@@ -1,6 +1,7 @@
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
+#include <iostream>
 #include <memory>
 
 #include "iterator/random_access_iterator.hpp"
@@ -61,8 +62,12 @@ class vector {
 			*this = x;
 		}
 
-		~vector() { _dealloc(); }
-
+		~vector() {
+			// std::cout << "C_" << this->capacity() << " "
+			// 					<< "S_" << this->size() << "\n";
+			// std::cout << size() << "___\n";
+			_dealloc();
+		}
 		vector& operator=( const vector& x ) {
 			_dealloc();
 			_start = _alloc.allocate( x.capacity() );
@@ -199,50 +204,94 @@ class vector {
 
 		void push_back( const value_type& x ) { this->insert( _end, x ); }
 
-		void pop_back() { this->erase( _end - 1 ); }
+		// void pop_back() { this->erase( _end - 1 ); }
+
+		void pop_back() {
+			_end--;
+			_alloc.destroy( _end );
+		}
 
 		iterator insert( iterator position, const value_type& val ) {
-			size_type next_capacity = 1;
+			// size_type next_capacity = 1;
+			// size_type pos_len = &( *position ) - _start;
+
+			// if ( this->size() < this->capacity() ) {
+			// 	for ( size_type i = 0; i < ( this->size() - pos_len ); i++ ) {
+			// 		_alloc.construct( _end - i, *( _end - i - 1 ) );
+			// 	}
+			// 	_end++;
+			// 	_alloc.construct( &( *position ), val );
+			// } else {
+			// 	pointer new_start = pointer();
+			// 	pointer new_end = pointer();
+			// 	pointer new_end_capacity = pointer();
+
+			// 	if ( this->size() * 2 > 0 )
+			// 		next_capacity = this->size() * 2;
+
+			// 	new_start = _alloc.allocate( next_capacity );
+			// 	new_end = new_start + this->size() + 1;
+			// 	new_end_capacity = new_start + next_capacity;
+
+			// 	for ( size_type i = 0; i < pos_len; i++ )
+			// 		_alloc.construct( new_start + i, *( _start + i ) );
+			// 	_alloc.construct( new_start + pos_len, val );
+			// 	for ( size_type i = 0; i < this->size() - pos_len; i++ )
+			// 		_alloc.construct( new_end - i - 1, *( _end - i - 1 ) );
+			// 	_dealloc();
+			// 	_start = new_start;
+			// 	_end = new_end;
+			// 	_end_capacity = new_end_capacity;
+			// }
+			// return ( iterator( _start + pos_len ) );
+
 			size_type pos_len = &( *position ) - _start;
+			insert( position, 1, val );
+			return ( iterator( _start + pos_len ) );
 
-			if ( this->size() < this->capacity() ) {
-				for ( size_type i = 0; i < ( this->size() - pos_len ); i++ ) {
-					_alloc.construct( _end - i, *( _end - i - 1 ) );
-				}
-				_end++;
-				_alloc.construct( &( *position ), val );
-			} else {
-				pointer new_start = pointer();
-				pointer new_end = pointer();
-				pointer new_end_capacity = pointer();
+		} // single element (1)
 
-				if ( this->size() * 2 > 0 )
-					next_capacity = this->size() * 2;
+		// void insert( iterator position, size_type n, const value_type& val ) {
+		// 	if ( !this->size() ) {
+		// 		_start = _alloc.allocate( 1 );
+		// 		_end = _end_capacity = _start;
+		// 	}
+		// 	for ( size_type i = 0; i < n; i++ ) {
+		// 		position = this->insert( position, val );
+		// 	}
+		// }
 
+		void insert( iterator position, size_type n, const value_type& val ) {
+			_allocate();
+
+			(void)val;
+			(void)n;
+			(void)position;
+		}
+
+		void _allocate() {
+			size_type next_capacity = 1;
+			if ( _start == _end_capacity ) {
+				_start = _alloc.allocate( next_capacity );
+				_end = _start;
+				_end_capacity = _start + next_capacity;
+			} else if ( _end == _end_capacity ) {
+				pointer new_start;
+				pointer new_end;
+				pointer new_end_capacity;
+
+				next_capacity = capacity() * 2;
 				new_start = _alloc.allocate( next_capacity );
-				new_end = new_start + this->size() + 1;
+				new_end = _end + 1;
 				new_end_capacity = new_start + next_capacity;
-
-				for ( size_type i = 0; i < pos_len; i++ )
+				for ( size_type i = 0; i < size(); i++ ) {
 					_alloc.construct( new_start + i, *( _start + i ) );
-				_alloc.construct( new_start + pos_len, val );
-				for ( size_type i = 0; i < this->size() - pos_len; i++ )
-					_alloc.construct( new_end - i - 1, *( _end - i - 1 ) );
+					_end++;
+				}
 				_dealloc();
 				_start = new_start;
 				_end = new_end;
 				_end_capacity = new_end_capacity;
-			}
-			return ( iterator( _start + pos_len ) );
-		} // single element (1)
-
-		void insert( iterator position, size_type n, const value_type& val ) {
-			if ( !this->size() ) {
-				_start = _alloc.allocate( 1 );
-				_end = _end_capacity = _start;
-			}
-			for ( size_type i = 0; i < n; i++ ) {
-				position = this->insert( position, val );
 			}
 		}
 
@@ -275,10 +324,10 @@ class vector {
 
 		iterator erase( iterator position ) {
 			size_type pos_len = &( *position ) - _start;
-			for ( size_type i = 0; i < ( this->size() - pos_len ); i++ ) {
+			size_type n = ( this->size() - pos_len );
+			for ( size_type i = 0; i < n; i++ )
 				_alloc.construct( _start + i + pos_len, *( _start + i + 1 + pos_len ) );
-			}
-			_alloc.destroy( _end );
+			_alloc.destroy( _end - 1 );
 			_end--;
 			return ( iterator( _start + pos_len ) );
 		}

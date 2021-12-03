@@ -8,53 +8,50 @@
 using namespace ft;
 
 template <class C1, class C2>
-std::ostream& operator<<( std::ostream& os, pair<C1, C2> const& p ) {
-	os << "(" << p.first << "," << p.second << ")";
-	return os;
+std::ostream & operator<<(std::ostream & os, pair<C1, C2> const & p) {
+  os << "(" << p.first << "," << p.second << ")";
+  return os;
 }
 
-struct KeyCompareInt {
-		bool operator()( int x, int y ) const { return -x / 2 < -y / 2; }
-};
-
-// struct KeyCompareInt {
-// 		bool operator()( int x, int y ) const { return x  < y ; }
-// };
-
-typedef map<int, int>::iterator		iterator_type;
-typedef pair<iterator_type, bool> insert_return_type;
-
-template <class T1, class T2, class Comp>
-void insert( map<T1, T2, Comp>& container, T1 k, T2 v ) {
-	pair<T1, T2> val = make_pair( k, v );
-	std::cout << "Inserting " << val << std::endl;
-
-	pair<typename map<T1, T2, Comp>::iterator, bool> ret = container.insert( val );
-
-	std::cout << "Was present : " << ret.second << std::endl;
-	std::cout << "Iterator points to " << *ret.first << std::endl;
+template <class Container>
+void print_container(Container const & m) {
+  for (typename Container::const_iterator it = m.begin(); it != m.end(); ++it) {
+    if (it != m.begin())
+      std::cout << ", ";
+    std::cout << *it;
+  }
 }
+template <class Container>
+void print_container_nl(Container const & m) {
+  print_container(m);
+  std::cout << std::endl;
+}
+
+void test_erase() {
+  map<int, int> m;
+
+  for (int i = 0; i < 10; ++i) {
+    m[i] = i;
+  }
+  std::cout << "m.erase(2) = " << m.erase(2) << std::endl;
+  print_container_nl(m);
+  std::cout << "m.erase(2) = " << m.erase(2) << std::endl;
+  print_container_nl(m);
+  m.erase(m.begin());
+  m.erase(--(m.end()));
+  print_container_nl(m);
+  map<int, int>::iterator it[2] = {m.begin(), m.end()};
+  it[0]++; it[0]++;
+  it[1]--; it[1]--;
+  m.erase(it[0], it[1]);
+  print_container_nl(m);
+  std::cout << "size = " << m.size() << std::endl;
+}
+
 
 int main() {
-	map<int, int, KeyCompareInt> m;
 
-	for ( int i = 0; i < 20; ++i )
-		insert( m, i, i );
+  std::cout << "--- Test erase ---" << std::endl;
+  test_erase();
 
-	for ( int i = 0; i < 20; ++i )
-		std::cout << m[i] << " ";
-	std::cout << "\n";
-
-	for ( map<int, int, KeyCompareInt>::iterator it = m.begin(); it != m.end(); it++ )
-		std::cout << *( it ) << " ";
-	std::cout << "\n";
 }
-
-// int main() {
-// 	map<int, int> m;
-
-// 	for ( int i = 0; i < 10; i++ )
-// 		m.insert( make_pair( i, i * 10 ) );
-
-// 	std::cout << *m.find( 5 )<< "\n";
-// }

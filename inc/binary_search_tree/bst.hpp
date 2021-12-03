@@ -221,6 +221,8 @@ class bst {
 		}
 
 		size_type erase( iterator position ) {
+			if ( position == end() )
+				return 0;
 			node_pointer cur( position.base() );
 			if ( cur->left && cur->left->is_limit == true && cur->right &&
 					 cur->right->is_limit == true ) {

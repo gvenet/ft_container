@@ -5,45 +5,43 @@
 #include <map>
 #include <vector>
 
-struct StaticCounter {
-		static int total;
-		int				 idx;
-		StaticCounter() { idx = StaticCounter::total++; }
-		StaticCounter( StaticCounter const& ) { idx = StaticCounter::total++; }
-		StaticCounter& operator=( StaticCounter const& ) { return *this; }
-		~StaticCounter() { StaticCounter::total--; }
+using namespace ft;
+
+template <class C1, class C2>
+std::ostream& operator<<( std::ostream& os, pair<C1, C2> const& p ) {
+	os << "(" << p.first << "," << p.second << ")";
+	return os;
+}
+
+// struct KeyCompareInt {
+// 		bool operator()( int x, int y ) const { return -x / 2 < -y / 2; }
+// };
+
+struct KeyCompareInt {
+		bool operator()( int x, int y ) const { return x  < y ; }
 };
 
-int StaticCounter::total = 0;
+typedef map<int, int>::iterator		iterator_type;
+typedef pair<iterator_type, bool> insert_return_type;
 
-template <class M>
-void test_size() {
-	M m;
-	std::cout << "insert :\n";
-	for ( int i = 0; i < 10; ++i ) {
-		m[i] = StaticCounter();
-		m.insert( ft::make_pair( i, StaticCounter() ) );
-		std::cout << "Map size = " << m.size() << std::endl;
-		std::cout << "Actual size = " << StaticCounter::total << std::endl;
-	}
+template <class T1, class T2, class Comp>
+void insert( map<T1, T2, Comp>& container, T1 k, T2 v ) {
+	pair<T1, T2> val = make_pair( k, v );
+	std::cout << "Inserting " << val << std::endl;
 
-	std::cout << "erase :\n";
-	for ( int i = 0; i < 5; ++i ) {
-		m.erase( i );
-		std::cout << "Map size = " << m.size() << std::endl;
-		std::cout << "Actual size = " << StaticCounter::total << std::endl;
-	}
+	pair<typename map<T1, T2, Comp>::iterator, bool> ret = container.insert( val );
 
-	std::cout << "clear :\n";
-	m.clear();
-	std::cout << "Map size = " << m.size() << std::endl;
-	std::cout << "Actual size = " << StaticCounter::total << std::endl;
+	std::cout << "Was present : " << ret.second << std::endl;
+	std::cout << "Iterator points to " << *ret.first << std::endl;
 }
 
 int main() {
-	std::cout << "--- Test size ---" << std::endl;
-	// std::cout << "--- STD ---\n\n";
-	// test_size<std::map<int, StaticCounter> >();
-	std::cout << "\n--- FT ---\n\n";
-	test_size<ft::map<int, StaticCounter> >();
+	map<int, int, KeyCompareInt> m;
+
+	for ( int i = 0; i < 20; ++i )
+		insert( m, i, i );
+
+	for ( int i = 0; i < 20; ++i )
+		std::cout << m[i] << std::endl;
 }
+

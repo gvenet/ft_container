@@ -113,7 +113,7 @@ class bst {
 		iterator insert( iterator position, const value_type& val ) {
 			iterator tmp;
 			_reset_limits();
-			node_pointer cur = position.base();
+			node_pointer cur( position.base() );
 			tmp = _insert( val, cur ).first;
 			_assign_limits();
 			return tmp;
@@ -123,11 +123,10 @@ class bst {
 		ft::pair<iterator, bool> _insert( const value_type& val, node_pointer& node ) {
 			ft::pair<iterator, bool> ret;
 
-			if ( !node || node->is_limit == true ) {
-				node = nullptr;
+			if ( !node ) {
 				node = _nodeAlloc.allocate( 1 );
 				_nodeAlloc.construct( node, Node( val, false ) );
-				ret.second = true;
+				ret = ft::make_pair( node, true );
 			} else if ( val.first < node->value.first ) {
 				ret = _insert( val, node->left );
 				node->left->parent = node;
@@ -135,7 +134,7 @@ class bst {
 				ret = _insert( val, node->right );
 				node->right->parent = node;
 			}
-			return ft::make_pair( node, ret.second );
+			return ret;
 		}
 
 		void _reset_limits() {
@@ -257,17 +256,6 @@ class bst {
 			}
 		}
 
-		void _delete( node_pointer& node ) {
-			_nodeAlloc.destroy( node );
-			_nodeAlloc.deallocate( node, 1 );
-			node = nullptr;
-		}
-
-		void _assign( node_pointer& addr, Node value ) {
-			_nodeAlloc.destroy( addr );
-			_nodeAlloc.construct( addr, value );
-		}
-
 		void _has_one_child( node_pointer& toRm, node_pointer& child ) {
 			if ( toRm == _root ) {
 				_root = child;
@@ -293,6 +281,17 @@ class bst {
 		void clear() { erase( begin(), end() ); }
 
 		//// UTILS ////
+
+		void _delete( node_pointer& node ) {
+			_nodeAlloc.destroy( node );
+			_nodeAlloc.deallocate( node, 1 );
+			node = nullptr;
+		}
+
+		void _assign( node_pointer& addr, Node value ) {
+			_nodeAlloc.destroy( addr );
+			_nodeAlloc.construct( addr, value );
+		}
 
 	private:
 		node_pointer _findMax() {

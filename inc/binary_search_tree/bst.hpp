@@ -31,15 +31,15 @@ class bst {
 
 		bst( Node_Alloc nodeAlloc = Node_Alloc() ) : _nodeAlloc( nodeAlloc ), _root(), _comp() {
 			_lastNode = _nodeAlloc.allocate( 1 );
-			_nodeAlloc.construct( _lastNode, Node( value_type(), true ) );
+			_assign( _lastNode, Node( value_type(), true ) );
 			_firstNode = _nodeAlloc.allocate( 1 );
-			_nodeAlloc.construct( _firstNode, Node( value_type(), true ) );
+			_assign( _firstNode, Node( value_type(), true ) );
 		}
 
 		~bst() {
 			clear();
-			_nodeAlloc.deallocate( _lastNode, 1 );
-			_nodeAlloc.deallocate( _firstNode, 1 );
+			_delete( _lastNode );
+			_delete( _firstNode );
 		}
 
 		// ITERATOR //
@@ -147,16 +147,16 @@ class bst {
 
 		void _assign_limits() {
 			if ( !_root ) {
-				_nodeAlloc.construct( _firstNode, Node( value_type(), true ) );
-				_nodeAlloc.construct( _lastNode, Node( value_type(), true ) );
+				_assign( _firstNode, Node( value_type(), true ) );
+				_assign( _lastNode, Node( value_type(), true ) );
 			} else {
 				node_pointer min = _findMin();
 				node_pointer max = _findMax();
 				min->left = _firstNode;
-				_nodeAlloc.construct( _firstNode, Node( min->value, true ) );
+				_assign( _firstNode, Node( min->value, true ) );
 				_firstNode->parent = min;
 				max->right = _lastNode;
-				_nodeAlloc.construct( _lastNode, Node( max->value, true ) );
+				_assign( _lastNode, Node( max->value, true ) );
 				_lastNode->parent = max;
 			}
 		}
@@ -225,8 +225,7 @@ class bst {
 			node_pointer cur( position.base() );
 			if ( cur->left && cur->left->is_limit == true && cur->right &&
 					 cur->right->is_limit == true ) {
-				_nodeAlloc.deallocate( _root, 1 );
-				_root = nullptr;
+				_delete( _root );
 			} else {
 				_reset_limits();
 				_erase( *position );
@@ -250,8 +249,7 @@ class bst {
 				_has_one_child( toRm, toRm->right );
 			} else {
 				node_pointer succ( _successor( toRm ) );
-				_nodeAlloc.construct( toRm,
-															Node( toRm->parent, toRm->left, toRm->right, succ->value, false ) );
+				_assign( toRm, Node( toRm->parent, toRm->left, toRm->right, succ->value, false ) );
 				if ( succ->right )
 					succ->right->parent = succ->parent;
 				_assign_child( succ, succ->right );
@@ -260,8 +258,14 @@ class bst {
 		}
 
 		void _delete( node_pointer& node ) {
+			_nodeAlloc.destroy( node );
 			_nodeAlloc.deallocate( node, 1 );
 			node = nullptr;
+		}
+
+		void _assign( node_pointer& addr, Node value ) {
+			_nodeAlloc.destroy( addr );
+			_nodeAlloc.construct( addr, value );
 		}
 
 		void _has_one_child( node_pointer& toRm, node_pointer& child ) {
@@ -272,7 +276,7 @@ class bst {
 				child->parent = toRm->parent;
 				_assign_child( toRm, child );
 			}
-			_nodeAlloc.deallocate( toRm, 1 );
+			_delete( toRm );
 		}
 
 		void _assign_child( node_pointer& toRm, node_pointer child ) {

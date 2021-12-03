@@ -5,36 +5,45 @@
 #include <map>
 #include <vector>
 
-using namespace std;
+struct StaticCounter {
+		static int total;
+		int				 idx;
+		StaticCounter() { idx = StaticCounter::total++; }
+		StaticCounter( StaticCounter const& ) { idx = StaticCounter::total++; }
+		StaticCounter& operator=( StaticCounter const& ) { return *this; }
+		~StaticCounter() { StaticCounter::total--; }
+};
 
-template <class V>
-void print( V v ) {
-	for ( typename V::iterator it = v.begin(); it != v.end(); it++ )
-		std::cout << *it << " ";
-	std::cout << "\n";
-}
+int StaticCounter::total = 0;
 
-template <class V>
-V vec_gen() {
-	V v;
-	for ( int i = 0; i < 5; ++i )
-		v.push_back( i );
-	return v;
-}
+template <class M>
+void test_size() {
+	M m;
+	std::cout << "insert :\n";
+	for ( int i = 0; i < 10; ++i ) {
+		m[i] = StaticCounter();
+		m.insert( ft::make_pair( i, StaticCounter() ) );
+		std::cout << "Map size = " << m.size() << std::endl;
+		std::cout << "Actual size = " << StaticCounter::total << std::endl;
+	}
 
-template <class V>
-V ins( V v ) {
-	typename V::iterator pos( v.begin() + 2 );
-	v.insert( pos, v.begin(), v.end() );
-	v.insert( v.begin() + 6, 12 );
-	v.insert( v.begin(), 3, 42 );
-	return v;
+	std::cout << "erase :\n";
+	for ( int i = 0; i < 5; ++i ) {
+		m.erase( i );
+		std::cout << "Map size = " << m.size() << std::endl;
+		std::cout << "Actual size = " << StaticCounter::total << std::endl;
+	}
+
+	std::cout << "clear :\n";
+	m.clear();
+	std::cout << "Map size = " << m.size() << std::endl;
+	std::cout << "Actual size = " << StaticCounter::total << std::endl;
 }
 
 int main() {
-	typedef std::vector<int> std_v;
-	typedef ft::vector<int>	 fft_v;
-
-	print( ins( vec_gen<std_v>() ) );
-	print( ins( vec_gen<fft_v>() ) );
+	std::cout << "--- Test size ---" << std::endl;
+	// std::cout << "--- STD ---\n\n";
+	// test_size<std::map<int, StaticCounter> >();
+	std::cout << "\n--- FT ---\n\n";
+	test_size<ft::map<int, StaticCounter> >();
 }

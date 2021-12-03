@@ -127,10 +127,10 @@ class bst {
 				node = _nodeAlloc.allocate( 1 );
 				_nodeAlloc.construct( node, Node( val, false ) );
 				ret = ft::make_pair( node, true );
-			} else if ( val.first < node->value.first ) {
+			} else if ( _comp( val.first, node->value.first ) ) {
 				ret = _insert( val, node->left );
 				node->left->parent = node;
-			} else if ( val.first > node->value.first ) {
+			} else if ( _comp( node->value.first, val.first ) ) {
 				ret = _insert( val, node->right );
 				node->right->parent = node;
 			}
@@ -185,12 +185,12 @@ class bst {
 		node_pointer _find( const key_type& key, node_pointer node ) {
 			if ( !node )
 				return nullptr;
-			if ( key == node->value.first )
-				return node;
-			else if ( key < node->value.first )
+			if ( _comp( key, node->value.first ) )
 				node = _find( key, node->left );
-			else if ( key > node->value.first )
+			else if ( _comp( node->value.first, key ) )
 				node = _find( key, node->right );
+			else
+				return node;
 			return node;
 		}
 
@@ -198,12 +198,12 @@ class bst {
 		node_pointer _find( const key_type& key, node_pointer node ) const {
 			if ( !node )
 				return nullptr;
-			if ( key == node->value.first )
-				return node;
-			else if ( key < node->value.first )
+			if ( _comp( key, node->value.first ) )
 				node = _find( key, node->left );
-			else if ( key > node->value.first )
+			else if ( _comp( node->value.first, key ) )
 				node = _find( key, node->right );
+			else
+				return node;
 			return node;
 		}
 
@@ -269,7 +269,7 @@ class bst {
 
 		void _assign_child( node_pointer& toRm, node_pointer child ) {
 			node_pointer parent = toRm->parent;
-			if ( parent->value.first > toRm->value.first )
+			if ( _comp(toRm->value.first, parent->value.first ) )
 				parent->left = child;
 			else
 				parent->right = child;
@@ -311,13 +311,12 @@ class bst {
 		node_pointer _find_by_value( node_pointer node, value_type value ) {
 			if ( !node )
 				return nullptr;
-			else if ( node->value.first == value.first ) {
-				return node;
-			} else if ( node->value.first < value.first ) {
+			if ( _comp( node->value.first, value.first ) )
 				return _find_by_value( node->right, value );
-			} else {
+			else if ( _comp( value.first, node->value.first ) )
 				return _find_by_value( node->left, value );
-			}
+			else
+				return node;
 		}
 
 		node_pointer _findMin( node_pointer& node ) {

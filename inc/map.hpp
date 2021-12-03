@@ -120,7 +120,7 @@ class map {
 
 		//// SWAP ////
 
-		void swap( map &x ) {
+		void swap( map& x ) {
 			_bst.swap(x._bst);
 		}
 

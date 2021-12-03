@@ -278,20 +278,18 @@ class bst {
 		}
 
 		//// SWAP ////
+
 	public:
 		void swap( bst& x ) {
+			std::swap( _root, x._root );
 			std::swap( _firstNode, x._firstNode );
 			std::swap( _lastNode, x._lastNode );
-			std::swap( _root, x._root );
 		}
 
 		//// CLEAR ////
 
 	public:
-		void clear() {
-			if ( !_root )
-				erase( begin(), end() );
-		}
+		void clear() { erase( begin(), end() ); }
 
 		//// UTILS ////
 

@@ -1,10 +1,15 @@
+obj [32mdir created[0m
+obj/main.o [32mcreated[0m
+bin [32mdir created[0m
+bin/EX00 (exec) [32mcreated[0m
+--------------------------------------------
 bin/EX00 [32mrdy 2 use[0m
 --------------------------------------------
 
 Before swap:
 m1 = (0,0) and m2 = 
-Address of (0,0) : 0x7ff3e3c02aac
+Address of (0,0) : 0x7f9ec5402b68
 After swap:
 m1 = and m2 = (0,0)
-Address of (0,0) : 0x7ff3e3c02aac
+Address of (0,0) : 0x7f9ec5402b68
 Address before and after are equal ? true

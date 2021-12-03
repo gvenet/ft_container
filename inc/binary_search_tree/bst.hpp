@@ -121,7 +121,7 @@ class bst {
 
 	private:
 		ft::pair<iterator, bool> _insert( const value_type& val, node_pointer& node ) {
-			ft::pair<iterator, bool> ret;
+			ft::pair<iterator, bool> ret = ft::make_pair(node, false);
 
 			if ( !node ) {
 				node = _nodeAlloc.allocate( 1 );

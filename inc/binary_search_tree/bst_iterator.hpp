@@ -35,10 +35,10 @@ class bst_iterator {
 				_elem = _elem->right;
 				while ( _elem->left && _elem->left->is_limit == false )
 					_elem = _elem->left;
-			} else if ( _elem->value.first < _elem->parent->value.first ) {
+			} else if ( _elem == _elem->parent->left ) {
 				_elem = _elem->parent;
 			} else {
-				while ( _elem->value.first > _elem->parent->value.first )
+				while ( _elem == _elem->parent->right )
 					_elem = _elem->parent;
 				_elem = _elem->parent;
 			}

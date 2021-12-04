@@ -1,4 +1,8 @@
 #! /bin/bash
 
+
+
 make
-./bin/EX00
+./bin/ft_containers
+echo "diff =>"
+diff ft std

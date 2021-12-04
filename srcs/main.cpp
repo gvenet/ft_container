@@ -1,3 +1,4 @@
+#include <fstream>
 #include <iostream>
 
 #include "../inc/map.hpp"
@@ -8,7 +9,7 @@
 using namespace ft;
 
 int _new;
-int _del = 5;
+int _del;
 
 struct A {
 		A() {
@@ -17,7 +18,7 @@ struct A {
 			m = new int();
 		}
 		A( A const& x ) {
-			std::cout << "___new_\n";
+			// std::cout << "___new_\n";
 			_new++;
 			m = new int();
 			*m = *x.m;
@@ -31,7 +32,7 @@ struct A {
 			return *this;
 		}
 		~A() {
-			std::cout << "_del___\n";
+			// std::cout << "_del___\n";
 			_del++;
 			delete m;
 		}
@@ -211,20 +212,49 @@ void print( V& v ) {
 }
 
 template <class V>
-V& v_gen( V& v ) {
-	for ( int i = 0; i < 10; i++ ) {
-		v.push_back( i );
+V& v_gen( V& v, A* array_A, int s ) {
+	s = 3;
+	for ( int i = 0; i < s; i++ ) {
+		v.push_back( array_A[i] );
 		print( v );
 	}
+	v.insert( v.begin() + 1, 8, array_A[1] );
+	print( v );
 	return v;
 }
 
-int main() {
-	// typedef std::vector<int> vstd;
-	// vstd vs;
-	// print( v_gen<std::vector<int> >( vs ) );
+template <class V>
+void test() {
 
-	typedef ft::vector<int>	 vfft;
-	vfft vf;
-	print( v_gen<ft::vector<int> >( vf ) );
+	int array[5] = { 0, 1, 2, 3, 4 };
+	int s = ( sizeof( array ) / sizeof( *array ) );
+
+	A array_A[s];
+	for ( int i = 0; i < s; i++ )
+		array_A[i] = array[i];
+
+	V vs;
+	print( v_gen<V>( vs, array_A, s ) );
+}
+
+template <class V>
+void file_out( std::string out_name ) {
+	std::ofstream		out( out_name );
+	std::streambuf* coutbuf = std::cout.rdbuf();
+	std::cout.rdbuf( out.rdbuf() );
+	test<V>();
+	std::cout.rdbuf( coutbuf );
+}
+
+int main() {
+	file_out<ft::vector<A> >( "ft" );
+	file_out<std::vector<A> >( "std" );
+
+	
+	// test<std::vector<A> >();
+	// std::cout << _del << " " << _new << "\n";
+	// _del =_new = 0;
+	// test<ft::vector<A> >();
+	// std::cout << _del << " " << _new << "\n";
+	return 0;
 }

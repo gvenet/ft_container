@@ -13,7 +13,7 @@ class stack {
 		typedef typename container_type::const_reference const_reference;
 		typedef typename container_type::size_type			 size_type;
 
-	private:
+	protected:
 		container_type _c;
 
 	public:
@@ -36,37 +36,19 @@ class stack {
 		void push( const value_type& x ) { _c.push_back( x ); }
 
 		void pop() { _c.pop_back(); }
+
+		friend bool operator==( const stack& x, const stack& y ) { return x._c == y._c; }
+
+		friend bool operator<( const stack& x, const stack& y ) { return x._c < y._c; }
+
+		friend bool operator!=( const stack& x, const stack& y ) { return !( x._c == y._c ); }
+
+		friend bool operator>( const stack& x, const stack& y ) { return y < x; }
+
+		friend bool operator>=( const stack& x, const stack& y ) { return !( x < y ); }
+
+		friend bool operator<=( const stack& x, const stack& y ) { return !( y < x ); }
 };
-
-template <class T, class Container>
-bool operator==( const stack<T, Container>& x, const stack<T, Container>& y ) {
-	return x._c == y._c;
-}
-
-template <class T, class Container>
-bool operator<( const stack<T, Container>& x, const stack<T, Container>& y ) {
-	return x._c < y._c;
-}
-
-template <class T, class Container>
-bool operator!=( const stack<T, Container>& x, const stack<T, Container>& y ) {
-	return !( x._c == y._c );
-}
-
-template <class T, class Container>
-bool operator>( const stack<T, Container>& x, const stack<T, Container>& y ) {
-	return y < x;
-}
-
-template <class T, class Container>
-bool operator>=( const stack<T, Container>& x, const stack<T, Container>& y ) {
-	return !( x < y );
-}
-
-template <class T, class Container>
-bool operator<=( const stack<T, Container>& x, const stack<T, Container>& y ) {
-	return !( y < x );
-}
 
 } // namespace ft
 

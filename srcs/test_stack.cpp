@@ -2,7 +2,7 @@
 #include <stack>
 #include <vector>
 
-using namespace std;
+using namespace ft;
 
 template <typename T, size_t n>
 T* array_end( T ( &array )[n] ) {

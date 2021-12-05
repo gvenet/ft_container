@@ -291,7 +291,7 @@ class vector {
 		iterator erase( iterator position ) {
 			size_type pos_len = position.base() - _start;
 			for ( size_type i = pos_len; i < static_cast<size_type>( _end - _start ); i++ )
-				_start + i = _start[i + 1];
+				_start[i] = _start[i + 1];
 			_alloc.destroy( _end - 1 );
 			_end--;
 			return _start + pos_len;

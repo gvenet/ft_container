@@ -177,18 +177,23 @@ class vector {
 		void assign( InputIterator first, InputIterator last,
 								 typename ft::enable_if<!is_integral<InputIterator>::value, InputIterator>::type* =
 										 nullptr ) {
-			pointer		new_start;
 			size_type n = last - first;
-
-			new_start = _alloc.allocate( n );
-			for ( size_type i = 0; i < n; i++ ) {
-				_alloc.construct( new_start + i, *( first + i ) );
+			if ( n > capacity() ) {
+				pointer new_start;
+				new_start = _alloc.allocate( n );
+				for ( size_type i = 0; i < n; i++ )
+					_alloc.construct( new_start + i, first[i] );
+				_dealloc();
+				_set_pointers( new_start, new_start + n, new_start + n );
+			} else {
+				size_type i = 0;
+				for ( ; i < n; i++ )
+					_start[i] = first[i];
+				for ( ; i < capacity(); i++)
+					_alloc.destroy( _start + i );
+				_end = _start + n;
 			}
-			_dealloc();
-			_start = new_start;
-			_end = _start + n;
-			_end_capacity = _end;
-		} // range(1)
+		}
 
 		void assign( size_type n, const value_type& val ) {
 			pointer new_start;
@@ -199,16 +204,16 @@ class vector {
 					_alloc.construct( new_start + i, val );
 				}
 				_dealloc();
-				_start = new_start;
-				_end = _start + n;
-				_end_capacity = _end;
+				_set_pointers( new_start, new_start + n, new_start + n );
 			} else {
-				for ( size_type i = 0; i < n; i++ ) {
-					_alloc.construct( _start + i, val );
-				}
+				size_type i = 0;
+				for ( ; i < n; i++ )
+					_start[i] = val;
+				for ( ; i < capacity(); i++ )
+					_alloc.destroy( _start + i );
 				_end = _start + n;
 			}
-		} // fill (2)
+		}
 
 		void push_back( const value_type& val ) {
 			if ( !_start ) {

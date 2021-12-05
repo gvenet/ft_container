@@ -62,18 +62,14 @@ class vector {
 			*this = x;
 		}
 
-		~vector() {
-			// std::cout << "C_" << this->capacity() << " "
-			// 					<< "S_" << this->size() << "\n";
-			// std::cout << size() << "___\n";
-			_dealloc();
-		}
+		~vector() { _dealloc(); }
+
 		vector& operator=( const vector& x ) {
 			_dealloc();
 			_start = _alloc.allocate( x.capacity() );
 			_end = _start + x.size();
 			_end_capacity = _end;
-			for ( size_type i = 0; i < this->size(); i++ ) {
+			for ( size_type i = 0; i < size(); i++ ) {
 				_alloc.construct( _start + i, x.at( i ) );
 			}
 			return *this;
@@ -88,13 +84,13 @@ class vector {
 
 		const_iterator end() const { return ( _end ); }
 
-		reverse_iterator rbegin() { return ( reverse_iterator( this->end() ) ); }
+		reverse_iterator rbegin() { return ( reverse_iterator( end() ) ); }
 
-		const_reverse_iterator rbegin() const { return ( const_reverse_iterator( this->end() ) ); }
+		const_reverse_iterator rbegin() const { return ( const_reverse_iterator( end() ) ); }
 
-		reverse_iterator rend() { return ( reverse_iterator( this->begin() ) ); }
+		reverse_iterator rend() { return ( reverse_iterator( begin() ) ); }
 
-		const_reverse_iterator rend() const { return ( const_reverse_iterator( this->begin() ) ); }
+		const_reverse_iterator rend() const { return ( const_reverse_iterator( begin() ) ); }
 
 		////////////////////////////////////CAPACITY
 		size_type size() const { return ( _end - _start ); }
@@ -111,36 +107,35 @@ class vector {
 			pointer		new_start;
 			size_type next_capacity;
 
-			if ( sz > this->capacity() ) {
-				( sz > this->capacity() * 2 ) ? next_capacity = sz : next_capacity = this->capacity() * 2;
+			if ( sz > capacity() ) {
+				( sz > capacity() * 2 ) ? next_capacity = sz : next_capacity = capacity() * 2;
 				new_start = _alloc.allocate( next_capacity );
 				for ( size_type i = 0; i < sz; i++ )
-					_alloc.construct( new_start + i, ( i < this->size() ) ? *( _start + i ) : val );
+					_alloc.construct( new_start + i, ( i < size() ) ? *( _start + i ) : val );
 				_dealloc();
 				_start = new_start;
 				_end_capacity = new_start + next_capacity;
-			} else if ( sz > this->size() )
-				for ( size_type i = this->size(); i < sz; i++ )
+			} else if ( sz > size() )
+				for ( size_type i = size(); i < sz; i++ )
 					_alloc.construct( _start + i, val );
 			_end = _start + sz;
 		}
 
 		size_type capacity() const { return ( _end_capacity - _start ); }
 
-		bool empty() const { return ( !this->size() ); }
+		bool empty() const { return ( !size() ); }
 
 		void reserve( size_type n ) {
-			pointer		new_start;
-			size_type size = this->size();
+			pointer new_start;
 
-			if ( n > this->capacity() ) {
+			if ( n > capacity() ) {
 				new_start = _alloc.allocate( n );
-				for ( size_type i = 0; i < size; i++ ) {
+				for ( size_type i = 0; i < size(); i++ ) {
 					_alloc.construct( new_start + i, *( _start + i ) );
 				}
 				_dealloc();
 				_start = new_start;
-				_end = _start + size;
+				_end = _start + size();
 				_end_capacity = _start + n;
 			}
 		}
@@ -189,7 +184,7 @@ class vector {
 				size_type i = 0;
 				for ( ; i < n; i++ )
 					_start[i] = first[i];
-				for ( ; i < capacity(); i++)
+				for ( ; i < capacity(); i++ )
 					_alloc.destroy( _start + i );
 				_end = _start + n;
 			}
@@ -198,7 +193,7 @@ class vector {
 		void assign( size_type n, const value_type& val ) {
 			pointer new_start;
 
-			if ( n > this->capacity() ) {
+			if ( n > capacity() ) {
 				new_start = _alloc.allocate( n );
 				for ( size_type i = 0; i < n; i++ ) {
 					_alloc.construct( new_start + i, val );
@@ -233,8 +228,6 @@ class vector {
 			_alloc.construct( _end, val );
 			_end++;
 		}
-
-		// void pop_back() { this->erase( _end - 1 ); }
 
 		void pop_back() {
 			_alloc.destroy( _end );
@@ -316,8 +309,7 @@ class vector {
 		}
 
 		void clear() {
-			size_type size = this->size();
-			for ( size_type i = 0; i < size; i++ ) {
+			for ( size_type i = 0; i < size(); i++ ) {
 				_end--;
 				_alloc.destroy( _end );
 			}
@@ -335,8 +327,8 @@ class vector {
 
 	private:
 		void _dealloc( void ) {
-			this->clear();
-			_alloc.deallocate( _start, this->capacity() );
+			clear();
+			_alloc.deallocate( _start, capacity() );
 		}
 
 	private:

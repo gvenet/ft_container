@@ -61,33 +61,33 @@ void test_with(T (&array10)[10], T (&array7)[7]) {
   // push_back
   for (int i = 0; i < 10; i++) {
     vect.push_back(array10[i]);
-    std::cout << vect.size() << std::endl;
-    std::cout << vect.back() << std::endl;
+    // std::cout << vect.size() << std::endl;
+    // std::cout << vect.back() << std::endl;
   }
-  print_container_nl(vect);
+  // print_container_nl(vect);
 
   //insert iterator
   vect.insert(vect.begin() + 5, array7, array7 + 3);
 
   // insert 1
   typename V::iterator it = vect.insert(vect.begin(), array7[3]);
-  std::cout << *it << std::endl;
-  std::cout << it - vect.begin() << std::endl;
+  // std::cout << *it << std::endl;
+  // std::cout << it - vect.begin() << std::endl;
   *it = array7[4];
 
   // insert range
   vect.insert(vect.end() - 1, array7[5]);
   vect.insert(vect.begin() + 8, 6, array7[5]);
 
-  print_container_nl(vect);
+  // print_container_nl(vect);
 
   // pop_back
   for (int i = 0; i < 5; i++) {
     vect.pop_back();
-    std::cout << "vect.back() = " << vect.back() << std::endl;
-    std::cout << "vect.size() = " << vect.size() << std::endl;
+    // std::cout << "vect.back() = " << vect.back() << std::endl;
+    // std::cout << "vect.size() = " << vect.size() << std::endl;
   }
-  print_container_nl(vect);
+  // print_container_nl(vect);
 
   // erase, clear
   vect.clear();

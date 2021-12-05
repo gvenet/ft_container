@@ -1,2 +1,2 @@
 #! /bin/bash
-make && leaks -atExit -- ./bin/EX00
+make && leaks -atExit -- ./bin/ft_containers

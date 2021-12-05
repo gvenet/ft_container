@@ -82,12 +82,15 @@ void test_with(T (&array10)[10], T (&array7)[7]) {
   // print_container_nl(vect);
 
   // pop_back
-  for (int i = 0; i < 5; i++) {
+
+	for (int i = 0; i < 5; i++) {
     vect.pop_back();
-    // std::cout << "vect.back() = " << vect.back() << std::endl;
+
+
+		// std::cout << "vect.back() = " << vect.back() << std::endl;
     // std::cout << "vect.size() = " << vect.size() << std::endl;
   }
-  // print_container_nl(vect);
+  print_container_nl(vect);
 
   // erase, clear
   vect.clear();

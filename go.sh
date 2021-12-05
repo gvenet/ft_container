@@ -4,5 +4,5 @@
 
 make
 ./bin/ft_containers
-echo "diff =>"
-diff ft std
+# echo "diff =>"
+# diff ft std

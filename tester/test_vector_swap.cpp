@@ -24,10 +24,10 @@ void test() {
 	V vect1;
 	V vect2;
 
-	for ( int i = 0; i < 10; i++ ) {
+	for ( int i = 10; i < 20; i++ ) {
 		vect1.push_back( i );
 	}
-	for ( int i = 10; i < 20; i++ ) {
+	for ( int i = 20; i < 30; i++ ) {
 		vect2.push_back( i );
 	}
 
@@ -38,25 +38,33 @@ void test() {
 	int&									r1 = vect1[5];
 	int&									r2 = vect2[5];
 
+	std::cout << "V1__ : ";
 	print_container_nl( vect1 );
+	std::cout << "V2__ : ";
 	print_container_nl( vect2 );
+	std::cout << "SWAP__\n";
 	swap( vect1, vect2 );
+	std::cout << "V1__ : ";
 	print_container_nl( vect1 );
+	std::cout << "V2__ : ";
 	print_container_nl( vect2 );
+	std::cout << "\n";
 
-	std::cout << *it1 << std::endl;
-	std::cout << *it2 << std::endl;
-	std::cout << *p1 << std::endl;
-	std::cout << *p2 << std::endl;
-	std::cout << r1 << std::endl;
-	std::cout << r2 << std::endl;
+	std::cout << "*IT1__ " << *it1 << std::endl;
+	std::cout << "*IT2__ " << *it2 << std::endl;
+	std::cout << "*P1__ " << *p1 << std::endl;
+	std::cout << "*P2__ " << *p2 << std::endl;
+	std::cout << "*R1__ " << r1 << std::endl;
+	std::cout << "*R2__ " << r2 << std::endl;
 	*it1 = -1;
 	*it2 = -2;
 	*p1 = -3;
 	*p2 = -4;
 	r1 = -5;
 	r2 = -6;
+	std::cout << "\nV1__ : ";
 	print_container_nl( vect1 );
+	std::cout << "V2__ : ";
 	print_container_nl( vect2 );
 }
 
@@ -73,8 +81,10 @@ int main() {
 	// file_out<ft::vector<int> >( "ft" );
 	// file_out<std::vector<int> >( "std" );
 
+	std::cout << "___FT___\n";
 	test<ft::vector<int> >();
 	std::cout << std::endl;
+	std::cout << "___STD___\n";
 	test<std::vector<int> >();
 	return 0;
 }

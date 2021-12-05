@@ -282,7 +282,7 @@ class vector {
 
 		iterator erase( iterator position ) {
 			size_type pos_len = position.base() - _start;
-			for ( size_type i = pos_len; i < size(); i++ )
+			for ( size_type i = pos_len; i < static_cast<size_type>( _end - _start ); i++ )
 				_start + i = _start[i + 1];
 			_alloc.destroy( _end - 1 );
 			_end--;
@@ -297,11 +297,9 @@ class vector {
 		}
 
 		void swap( vector& x ) {
-			vector<T> tmp;
-
-			tmp = x;
-			x = *this;
-			*this = tmp;
+			std::swap( _start, x._start );
+			std::swap( _end, x._end );
+			std::swap( _end_capacity, x._end_capacity );
 		}
 
 		void clear() {

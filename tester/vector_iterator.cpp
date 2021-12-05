@@ -1,4 +1,6 @@
 #include "../inc/vector.hpp"
+#include <ios>
+#include <fstream>
 #include <iostream>
 #include <vector>
 
@@ -115,7 +117,7 @@ void test() {
 		intVect.push_back( i );
 	V const cIntVect( intVect );
 
-	std::boolalpha( std::cout );
+	std::boolalpha(std::cout);
 	std::cout << "vector::iterator" << std::endl << std::endl;
 	test_iterator_methods( intVect.begin() );
 	std::cout << std::endl;
@@ -129,7 +131,31 @@ void test() {
 	test_comparison_iters<V>();
 }
 
-int main() {
-	test<std::vector<int> >();
-	// test<ft::V>();
+// int main() {
+// 	std::cout << "\n############___FT___###############\n";
+// 	test<ft::vector<int> >();
+// 	std::cout << "\n############___STD___###############\n";
+// 	// test<std::vector<int> >();
+// }
+
+template <class V>
+void file_out( std::string out_name ) {
+	std::ofstream		out( out_name );
+	std::streambuf* coutbuf = std::cout.rdbuf();
+	std::cout.rdbuf( out.rdbuf() );
+	test<V>();
+	std::cout.rdbuf( coutbuf );
 }
+
+int main() {
+	file_out<ft::vector<int> >( "ft" );
+	file_out<std::vector<int> >( "std" );
+
+	// std::cout << "___FT___\n";
+	// test<ft::vector<int> >();
+	// std::cout << std::endl;
+	// std::cout << "___STD___\n";
+	// test<std::vector<int> >();
+	return 0;
+}
+

@@ -37,20 +37,6 @@ class bst {
 			_assign( _firstNode, Node( value_type(), true ) );
 		}
 
-		bst( const bst& __t ) { *this = __t; }
-
-		bst& operator=( const bst& __t ) {
-			if ( this != &__t ) {
-				// _comp = __t._comp;
-				if ( !empty() )
-					clear();
-				// _firstNode = __t._firstNode;
-				// _lastNode = __t._lastNode;
-				insert( __t.begin(), __t.end() );
-			}
-			return *this;
-		}
-
 		~bst() {
 			clear();
 			_delete( _lastNode );

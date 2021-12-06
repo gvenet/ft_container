@@ -288,22 +288,51 @@ class vector {
 			_set_pointers( new_start, new_end, new_start + new_capacity );
 		}
 
+		// iterator erase( iterator position ) {
+		// 	size_type pos_len = position.base() - _start;
+		// 	for ( size_type i = pos_len; i < static_cast<size_type>( _end - _start ); i++ )
+		// 		_start[i] = _start[i + 1];
+		// 	_alloc.destroy( _end - 1 );
+		// 	_end--;
+		// 	return _start + pos_len;
+		// }
+
+		// iterator erase( iterator first, iterator last ) {
+		// 	while ( first != last ) {
+		// 		erase( first );
+		// 		first++;
+		// 	}
+		// }
+
 		iterator erase( iterator position ) {
-			size_type pos_len = position.base() - _start;
-			for ( size_type i = pos_len; i < static_cast<size_type>( _end - _start ); i++ )
-				_start[i] = _start[i + 1];
-			_alloc.destroy( _end - 1 );
-			_end--;
-			return _start + pos_len;
+			difference_type ps = position - begin();
+			pointer					p = _start + ps;
+			_move( p + 1, _end, p );
+			_alloc.destroy( --_end );
+			return p;
 		}
 
 		iterator erase( iterator first, iterator last ) {
-			while ( first != last ) {
-				erase( first );
-				first++;
+			pointer p = _start + ( first - begin() );
+			if ( first != last ) {
+				p = _move( p + ( last - first ), _end, p );
+				for ( pointer i = p; i < _end; i++ )
+					_alloc.destroy( i );
+				_end = p;
 			}
+			return p;
 		}
 
+	private:
+		template <class _Tp, class _Up>
+		pointer _move( _Tp* __first, _Tp* __last, _Up* __result ) {
+			const size_t __n = static_cast<size_t>( __last - __first );
+			if ( __n > 0 )
+				std::memmove( __result, __first, __n * sizeof( _Up ) );
+			return __result + __n;
+		}
+
+	public:
 		void swap( vector& x ) {
 			std::swap( _start, x._start );
 			std::swap( _end, x._end );

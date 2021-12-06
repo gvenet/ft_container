@@ -1,7 +1,9 @@
 #include "../inc/map.hpp"
+#include <ctime>
 #include <fstream>
 #include <iostream>
 #include <map>
+#include <sys/time.h>
 
 template <typename T_L, typename T_R>
 std::ostream& operator<<( std::ostream& os, const std::map<T_L, T_R>& m ) {
@@ -39,10 +41,22 @@ void test_insert_copy( P ( *make_pair )( T_L, T_R ) ) {
 	for ( int i = 0; i < 1000; ++i ) {
 		map_int.insert( make_pair( rand(), rand() ) );
 	}
+	M copy;
 	for ( int i = 0; i < 1000; ++i ) {
-		M copy = map_int;
+		copy = map_int;
 	}
 }
+
+// template <class M, class P, typename T_L, typename T_R>
+// void exec_time( void (*f)(M, P)) {
+// 	std::clock_t start, end;
+// 	start = clock();
+// 	f();
+// 	end = clock();
+// 	double time_taken = double( end - start ) / double( CLOCKS_PER_SEC );
+// 	std::cout << std::fixed << time_taken << std::setprecision( 5 );
+// 	std::cout << " sec " << std::endl;
+// }
 
 template <typename T_L, typename T_R>
 void type_choice() {
@@ -61,5 +75,5 @@ void type_choice() {
 
 int main() {
 	type_choice<int, int>();
-	// type_choice<char, int>();
+	// void ( *func )( ft::map<int, int>, ft::pair<int, int>, int, int );
 }

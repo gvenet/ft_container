@@ -55,7 +55,8 @@ class map {
 		map( const map& x ) { *this = x; }
 
 		map& operator=( const map& x ) {
-			clear();
+			if ( !empty() )
+				clear();
 			insert( x.begin(), x.end() );
 			return *this;
 		}
@@ -120,9 +121,7 @@ class map {
 
 		//// SWAP ////
 
-		void swap( map& x ) {
-			_bst.swap(x._bst);
-		}
+		void swap( map& x ) { _bst.swap( x._bst ); }
 
 		//// CLEAR ////
 

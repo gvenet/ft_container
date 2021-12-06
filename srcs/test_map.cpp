@@ -3,9 +3,8 @@
 #include <fstream>
 #include <iostream>
 #include <map>
-#include <sys/time.h>
 #include <string>
-
+#include <sys/time.h>
 
 template <typename T_L, typename T_R>
 std::ostream& operator<<( std::ostream& os, const std::map<T_L, T_R>& m ) {
@@ -21,9 +20,24 @@ std::ostream& operator<<( std::ostream& os, const ft::map<T_L, T_R>& m ) {
 	return os;
 }
 
+
+///// INSERT_ACCES_TEST ////////
+template <class M, class P, typename T_L, typename T_R>
+void test_insert_access( P ( *make_pair )( T_L, T_R ) ) {
+	M map_int;
+	for ( int i = 0; i < 10000; ++i ) {
+		map_int.insert( make_pair( rand(), rand() ) );
+	}
+	int sum = 0;
+	for ( int i = 0; i < 100000; i++ ) {
+		int access = rand() % map_int.size();
+		sum += map_int[access];
+	}
+}
+
+////// INSERT_COPY_TEST //////////
 template <class M, class P, typename T_L, typename T_R>
 void test_insert_copy( P ( *make_pair )( T_L, T_R ) ) {
-
 	M map_int;
 	for ( int i = 0; i < 1000; ++i ) {
 		map_int.insert( make_pair( rand(), rand() ) );
@@ -34,19 +48,6 @@ void test_insert_copy( P ( *make_pair )( T_L, T_R ) ) {
 	}
 }
 
-template <class M, class P, typename T_L, typename T_R>
-void test_insert_access( P ( *make_pair )( T_L, T_R ) ) {
-	M map_int;
-	for ( int i = 0; i < 10000; ++i ) {
-		map_int.insert( make_pair( rand(), rand() ) );
-	}
-
-	int sum = 0;
-	for ( int i = 0; i < 100000; i++ ) {
-		int access = rand() % map_int.size();
-		sum += map_int[access];
-	}
-}
 
 template <typename func_type, typename pair_ptr>
 double exec_time( func_type* test_func, pair_ptr* make_pair ) {
@@ -62,13 +63,12 @@ double exec_time( func_type* test_func, pair_ptr* make_pair ) {
 void ratio( double ft, double std ) {
 	double ratio = ft / std;
 	std::cout << "ratio ft / std = ";
-	if ( ratio > 20) 
+	if ( ratio > 20 )
 		std::cout << "\033[01;31m";
 	else
 		std::cout << "\033[01;32m";
 	std::cout << ratio << " \033[0m\n";
 }
-
 
 template <typename T_L, typename T_R>
 void type_choice() {
@@ -84,27 +84,25 @@ void type_choice() {
 
 	double clock_ft;
 	double clock_std;
-	
+
 	std::cout << "__test_insert_access\n";
 	std::cout << "__FT__  : ";
 	clock_ft = exec_time<ft_func_type, ft_pair_ptr>( &(test_insert_access<ft_map, ft_pair>),
-																				&( ft::make_pair ) );
+																									 &( ft::make_pair ) );
 
 	std::cout << "__STD__ : ";
 	clock_std = exec_time<std_func_type, std_pair_ptr>( &(test_insert_access<std_map, std_pair>),
-																					&( std::make_pair ) );
-	ratio(clock_ft, clock_std);
+																											&( std::make_pair ) );
+	ratio( clock_ft, clock_std );
 
-
-	
 	std::cout << "__test_insert_copy\n";
 	std::cout << "__FT__  : ";
 	clock_ft = exec_time<ft_func_type, ft_pair_ptr>( &(test_insert_copy<ft_map, ft_pair>),
-																				&( ft::make_pair ) );
+																									 &( ft::make_pair ) );
 	std::cout << "__STD__ : ";
 	clock_std = exec_time<std_func_type, std_pair_ptr>( &(test_insert_copy<std_map, std_pair>),
-																					&( std::make_pair ) );
-	ratio(clock_ft, clock_std);
+																											&( std::make_pair ) );
+	ratio( clock_ft, clock_std );
 }
 
 int main() {
@@ -113,7 +111,5 @@ int main() {
 	std::cout << "\n\nTEST__CHAR__INT\n";
 	type_choice<char, int>();
 
-
-	
 	return 0;
 }

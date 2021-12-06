@@ -234,8 +234,6 @@ class vector {
 			_end++;
 		}
 
-		// void pop_back() { this->erase( _end - 1 ); }
-
 		void pop_back() { _alloc.destroy( --_end ); }
 
 		iterator insert( iterator position, const value_type& val ) {

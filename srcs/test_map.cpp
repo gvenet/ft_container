@@ -4,6 +4,8 @@
 #include <iostream>
 #include <map>
 #include <sys/time.h>
+#include <string>
+
 
 template <typename T_L, typename T_R>
 std::ostream& operator<<( std::ostream& os, const std::map<T_L, T_R>& m ) {
@@ -20,22 +22,6 @@ std::ostream& operator<<( std::ostream& os, const ft::map<T_L, T_R>& m ) {
 }
 
 template <class M, class P, typename T_L, typename T_R>
-void test_insert_access( P ( *make_pair )( T_L, T_R ) ) {
-	M map_int;
-	for ( int i = 0; i < 10000; ++i ) {
-		map_int.insert( make_pair( rand(), rand() ) );
-	}
-
-	int sum = 0;
-	for ( int i = 0; i < 100000; i++ ) {
-		int access = rand() % map_int.size();
-		(void)access;
-		sum += map_int[access];
-	}
-	std::cout << "test_insert_access\n";
-}
-
-template <class M, class P, typename T_L, typename T_R>
 void test_insert_copy( P ( *make_pair )( T_L, T_R ) ) {
 
 	M map_int;
@@ -49,47 +35,85 @@ void test_insert_copy( P ( *make_pair )( T_L, T_R ) ) {
 }
 
 template <class M, class P, typename T_L, typename T_R>
-void exec_time( void ( *f )( P ) ) {
+void test_insert_access( P ( *make_pair )( T_L, T_R ) ) {
+	M map_int;
+	for ( int i = 0; i < 10000; ++i ) {
+		map_int.insert( make_pair( rand(), rand() ) );
+	}
+
+	int sum = 0;
+	for ( int i = 0; i < 100000; i++ ) {
+		int access = rand() % map_int.size();
+		sum += map_int[access];
+	}
+}
+
+template <typename func_type, typename pair_ptr>
+double exec_time( func_type* test_func, pair_ptr* make_pair ) {
 	std::clock_t start, end;
 	start = clock();
-	f();
+	test_func( make_pair );
 	end = clock();
 	double time_taken = double( end - start ) / double( CLOCKS_PER_SEC );
-	std::cout << std::fixed << time_taken << std::setprecision( 5 );
-	std::cout << " sec " << std::endl;
+	std::cout << std::fixed << time_taken << std::setprecision( 4 ) << std::endl;
+	return time_taken;
 }
+
+void ratio( double ft, double std ) {
+	double ratio = ft / std;
+	std::cout << "ratio ft / std = ";
+	if ( ratio > 20) 
+		std::cout << "\033[01;31m";
+	else
+		std::cout << "\033[01;32m";
+	std::cout << ratio << " \033[0m\n";
+}
+
 
 template <typename T_L, typename T_R>
 void type_choice() {
-	std::cout << "__test_insert_access\n";
-	std::cout << "__FT__\n";
-	test_insert_access<ft::map<T_L, T_R>, ft::pair<T_L, T_R>, T_L, T_R>( &( ft::make_pair ) );
-	std::cout << "__STD__\n";
-	test_insert_access<std::map<T_L, T_R>, std::pair<T_L, T_R>, T_L, T_R>( &( std::make_pair ) );
+	typedef ft::map<T_L, T_R>	 ft_map;
+	typedef ft::pair<T_L, T_R> ft_pair;
+	typedef ft_pair( ft_pair_ptr )( T_L, T_R );
+	typedef void( ft_func_type )( ft_pair_ptr );
 
+	typedef std::map<T_L, T_R>	std_map;
+	typedef std::pair<T_L, T_R> std_pair;
+	typedef std_pair( std_pair_ptr )( T_L, T_R );
+	typedef void( std_func_type )( std_pair_ptr );
+
+	double clock_ft;
+	double clock_std;
+	
+	std::cout << "__test_insert_access\n";
+	std::cout << "__FT__  : ";
+	clock_ft = exec_time<ft_func_type, ft_pair_ptr>( &(test_insert_access<ft_map, ft_pair>),
+																				&( ft::make_pair ) );
+
+	std::cout << "__STD__ : ";
+	clock_std = exec_time<std_func_type, std_pair_ptr>( &(test_insert_access<std_map, std_pair>),
+																					&( std::make_pair ) );
+	ratio(clock_ft, clock_std);
+
+
+	
 	std::cout << "__test_insert_copy\n";
-	std::cout << "__FT__\n";
-	test_insert_copy<ft::map<T_L, T_R>, ft::pair<T_L, T_R>, T_L, T_R>( &( ft::make_pair ) );
-	std::cout << "__STD__\n";
-	test_insert_copy<std::map<T_L, T_R>, std::pair<T_L, T_R>, T_L, T_R>( &( std::make_pair ) );
+	std::cout << "__FT__  : ";
+	clock_ft = exec_time<ft_func_type, ft_pair_ptr>( &(test_insert_copy<ft_map, ft_pair>),
+																				&( ft::make_pair ) );
+	std::cout << "__STD__ : ";
+	clock_std = exec_time<std_func_type, std_pair_ptr>( &(test_insert_copy<std_map, std_pair>),
+																					&( std::make_pair ) );
+	ratio(clock_ft, clock_std);
 }
 
 int main() {
-	// type_choice<int, int>();
+	std::cout << "TEST__INT__INT\n";
+	type_choice<int, int>();
+	std::cout << "\n\nTEST__CHAR__INT\n";
+	type_choice<char, int>();
 
-	// void ( *f )( std::pair<int, int> );
-	// f = &( test_insert_access<std::map<int, int>, std::pair<int, int>, int, int> );
-
-	// std::make_pair<int, int>( 42, 12 );
-	std::pair<int, int> ( *make_pair )( int, int ) = ( &( std::make_pair ) );
-
-	std::cout << make_pair( 42, 12 ).first << "\n";
 
 	
-	
-	test_insert_access<std::map<int, int>, std::pair<int, int> >( make_pair );
-	
-	// void ( *f )( std::pair<int, int> ) = ( &( test_insert_access<std::map<int, int>, std::pair<int, int>, int, int> ) );
-
-	// (void)f;
+	return 0;
 }

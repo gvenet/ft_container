@@ -87,9 +87,9 @@ int main() {
 
 	
 	
-	test_insert_access<std::map<int, int>, std::pair<int, int>, int, int>( make_pair );
+	test_insert_access<std::map<int, int>, std::pair<int, int> >( make_pair );
 	
-	void ( *f )( std::pair<int, int> ) = ( &( test_insert_access<std::map<int, int>, std::pair<int, int>, int, int> ) );
+	// void ( *f )( std::pair<int, int> ) = ( &( test_insert_access<std::map<int, int>, std::pair<int, int>, int, int> ) );
 
 	// (void)f;
 }

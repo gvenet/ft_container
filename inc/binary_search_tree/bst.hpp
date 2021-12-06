@@ -29,7 +29,8 @@ class bst {
 		typedef Compare															 value_compare;
 		typedef Node_Alloc													 allocator_type;
 
-		bst( Node_Alloc nodeAlloc = Node_Alloc() ) : _nodeAlloc( nodeAlloc ), _root(), _comp() {
+		bst( Node_Alloc nodeAlloc = Node_Alloc() )
+				: _nodeAlloc( nodeAlloc ), _root(), _comp(), _size() {
 			_lastNode = _nodeAlloc.allocate( 1 );
 			_assign( _lastNode, Node( value_type(), true ) );
 			_firstNode = _nodeAlloc.allocate( 1 );
@@ -80,12 +81,7 @@ class bst {
 		//// CAPACITY ////
 		bool empty() const { return !_root; }
 
-		size_type size() const {
-			size_type c = 0;
-			for ( iterator it = begin(); it != end(); it++ )
-				c++;
-			return c;
-		}
+		size_type size() const { return _size; }
 
 		size_type max_size() const {
 			return ft::min<size_type>( std::allocator_traits<Node_Alloc>::max_size( _nodeAlloc ),
@@ -126,6 +122,7 @@ class bst {
 			if ( !node ) {
 				node = _nodeAlloc.allocate( 1 );
 				_nodeAlloc.construct( node, Node( val, false ) );
+				_size++;
 				ret = ft::make_pair( node, true );
 			} else if ( _comp( val.first, node->value.first ) ) {
 				ret = _insert( val, node->left );
@@ -224,6 +221,7 @@ class bst {
 			if ( position == end() )
 				return 0;
 			node_pointer cur( position.base() );
+			_size--;
 			if ( cur->left && cur->left->is_limit == true && cur->right &&
 					 cur->right->is_limit == true ) {
 				_delete( _root );
@@ -368,6 +366,7 @@ class bst {
 		node_pointer _firstNode;
 		node_pointer _lastNode;
 		Compare			 _comp;
+		size_type		 _size;
 };
 
 } // namespace ft

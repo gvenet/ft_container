@@ -299,9 +299,8 @@ class vector {
 			pointer p = _start + ( first - begin() );
 			if ( first != last ) {
 				p = _move( p + ( last - first ), _end, p );
-				for ( pointer i = p; i < _end; i++ )
-					_alloc.destroy( i );
-				_end = p;
+				while ( _end > p )
+					_alloc.destroy( --_end );
 			}
 			return p;
 		}

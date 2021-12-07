@@ -54,10 +54,7 @@ void ratio( double ft, double std ) {
 	std::cout << YLW << "ft  = " << CBN << ft << std::endl;
 	std::cout << YLW << "std = " << CBN << std << std::endl;
 	std::cout << YLW << "ratio ft / std = " << CBN;
-	if ( ratio > 20 )
-		std::cout << GRN;
-	else
-		std::cout << RED;
+	( ratio > 20 ) ? std::cout << GRN :	std::cout << RED;
 	std::cout << ratio << CBN << std::endl;
 }
 

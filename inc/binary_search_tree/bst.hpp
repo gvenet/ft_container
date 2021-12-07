@@ -171,7 +171,6 @@ class bst {
 		template <typename key_type>
 		const_iterator find( const key_type& key ) const {
 			node_pointer ret = _find( key, _root );
-
 			if ( !ret )
 				return end();
 			return ret;
@@ -291,6 +290,7 @@ class bst {
 
 		//// UTILS ////
 
+	private:
 		void _delete( node_pointer& node ) {
 			_nodeAlloc.destroy( node );
 			_nodeAlloc.deallocate( node, 1 );
@@ -302,7 +302,6 @@ class bst {
 			_nodeAlloc.construct( addr, value );
 		}
 
-	private:
 		node_pointer _findMax() {
 			node_pointer node = _root;
 			while ( node->right )

@@ -10,7 +10,7 @@ typedef void(func_type)();
 
 void test_insert_access_ft() {
 	ft::map<int, int> map_int;
-	for ( int i = 0; i < 10000; ++i ) {
+	for ( int i = 0; i < 1000000; ++i ) {
 		map_int.insert( ft::make_pair( rand(), rand() ) );
 	}
 	int sum = 0;
@@ -22,7 +22,7 @@ void test_insert_access_ft() {
 
 void test_insert_access_std() {
 	std::map<int, int> map_int;
-	for ( int i = 0; i < 10000; ++i ) {
+	for ( int i = 0; i < 1000000; ++i ) {
 		map_int.insert( std::make_pair( rand(), rand() ) );
 	}
 	int sum = 0;

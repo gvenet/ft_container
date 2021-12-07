@@ -8,7 +8,7 @@ SRC		:= $(wildcard $(SRC_DIR)*.cpp) $(wildcard $(SRC_DIR)*/*.cpp)
 OBJ		:= $(SRC:$(SRC_DIR)%.cpp=$(OBJ_DIR)%.o)
 INC		:= $(wildcard $(INC_DIR)*.hpp) $(wildcard $(INC_DIR)*/*.hpp)
 CC		:= clang++
-CFLAGS	:= -Wall -Wextra -Werror -std=c++98 
+CFLAGS	:= -Wall -Wextra -Werror -std=c++98 -fsanitize=address
 
 all: $(NAME)
 	echo "$^ \033[32mrdy 2 use\033[0m"
@@ -16,7 +16,7 @@ all: $(NAME)
 	echo ""
 
 $(NAME):  $(OBJ) | $(BIN_DIR)
-	$(CC) $^ -o $@
+	$(CC) $^ -o $@ -fsanitize=address
 	echo "$@ (exec) \033[32mcreated\033[0m"
 	echo "--------------------------------------------"
 

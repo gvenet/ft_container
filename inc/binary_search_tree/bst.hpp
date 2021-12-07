@@ -124,7 +124,7 @@ class bst {
 				_nodeAlloc.construct( node, Node( val, false ) );
 				_size++;
 				ret = ft::make_pair( node, true );
-			} else if ( _comp( val.first, node->value.first ) ) {
+			} else if ( _comp( val.first, node->value.first ) ) { //_comp(x < y)
 				ret = _insert( val, node->left );
 				node->left->parent = node;
 			} else if ( _comp( node->value.first, val.first ) ) {

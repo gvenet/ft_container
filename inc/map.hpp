@@ -91,8 +91,10 @@ class map {
 
 		mapped_type& operator[]( const key_type& k ) {
 			iterator tmp = find( k );
-			insert( ft::make_pair( k, mapped_type() ) );
-			tmp = find( k );
+			if ( tmp == end() ) {
+				insert( ft::make_pair( k, mapped_type() ) );
+				tmp = find( k );
+			}
 			return tmp->second;
 		}
 

@@ -32,7 +32,7 @@ void test_insert_access_std() {
 	}
 }
 
-double exec_time( func_type* test_func ) {
+double exec_time( func_type* test_func) {
 	std::clock_t start, end;
 	start = clock();
 	test_func();

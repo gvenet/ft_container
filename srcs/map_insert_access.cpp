@@ -6,7 +6,9 @@
 #include <string>
 #include <sys/time.h>
 
-void test_insert_access() {
+typedef void(func_type)();
+
+void test_insert_access_ft() {
 	ft::map<int, int> map_int;
 	for ( int i = 0; i < 10000; ++i ) {
 		map_int.insert( ft::make_pair( rand(), rand() ) );
@@ -18,7 +20,19 @@ void test_insert_access() {
 	}
 }
 
-double exec_time( void ( *test_func )() ) {
+void test_insert_access_std() {
+	std::map<int, int> map_int;
+	for ( int i = 0; i < 10000; ++i ) {
+		map_int.insert( std::make_pair( rand(), rand() ) );
+	}
+	int sum = 0;
+	for ( int i = 0; i < 100000; i++ ) {
+		int access = rand() % map_int.size();
+		sum += map_int[access];
+	}
+}
+
+double exec_time( func_type* test_func ) {
 	std::clock_t start, end;
 	start = clock();
 	test_func();
@@ -40,7 +54,9 @@ void ratio( double ft, double std ) {
 }
 
 int main() {
-	double ft = exec_time( &test_insert_access );
-	ratio( ft, 0.0815 );
+	double ft = exec_time( &test_insert_access_ft );
+	double std = exec_time( &test_insert_access_std );
+	ratio( ft, std );
+
 	return 0;
 }

@@ -90,11 +90,8 @@ class map {
 		//// ELEMENT ACCES ////
 
 		mapped_type& operator[]( const key_type& k ) {
+			insert( ft::make_pair( k, mapped_type() ) );
 			iterator tmp = find( k );
-			if ( tmp == end() ) {
-				insert( ft::make_pair( k, mapped_type() ) );
-				tmp = find( k );
-			}
 			return tmp->second;
 		}
 

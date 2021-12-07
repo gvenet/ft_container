@@ -49,19 +49,18 @@ double exec_time( func_type* test_func ) {
 	return time_taken;
 }
 
-void ratio( double ft, double std ) {
+void ratio( const double& ft, const double& std ) {
 	double ratio = ft / std;
 	std::cout << YLW << "ft  = " << CBN << ft << std::endl;
 	std::cout << YLW << "std = " << CBN << std << std::endl;
 	std::cout << YLW << "ratio ft / std = " << CBN;
-	( ratio > 20 ) ? std::cout << GRN :	std::cout << RED;
+	( ratio > 20 ) ? std::cout << GRN : std::cout << RED;
 	std::cout << ratio << CBN << std::endl;
 }
 
 int main() {
-	double ft = exec_time( &test_insert_access_ft );
-	double std = exec_time( &test_insert_access_std );
+	const double ft = exec_time( &test_insert_access_ft );
+	const double std = exec_time( &test_insert_access_std );
 	ratio( ft, std );
-
 	return 0;
 }

@@ -6,6 +6,9 @@
 #include <string>
 #include <sys/time.h>
 
+#define INS 100
+#define ACC 100
+
 template <typename T_L, typename T_R>
 std::ostream& operator<<( std::ostream& os, const std::map<T_L, T_R>& m ) {
 	for ( typename std::map<T_L, T_R>::const_iterator it = m.begin(); it != m.end(); it++ )
@@ -20,16 +23,15 @@ std::ostream& operator<<( std::ostream& os, const ft::map<T_L, T_R>& m ) {
 	return os;
 }
 
-
 ///// INSERT_ACCES_TEST ////////
 template <class M, class P, typename T_L, typename T_R>
 void test_insert_access( P ( *make_pair )( T_L, T_R ) ) {
 	M map_int;
-	for ( int i = 0; i < 100; ++i ) {
+	for ( int i = 0; i < INS; ++i ) {
 		map_int.insert( make_pair( rand(), rand() ) );
 	}
 	int sum = 0;
-	for ( int i = 0; i < 100; i++ ) {
+	for ( int i = 0; i < ACC; i++ ) {
 		int access = rand() % map_int.size();
 		sum += map_int[access];
 	}
@@ -39,15 +41,14 @@ void test_insert_access( P ( *make_pair )( T_L, T_R ) ) {
 template <class M, class P, typename T_L, typename T_R>
 void test_insert_copy( P ( *make_pair )( T_L, T_R ) ) {
 	M map_int;
-	for ( int i = 0; i < 10; ++i ) {
+	for ( int i = 0; i < INS; ++i ) {
 		map_int.insert( make_pair( rand(), rand() ) );
 	}
 	M copy;
-	for ( int i = 0; i < 10; ++i ) {
+	for ( int i = 0; i < ACC; ++i ) {
 		copy = map_int;
 	}
 }
-
 
 template <typename func_type, typename pair_ptr>
 double exec_time( func_type* test_func, pair_ptr* make_pair ) {

@@ -124,16 +124,26 @@ class bst {
 				_nodeAlloc.construct( node, Node( val, false ) );
 				_size++;
 				ret = ft::make_pair( node, true );
-			} else if ( _comp( val.first, node->value.first ) ) { //_comp(x < y)
+			} else if ( _comp( val.first, node->value.first ) ) { //_comp(x < y) == true
 				ret = _insert( val, node->left );
+				node->left_depth++;
 				node->left->parent = node;
+				_balancing(node);
 			} else if ( _comp( node->value.first, val.first ) ) {
 				ret = _insert( val, node->right );
+				node->right_depth++;
 				node->right->parent = node;
+				_balancing(node);
 			}
 			return ret;
 		}
 
+		void _balancing( node_pointer& node ) {
+				if ( node->left_depth - node->right_depth < -1 ) {
+					
+				}
+		}
+		
 		void _reset_limits() {
 			if ( _firstNode->parent )
 				_firstNode->parent->left = nullptr;

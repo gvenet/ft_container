@@ -1,10 +1,12 @@
 #ifndef MAP_HPP
 #define MAP_HPP
 
-#include <memory>
-
 #include "binary_search_tree/bst.hpp"
+#include "binary_search_tree/bst_node.hpp"
 #include "utils/pair.hpp"
+#include <math.h>
+#include <memory>
+#include <queue>
 
 namespace ft {
 
@@ -180,6 +182,102 @@ class map {
 		}
 
 		allocator_type get_allocator() const { return _bst.get_allocator(); }
+
+	public:
+		void print_tree() {
+
+			// std::cout<<"dans print tree\n";
+			int i = 0;
+			int tour = 0;
+			// std::cout<<"dans print tree1.25"<<head->getKey()<<"\n";
+			int space = pow( 2, _bst.height( _bst.get_root() ) - 1 );
+
+			// std::cout<<"dans print tree1.35\n";
+			int																		vide = 0;
+			int																		v = 1;
+			int																		debug = 0;
+			std::queue<ft::bst_node<value_type>*> n;
+			// std::cout<<"dans print tree1.5\n";
+
+			// std::cout<<"dans print tree1.75\n";
+			ft::bst_node<value_type>* temp;
+
+			ft::bst_node<value_type>* temp_head = _bst.get_root();
+
+			n.push( temp_head );
+			ft::bst_node<value_type>* temp2;
+			for ( int x = 0; x < space; x++ ) {
+				std::cout << " ";
+			}
+			while ( !n.empty() ) //&& debug < 15)
+			{
+
+				// std::cout<<"dans print tree2\n";
+				debug++;
+				temp = n.front();
+				n.pop();
+
+				if ( temp->getKey() == '*' )
+					std::cout << (char)( temp->getKey() );
+				else
+					std::cout << ( temp->getKey() );
+				i++;
+				if ( i != 0 && i == pow( 2, tour ) / 2 )
+					std::cout << " ";
+
+				if ( i == pow( 2, tour ) ) {
+					if ( v == 0 ) {
+
+						std::cout << "\n";
+						return;
+					}
+					std::cout << "\n";
+					for ( int x = 0; x < space - pow( 2, tour ); x++ ) {
+						std::cout << " ";
+					}
+					tour++;
+					i = 0;
+					v = 0;
+				}
+				if ( temp->getKey() == '*' ) {
+					pair<const char, int> p1( '*', 0 );
+					temp2 = _bst.get_allocator().allocate( 1 );
+					_bst.get_allocator().construct( temp2, ft::bst_node<value_type>( p1 ) );
+					n.push( temp2 );
+					temp2 = _bst.get_allocator().allocate( 1 );
+					_bst.get_allocator().construct( temp2, ft::bst_node<value_type>( p1 ) );
+					n.push( temp2 );
+					delete temp;
+					continue;
+				}
+				if ( temp->left != 0 ) {
+					// std::cout<<"dans left ";
+					n.push( temp->left );
+					if ( temp->getKey() != '*' )
+						v++;
+				} else {
+					pair<const char, int> p1( '*', 0 );
+					temp2 = _bst.get_allocator().allocate( 1 );
+					_bst.get_allocator().construct( temp2, ft::bst_node<value_type>( p1 ) );
+					n.push( temp2 );
+				}
+				if ( temp->right != 0 ) {
+					// std::cout<<"dans right ";
+					n.push( temp->right );
+					if ( temp->getKey() != '*' )
+						v++;
+				} else {
+					pair<const char, int> p1( '*', 0 );
+					temp2 = _bst.get_allocator().allocate( 1 );
+					_bst.get_allocator().construct( temp2, ft::bst_node<value_type>( p1 ) );
+					n.push( temp2 );
+					// n.push(node<Key,T,Allocator>("*",0));
+					vide++;
+				}
+				// std::cout<<"v == "<<v<<" ";
+			}
+			std::cout << "\n";
+		}
 
 	private:
 		key_compare		 _comp;

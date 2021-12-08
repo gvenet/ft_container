@@ -128,22 +128,86 @@ class bst {
 				ret = _insert( val, node->left );
 				node->left_depth++;
 				node->left->parent = node;
-				_balancing(node);
+				_balancing( node, node->left_depth, node->right_depth );
 			} else if ( _comp( node->value.first, val.first ) ) {
 				ret = _insert( val, node->right );
 				node->right_depth++;
 				node->right->parent = node;
-				_balancing(node);
+				_balancing( node, node->left_depth, node->right_depth );
 			}
 			return ret;
 		}
 
-		void _balancing( node_pointer& node ) {
-				if ( node->left_depth - node->right_depth < -1 ) {
-					
-				}
+		void _balancing( node_pointer& node, int& l, int& r ) {
+			if ( l - r < -1 ) {
+				if ( r - node->right->left_depth != 1 )
+					node = _rr_rotation( node, node->right, node->right->right );
+				else
+					node = _rl_rotation( node, node->right->left, node->right );
+			} else if ( l - r > 1 ) {
+				if ( l - node->left->left_depth != 1 )
+					node = _lr_rotation( node->left, node->left->right, node );
+				else
+					node = _ll_rotation( node->left->left, node->left, node );
+			}
 		}
-		
+
+		node_pointer _rr_rotation( node_pointer& n1, node_pointer& n2, node_pointer& n3 ) {
+			node_pointer tmp2;
+			n1->right_depth += -2;
+			tmp2 = _nodeAlloc.allocate( 1 );
+			_nodeAlloc.construct(
+					tmp2, Node( n1->parent, n1, n3, n2->value, false, n2->left_depth + 1, n2->right_depth ) );
+			tmp2->left->parent = tmp2;
+			tmp2->right->parent = tmp2;
+			tmp2->left->right = n2->left;
+			_delete( n2 );
+			return tmp2;
+		}
+
+		node_pointer _lr_rotation( node_pointer& n1, node_pointer& n2, node_pointer& n3 ) {
+			node_pointer tmp2;
+			n3->left_depth += -2;
+			n1->right_depth--;
+			tmp2 = _nodeAlloc.allocate( 1 );
+			_nodeAlloc.construct( tmp2, Node( n3->parent, n1, n3, n2->value, false, n2->left_depth + 1,
+																				n2->right_depth + 1 ) );
+			tmp2->left->parent = tmp2;
+			tmp2->right->parent = tmp2;
+			tmp2->right->left = n2->right;
+			tmp2->left->right = n2->left;
+			_delete( n2 );
+			return tmp2;
+		}
+
+		node_pointer _rl_rotation( node_pointer& n1, node_pointer& n2, node_pointer& n3 ) {
+			node_pointer tmp2;
+			n1->right_depth += -2;
+			n3->left_depth--;
+			tmp2 = _nodeAlloc.allocate( 1 );
+			_nodeAlloc.construct( tmp2, Node( n1->parent, n1, n3, n2->value, false, n2->left_depth + 1,
+																				n2->right_depth + 1 ) );
+			tmp2->left->parent = tmp2;
+			tmp2->right->parent = tmp2;
+			tmp2->left->right = n2->left;
+			tmp2->right->left = n2->right;
+			_delete( n2 );
+			return tmp2;
+		}
+
+		node_pointer _ll_rotation( node_pointer& n1, node_pointer& n2, node_pointer& n3 ) {
+			node_pointer tmp2;
+			n3->left_depth += -2;
+			tmp2 = _nodeAlloc.allocate( 1 );
+			_nodeAlloc.construct(
+					tmp2, Node( n3->parent, n1, n3, n2->value, false, n2->left_depth, n2->right_depth + 1 ) );
+			tmp2->left->parent = tmp2;
+			tmp2->right->parent = tmp2;
+			tmp2->right->left = n2->right;
+			_delete( n2 );
+			return tmp2;
+		}
+
 		void _reset_limits() {
 			if ( _firstNode->parent )
 				_firstNode->parent->left = nullptr;
@@ -257,7 +321,7 @@ class bst {
 				_has_one_child( toRm, toRm->right );
 			} else {
 				node_pointer succ( _successor( toRm ) );
-				_assign( toRm, Node( toRm->parent, toRm->left, toRm->right, succ->value, false ) );
+				_assign( toRm, Node( toRm->parent, toRm->left, toRm->right, succ->value, false, 0, 0 ) );
 				if ( succ->right )
 					succ->right->parent = succ->parent;
 				_assign_child( succ, succ->right );
@@ -365,9 +429,24 @@ class bst {
 		}
 
 	public:
+		int height( node_pointer node ) {
+
+			// std::cout<<"dans height "<<getKey()<<std::endl;
+			if ( node->left == 0 && node->right == 0 )
+				return 1;
+			else if ( node->right == 0 )
+				return 1 + height(node->left);
+			else if ( node->left == 0 )
+				return 1 + height(node->right);
+			else
+				return 1 + std::max( height(node->left), height(node->right) );
+		}
+
 		Compare get_comp() const { return _comp; }
 
 		allocator_type get_allocator() const { return _nodeAlloc; }
+
+		node_pointer get_root() const { return _root; }
 
 	private:
 		Node_Alloc	 _nodeAlloc;

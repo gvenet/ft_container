@@ -1,15 +1,9 @@
 #include "../inc/map.hpp"
 #include <iostream>
 
-// void print_depth( const ft::map<int, int>& m ) {
-// 	for ( ft::map<int, int>::const_iterator it = m.begin(); it != m.end(); it++ )
-// 		std::cout << it->first << "(" << it.base()->left_depth << "," << it.base()->right_depth << ")";
-// 	std::cout << std::endl;
-// }
-
 std::ostream& operator<<( std::ostream& os, const ft::map<int, int>& m ) {
 	for ( ft::map<int, int>::const_iterator it = m.begin(); it != m.end(); it++ )
-		os << it->first << "(" << it.base()->left_depth << "," << it.base()->right_depth << ")";
+		os << it->first << "(" << it.base()->left_depth << "," << it.base()->right_depth << ")  ";
 	os << std::endl;
 	return os;
 }
@@ -17,13 +11,16 @@ std::ostream& operator<<( std::ostream& os, const ft::map<int, int>& m ) {
 int main() {
 	ft::map<int, int> m;
 
-	m[50];
-	std::cout << m;
-	m[100];
-	std::cout << m;
-	m[150];
+	m[9];
+	m[8];
+	m[4];
+	m[3];
+	m[2];
+	m[1];
+	m[0];
 	std::cout << m;
 
+	m.print_tree();
 	
 	return 0;
 }

@@ -46,39 +46,40 @@ void add( ft::map<int, int>& m, int n ) {
 
 void err( ft::map<int, int>& m, int n ) {
 	m.erase( n );
-	if ( !m.empty() )
-		m.print_tree();
-	std::cout << m << "\n";
+	// if ( !m.empty() )
+	// 	m.print_tree();
+	// std::cout << m << "\n";
+	// std::cout << "--------------------------------------------------------\n";
 }
 
 int main() {
 	ft::map<int, int> m;
 
-	// int size = 7;
-	// std::vector<int>	v( random_tab( size ) );
-	// for ( int i = 0; i < size; i++ ) {
-	// 	add( m, v[i] );
-	// }
+	int size = 300;
+	std::vector<int>	v( random_tab( size ) );
+	for ( int i = 0; i < size; i++ ) {
+		add( m, v[i] );
+	}
 	// m.print_tree();
 	// std::cout << m << "\n";
 
-	add( m, 6 );
-	add( m, 5 );
-	add( m, 4 );
-	m[1];
-	m[0];
-	m[2];
-	m[3];
-	m.print_tree();
-	std::cout << m << "\n";
+	// int t[] = { 8, 3, 13, 1, 5, 10, 15, 2, 4, 7, 9, 12, 14, 16, 6, 11 };
 
-	err( m, 0 );
-	err( m, 1 );
-	err( m, 2 );
-	err( m, 3 );
-	err( m, 4 );
-	err( m, 5 );
-	err( m, 6 );
+	// for ( int i = 0; i < size; i++ )
+	// 	add( m, t[i] );
+	// // m.print_tree();
+	// std::cout << m << "\n";
+
+	// for ( int i = 0; i < size; i++ )
+	// 	err( m, i );
+
+	// err( m, 0 );
+	// err( m, 1 );
+	// err( m, 2 );
+	// err( m, 3 );
+	// err( m, 4 );
+	// err( m, 5 );
+	// err( m, 6 );
 
 	return 0;
 }

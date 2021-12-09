@@ -1,10 +1,10 @@
 #ifndef BST_HPP
 #define BST_HPP
 
-// #define RED "\033[01;31m"
-// #define GRN "\033[01;32m"
-// #define YLW "\033[01;33m"
-// #define CBN "\033[0m"
+#define RED "\033[01;31m"
+#define GRN "\033[01;32m"
+#define YLW "\033[01;33m"
+#define CBN "\033[0m"
 
 #include <memory>
 
@@ -334,20 +334,22 @@ class bst {
 		}
 
 	private:
-		void _erase( value_type value, node_pointer &node ) {
+		void _erase( value_type value, node_pointer& node ) {
 			if ( !node )
 				return;
 			if ( _comp( node->value.first, value.first ) ) {
 				_erase( value, node->right );
-				if ( !node->right ||
-						 ( node->right && !( node->right->left_depth - node->right->right_depth ) ) )
-					node->right_depth--;
+				if ( !node->right )
+					node->right_depth = 0;
+				else
+					node->right_depth = std::max( node->right->right_depth, node->right->left_depth ) + 1;
 				_balancing( node, node->left_depth, node->right_depth );
 			} else if ( _comp( value.first, node->value.first ) ) {
 				_erase( value, node->left );
-				if ( !node->left ||
-						 ( node->left && !( node->left->left_depth - node->left->right_depth ) ) )
-					node->left_depth--;
+				if ( !node->left )
+					node->left_depth = 0;
+				else
+					node->left_depth = std::max( node->left->right_depth, node->left->left_depth ) + 1;
 				_balancing( node, node->left_depth, node->right_depth );
 			} else {
 				_toRm( node );

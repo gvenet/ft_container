@@ -1,9 +1,9 @@
 #include "../inc/map.hpp"
 #include <iostream>
+#include <map>
 #include <random>
 #include <time.h>
 #include <vector>
-#include <map>
 
 bool is_in_vec3( int to_find, std::vector<int>& vec3 ) {
 	for ( std::vector<int>::iterator it = vec3.begin(); it != vec3.end(); it++ )
@@ -15,14 +15,14 @@ bool is_in_vec3( int to_find, std::vector<int>& vec3 ) {
 std::vector<int> random_tab( int size ) {
 	srand( (unsigned)time( 0 ) );
 	typedef std::map<int, int> map;
-	typedef std::vector<int> vec;
-	map m1;
-	vec v1;
+	typedef std::vector<int>	 vec;
+	map												 m1;
+	vec												 v1;
 
 	for ( int i = 0; i < size; i++ )
 		m1[( rand() % 9000000 + 999999 )] = i;
 	for ( map::iterator it = m1.begin(); it != m1.end(); it++ )
-		v1.push_back(it->second);
+		v1.push_back( it->second );
 	for ( std::vector<int>::iterator it = v1.begin(); it != v1.end(); it++ )
 		std::cout << *it << " ";
 	std::cout << "\n--------------------------------------------------------\n";
@@ -41,20 +41,44 @@ void add( ft::map<int, int>& m, int n ) {
 	m[n];
 	// m.print_tree();
 	// std::cout << m << "--------------------------------------------------------\n";
-	std::cout << "--------------------------------------------------------\n";
+	// std::cout << "--------------------------------------------------------\n";
+}
+
+void err( ft::map<int, int>& m, int n ) {
+	m.erase( n );
+	if ( !m.empty() )
+		m.print_tree();
+	std::cout << m << "\n";
 }
 
 int main() {
 	ft::map<int, int> m;
 
-	int size = 50;
-	std::vector<int>	v( random_tab( size ) );
-	for ( int i = 0; i < size; i++ ) {
-		add( m, v[i] );
-	}
-
-
+	// int size = 7;
+	// std::vector<int>	v( random_tab( size ) );
+	// for ( int i = 0; i < size; i++ ) {
+	// 	add( m, v[i] );
+	// }
 	// m.print_tree();
 	// std::cout << m << "\n";
+
+	add( m, 6 );
+	add( m, 5 );
+	add( m, 4 );
+	m[1];
+	m[0];
+	m[2];
+	m[3];
+	m.print_tree();
+	std::cout << m << "\n";
+
+	err( m, 0 );
+	err( m, 1 );
+	err( m, 2 );
+	err( m, 3 );
+	err( m, 4 );
+	err( m, 5 );
+	err( m, 6 );
+
 	return 0;
 }

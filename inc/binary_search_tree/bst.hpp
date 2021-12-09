@@ -327,15 +327,34 @@ class bst {
 				_delete( _root );
 			} else {
 				_reset_limits();
-				_erase( *position );
+				_erase( *position, _root );
 			}
 			_assign_limits();
 			return 1;
 		}
 
 	private:
-		void _erase( value_type value ) {
-			node_pointer toRm( _find_by_value( _root, value ) );
+		void _erase( value_type value, node_pointer &node ) {
+			if ( !node )
+				return;
+			if ( _comp( node->value.first, value.first ) ) {
+				_erase( value, node->right );
+				if ( !node->right ||
+						 ( node->right && !( node->right->left_depth - node->right->right_depth ) ) )
+					node->right_depth--;
+				_balancing( node, node->left_depth, node->right_depth );
+			} else if ( _comp( value.first, node->value.first ) ) {
+				_erase( value, node->left );
+				if ( !node->left ||
+						 ( node->left && !( node->left->left_depth - node->left->right_depth ) ) )
+					node->left_depth--;
+				_balancing( node, node->left_depth, node->right_depth );
+			} else {
+				_toRm( node );
+			}
+		}
+
+		void _toRm( node_pointer toRm ) {
 			if ( !toRm->left && !toRm->right ) {
 				if ( toRm != _root ) {
 					_assign_child( toRm, nullptr );

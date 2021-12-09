@@ -13,8 +13,8 @@
 
 typedef void( func_type )();
 
-#define A1 1000000
-#define A2 1000000
+#define A1 100
+#define A2 1000
 
 void test_insert_access_ft() {
 	ft::map<int, int> map_int;

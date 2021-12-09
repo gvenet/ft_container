@@ -1,10 +1,10 @@
 #ifndef BST_HPP
 #define BST_HPP
 
-#define RED "\033[01;31m"
-#define GRN "\033[01;32m"
-#define YLW "\033[01;33m"
-#define CBN "\033[0m"
+// #define RED "\033[01;31m"
+// #define GRN "\033[01;32m"
+// #define YLW "\033[01;33m"
+// #define CBN "\033[0m"
 
 #include <memory>
 
@@ -158,7 +158,7 @@ class bst {
 		}
 
 		node_pointer _rr_rotation( node_pointer n1, node_pointer n2 ) {
-			std::cout << GRN << "RR : " << CBN << n2->value.first << "\n\n";
+			// std::cout << GRN << "RR : " << CBN << n2->value.first << "\n\n";
 			node_pointer tmp = n2->left;
 			n2->parent = n1->parent;
 			n2->left = n1;
@@ -172,7 +172,7 @@ class bst {
 		}
 
 		node_pointer _ll_rotation( node_pointer n2, node_pointer n3 ) {
-			std::cout << GRN << "LL : " << CBN << n2->value.first << "\n\n";
+			// std::cout << GRN << "LL : " << CBN << n2->value.first << "\n\n";
 			node_pointer tmp = n2->right;
 			n2->parent = n3->parent;
 			n2->right = n3;
@@ -186,7 +186,7 @@ class bst {
 		}
 
 		node_pointer _lr_rotation( node_pointer n1, node_pointer n2, node_pointer n3 ) {
-			std::cout << GRN << "LR : " << CBN << n2->value.first << "\n\n";
+			// std::cout << GRN << "LR : " << CBN << n2->value.first << "\n\n";
 			node_pointer tmpl = n2->left;
 			node_pointer tmpr = n2->right;
 
@@ -211,7 +211,7 @@ class bst {
 		}
 
 		node_pointer _rl_rotation( node_pointer n1, node_pointer n2, node_pointer n3 ) {
-			std::cout << GRN << "RL : " << CBN << n2->value.first << "\n\n";
+			// std::cout << GRN << "RL : " << CBN << n2->value.first << "\n\n";
 			node_pointer tmpl = n2->left;
 			node_pointer tmpr = n2->right;
 			n2->parent = n1->parent;

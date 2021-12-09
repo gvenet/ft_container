@@ -1,6 +1,11 @@
 #ifndef BST_HPP
 #define BST_HPP
 
+#define RED "\033[01;31m"
+#define GRN "\033[01;32m"
+#define YLW "\033[01;33m"
+#define CBN "\033[0m"
+
 #include <memory>
 
 #include "../utils/algorithm.hpp"
@@ -126,12 +131,12 @@ class bst {
 				ret = ft::make_pair( node, true );
 			} else if ( _comp( val.first, node->value.first ) ) { //_comp(x < y) == true
 				ret = _insert( val, node->left );
-				node->left_depth++;
+				node->left_depth = std::max( node->left->right_depth, node->left->left_depth ) + 1;
 				node->left->parent = node;
 				_balancing( node, node->left_depth, node->right_depth );
 			} else if ( _comp( node->value.first, val.first ) ) {
 				ret = _insert( val, node->right );
-				node->right_depth++;
+				node->right_depth = std::max( node->right->right_depth, node->right->left_depth ) + 1;
 				node->right->parent = node;
 				_balancing( node, node->left_depth, node->right_depth );
 			}
@@ -141,73 +146,95 @@ class bst {
 		void _balancing( node_pointer& node, int& l, int& r ) {
 			if ( l - r < -1 ) {
 				if ( r - node->right->left_depth != 1 )
-					node = _rr_rotation( node, node->right, node->right->right );
+					node = _rr_rotation( node, node->right );
 				else
 					node = _rl_rotation( node, node->right->left, node->right );
 			} else if ( l - r > 1 ) {
 				if ( l - node->left->left_depth != 1 )
 					node = _lr_rotation( node->left, node->left->right, node );
 				else
-					node = _ll_rotation( node->left->left, node->left, node );
+					node = _ll_rotation( node->left, node );
 			}
 		}
 
-		node_pointer _rr_rotation( node_pointer& n1, node_pointer& n2, node_pointer& n3 ) {
-			node_pointer tmp2;
+		node_pointer _rr_rotation( node_pointer n1, node_pointer n2 ) {
+			std::cout << GRN << "RR : " << CBN << n2->value.first << "\n\n";
+			node_pointer tmp = n2->left;
+			n2->parent = n1->parent;
+			n2->left = n1;
+			n1->right = tmp;
+			n1->parent = n2;
 			n1->right_depth += -2;
-			tmp2 = _nodeAlloc.allocate( 1 );
-			_nodeAlloc.construct(
-					tmp2, Node( n1->parent, n1, n3, n2->value, false, n2->left_depth + 1, n2->right_depth ) );
-			tmp2->left->parent = tmp2;
-			tmp2->right->parent = tmp2;
-			tmp2->left->right = n2->left;
-			_delete( n2 );
-			return tmp2;
+			n2->left_depth += 1;
+			if ( n1->right )
+				n1->right->parent = n1;
+			return n2;
 		}
 
-		node_pointer _lr_rotation( node_pointer& n1, node_pointer& n2, node_pointer& n3 ) {
-			node_pointer tmp2;
+		node_pointer _ll_rotation( node_pointer n2, node_pointer n3 ) {
+			std::cout << GRN << "LL : " << CBN << n2->value.first << "\n\n";
+			node_pointer tmp = n2->right;
+			n2->parent = n3->parent;
+			n2->right = n3;
+			n3->left = tmp;
+			n3->parent = n2;
 			n3->left_depth += -2;
-			n1->right_depth--;
-			tmp2 = _nodeAlloc.allocate( 1 );
-			_nodeAlloc.construct( tmp2, Node( n3->parent, n1, n3, n2->value, false, n2->left_depth + 1,
-																				n2->right_depth + 1 ) );
-			tmp2->left->parent = tmp2;
-			tmp2->right->parent = tmp2;
-			tmp2->right->left = n2->right;
-			tmp2->left->right = n2->left;
-			_delete( n2 );
-			return tmp2;
+			n2->right_depth += 1;
+			if ( n3->left )
+				n3->left->parent = n3;
+			return n2;
 		}
 
-		node_pointer _rl_rotation( node_pointer& n1, node_pointer& n2, node_pointer& n3 ) {
-			node_pointer tmp2;
-			n1->right_depth += -2;
-			n3->left_depth--;
-			tmp2 = _nodeAlloc.allocate( 1 );
-			_nodeAlloc.construct( tmp2, Node( n1->parent, n1, n3, n2->value, false, n2->left_depth + 1,
-																				n2->right_depth + 1 ) );
-			tmp2->left->parent = tmp2;
-			tmp2->right->parent = tmp2;
-			tmp2->left->right = n2->left;
-			tmp2->right->left = n2->right;
-			_delete( n2 );
-			return tmp2;
+		node_pointer _lr_rotation( node_pointer n1, node_pointer n2, node_pointer n3 ) {
+			std::cout << GRN << "LR : " << CBN << n2->value.first << "\n\n";
+			node_pointer tmpl = n2->left;
+			node_pointer tmpr = n2->right;
+
+			n2->parent = n3->parent;
+			n2->right = n3;
+			n2->left = n1;
+			n2->left->parent = n2;
+			n2->right->parent = n2;
+			n1->right = tmpl;
+			n3->left = tmpr;
+			if ( n1->right )
+				n1->right->parent = n1;
+			if ( n3->left )
+				n3->left->parent = n3;
+
+			n1->right_depth = n2->left_depth;
+			n2->left_depth = std::max( n1->left_depth, n1->right_depth ) + 1;
+			n3->left_depth = n2->right_depth;
+			n2->right_depth = std::max( n3->left_depth, n3->right_depth ) + 1;
+
+			return n2;
 		}
 
-		node_pointer _ll_rotation( node_pointer& n1, node_pointer& n2, node_pointer& n3 ) {
-			node_pointer tmp2;
-			n3->left_depth += -2;
-			tmp2 = _nodeAlloc.allocate( 1 );
-			_nodeAlloc.construct(
-					tmp2, Node( n3->parent, n1, n3, n2->value, false, n2->left_depth, n2->right_depth + 1 ) );
-			tmp2->left->parent = tmp2;
-			tmp2->right->parent = tmp2;
-			tmp2->right->left = n2->right;
-			_delete( n2 );
-			return tmp2;
+		node_pointer _rl_rotation( node_pointer n1, node_pointer n2, node_pointer n3 ) {
+			std::cout << GRN << "RL : " << CBN << n2->value.first << "\n\n";
+			node_pointer tmpl = n2->left;
+			node_pointer tmpr = n2->right;
+			n2->parent = n1->parent;
+			n2->right = n3;
+			n2->left = n1;
+			n2->left->parent = n2;
+			n2->right->parent = n2;
+			n1->right = tmpl;
+			n3->left = tmpr;
+			if ( n1->right )
+				n1->right->parent = n1;
+			if ( n3->left )
+				n3->left->parent = n3;
+
+			n1->right_depth = n2->left_depth;
+			n2->left_depth = std::max( n1->left_depth, n1->right_depth ) + 1;
+			n3->left_depth = n2->right_depth;
+			n2->right_depth = std::max( n3->left_depth, n3->right_depth ) + 1;
+
+			return n2;
 		}
 
+	public:
 		void _reset_limits() {
 			if ( _firstNode->parent )
 				_firstNode->parent->left = nullptr;
@@ -435,11 +462,11 @@ class bst {
 			if ( node->left == 0 && node->right == 0 )
 				return 1;
 			else if ( node->right == 0 )
-				return 1 + height(node->left);
+				return 1 + height( node->left );
 			else if ( node->left == 0 )
-				return 1 + height(node->right);
+				return 1 + height( node->right );
 			else
-				return 1 + std::max( height(node->left), height(node->right) );
+				return 1 + std::max( height( node->left ), height( node->right ) );
 		}
 
 		Compare get_comp() const { return _comp; }

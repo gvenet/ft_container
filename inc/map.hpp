@@ -186,37 +186,26 @@ class map {
 	public:
 		void print_tree() {
 
-			// std::cout<<"dans print tree\n";
-			int i = 0;
-			int tour = 0;
-			// std::cout<<"dans print tree1.25"<<head->getKey()<<"\n";
-			int space = pow( 2, _bst.height( _bst.get_root() ) - 1 );
-
-			// std::cout<<"dans print tree1.35\n";
+			_bst._reset_limits();
+			int																		i = 0;
+			int																		tour = 0;
+			int																		space = pow( 2, _bst.height( _bst.get_root() ) - 1 );
 			int																		vide = 0;
 			int																		v = 1;
 			int																		debug = 0;
 			std::queue<ft::bst_node<value_type>*> n;
-			// std::cout<<"dans print tree1.5\n";
-
-			// std::cout<<"dans print tree1.75\n";
-			ft::bst_node<value_type>* temp;
-
-			ft::bst_node<value_type>* temp_head = _bst.get_root();
+			ft::bst_node<value_type>*							temp;
+			ft::bst_node<value_type>*							temp_head = _bst.get_root();
 
 			n.push( temp_head );
 			ft::bst_node<value_type>* temp2;
 			for ( int x = 0; x < space; x++ ) {
 				std::cout << " ";
 			}
-			while ( !n.empty() ) //&& debug < 15)
-			{
-
-				// std::cout<<"dans print tree2\n";
+			while ( !n.empty() ) {
 				debug++;
 				temp = n.front();
 				n.pop();
-
 				if ( temp->getKey() == '*' )
 					std::cout << (char)( temp->getKey() );
 				else
@@ -228,7 +217,8 @@ class map {
 				if ( i == pow( 2, tour ) ) {
 					if ( v == 0 ) {
 
-						std::cout << "\n";
+						std::cout << "\n\n";
+						_bst._assign_limits();
 						return;
 					}
 					std::cout << "\n";
@@ -251,7 +241,6 @@ class map {
 					continue;
 				}
 				if ( temp->left != 0 ) {
-					// std::cout<<"dans left ";
 					n.push( temp->left );
 					if ( temp->getKey() != '*' )
 						v++;
@@ -262,7 +251,6 @@ class map {
 					n.push( temp2 );
 				}
 				if ( temp->right != 0 ) {
-					// std::cout<<"dans right ";
 					n.push( temp->right );
 					if ( temp->getKey() != '*' )
 						v++;
@@ -271,10 +259,8 @@ class map {
 					temp2 = _bst.get_allocator().allocate( 1 );
 					_bst.get_allocator().construct( temp2, ft::bst_node<value_type>( p1 ) );
 					n.push( temp2 );
-					// n.push(node<Key,T,Allocator>("*",0));
 					vide++;
 				}
-				// std::cout<<"v == "<<v<<" ";
 			}
 			std::cout << "\n";
 		}

@@ -8,8 +8,8 @@ SRC			:= $(wildcard $(SRC_DIR)*.cpp) $(wildcard $(SRC_DIR)*/*.cpp)
 OBJ			:= $(SRC:$(SRC_DIR)%.cpp=$(OBJ_DIR)%.o)
 INC			:= $(wildcard $(INC_DIR)*.hpp) $(wildcard $(INC_DIR)*/*.hpp)
 CC			:= clang++
-DEBUG 	:= -fsanitize=address
-# DEBUG 	:= 
+# DEBUG 	:= -fsanitize=address
+DEBUG 	:= 
 CFLAGS	:= -Wall -Wextra -Werror -std=c++98 $(DEBUG)
 
 

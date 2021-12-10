@@ -91,6 +91,6 @@ void pre() {
 }
 
 int main() {
-	// rdm( 11 );
-	pre();
+	rdm( 11 );
+	// pre();
 }

@@ -6,8 +6,8 @@
 #include <string>
 #include <sys/time.h>
 
-#define INS 100
-#define ACC 100
+#define INS 100000
+#define ACC 100000
 
 template <typename T_L, typename T_R>
 std::ostream& operator<<( std::ostream& os, const std::map<T_L, T_R>& m ) {

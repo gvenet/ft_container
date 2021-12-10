@@ -1,11 +1,6 @@
 #ifndef BST_HPP
 #define BST_HPP
 
-#define RED "\033[01;31m"
-#define GRN "\033[01;32m"
-#define YLW "\033[01;33m"
-#define CBN "\033[0m"
-
 #include <memory>
 
 #include "../utils/algorithm.hpp"
@@ -158,35 +153,32 @@ class bst {
 		}
 
 		node_pointer _rr_rotation( node_pointer n1, node_pointer n2 ) {
-			// std::cout << GRN << "RR : " << CBN << n2->value.first << "\n";
 			node_pointer tmp = n2->left;
 			n2->parent = n1->parent;
 			n2->left = n1;
 			n1->right = tmp;
 			n1->parent = n2;
 			n1->right_depth = n2->left_depth;
-			n2->left_depth = std::max(n1->left_depth, n1->right_depth) + 1;
+			n2->left_depth = std::max( n1->left_depth, n1->right_depth ) + 1;
 			if ( n1->right )
 				n1->right->parent = n1;
 			return n2;
 		}
 
 		node_pointer _ll_rotation( node_pointer n2, node_pointer n3 ) {
-			// std::cout << GRN << "LL : " << CBN << n2->value.first << "\n";
 			node_pointer tmp = n2->right;
 			n2->parent = n3->parent;
 			n2->right = n3;
 			n3->left = tmp;
 			n3->parent = n2;
 			n3->left_depth = n2->right_depth;
-			n2->right_depth = std::max(n3->left_depth, n3->right_depth) + 1;
+			n2->right_depth = std::max( n3->left_depth, n3->right_depth ) + 1;
 			if ( n3->left )
 				n3->left->parent = n3;
 			return n2;
 		}
 
 		node_pointer _lr_rotation( node_pointer n1, node_pointer n2, node_pointer n3 ) {
-			// std::cout << GRN << "LR : " << CBN << n2->value.first << "\n";
 			node_pointer tmpl = n2->left;
 			node_pointer tmpr = n2->right;
 
@@ -211,7 +203,6 @@ class bst {
 		}
 
 		node_pointer _rl_rotation( node_pointer n1, node_pointer n2, node_pointer n3 ) {
-			// std::cout << GRN << "RL : " << CBN << n2->value.first << "\n";
 			node_pointer tmpl = n2->left;
 			node_pointer tmpr = n2->right;
 			n2->parent = n1->parent;
@@ -354,10 +345,10 @@ class bst {
 			} else {
 				if ( !node->left && !node->right ) {
 					if ( node != _root ) {
-						_assign_child( node, nullptr );
 						_delete( node );
-					} else
+					} else {
 						_delete( _root );
+					}
 				} else if ( node->left && !node->right ) {
 					_has_one_child( node, node->left );
 				} else if ( !node->left && node->right ) {
@@ -399,30 +390,6 @@ class bst {
 			_assign_child( succ, succ->right );
 			_delete( succ );
 		}
-
-		// node_pointer _findMin( node_pointer& node ) {
-		// 	if ( !node->left ) {
-		// 		return node;
-		// 	} else {
-		// 		return _findMin( node->left );
-		// 	}
-		// }
-
-		// node_pointer _successor( node_pointer& node ) {
-		// 	if ( node->right ) {
-		// 		return _findMin( node->right ); // diminution de l indice de hauteur seulement dans le cas
-		// 																		// ou node->right != 0
-		// 	} else {
-		// 		node_pointer parentNode = node->parent;
-		// 		node_pointer currentNode = node;
-
-		// 		while ( parentNode && ( currentNode == parentNode->right ) ) {
-		// 			currentNode = parentNode;
-		// 			parentNode = currentNode->parent;
-		// 		}
-		// 		return parentNode;
-		// 	}
-		// }
 
 		void _has_one_child( node_pointer toRm, node_pointer child ) {
 			if ( toRm == _root ) {
@@ -483,17 +450,6 @@ class bst {
 			while ( node->left )
 				node = node->left;
 			return node;
-		}
-
-		node_pointer _find_by_value( node_pointer node, value_type value ) {
-			if ( !node )
-				return nullptr;
-			if ( _comp( node->value.first, value.first ) )
-				return _find_by_value( node->right, value );
-			else if ( _comp( value.first, node->value.first ) )
-				return _find_by_value( node->left, value );
-			else
-				return node;
 		}
 
 	public:

@@ -74,9 +74,9 @@ void rdm( int size ) {
 
 void pre() {
 	ft::map<int, int> m;
-	int								t1[] = { 4, 2, 8, 0, 3, 6, 9, 5, 7 };
+	int								t1[] = { 9,2,10,3 };
 	int								s1 = sizeof( t1 ) / sizeof( *t1 );
-	int								t2[] = { 8 };
+	int								t2[] = { 2 };
 	int								s2 = sizeof( t2 ) / sizeof( *t2 );
 
 	for ( int i = 0; i < s1; i++ )
@@ -91,6 +91,6 @@ void pre() {
 }
 
 int main() {
-	rdm( 11 );
+	rdm( 10 );
 	// pre();
 }

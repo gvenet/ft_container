@@ -158,35 +158,35 @@ class bst {
 		}
 
 		node_pointer _rr_rotation( node_pointer n1, node_pointer n2 ) {
-			std::cout << GRN << "RR : " << CBN << n2->value.first << "\n";
+			// std::cout << GRN << "RR : " << CBN << n2->value.first << "\n";
 			node_pointer tmp = n2->left;
 			n2->parent = n1->parent;
 			n2->left = n1;
 			n1->right = tmp;
 			n1->parent = n2;
-			n1->right_depth += -2;
-			n2->left_depth += 1;
+			n1->right_depth = n2->left_depth;
+			n2->left_depth = std::max(n1->left_depth, n1->right_depth) + 1;
 			if ( n1->right )
 				n1->right->parent = n1;
 			return n2;
 		}
 
 		node_pointer _ll_rotation( node_pointer n2, node_pointer n3 ) {
-			std::cout << GRN << "LL : " << CBN << n2->value.first << "\n";
+			// std::cout << GRN << "LL : " << CBN << n2->value.first << "\n";
 			node_pointer tmp = n2->right;
 			n2->parent = n3->parent;
 			n2->right = n3;
 			n3->left = tmp;
 			n3->parent = n2;
-			n3->left_depth += -2;
-			n2->right_depth += 1;
+			n3->left_depth = n2->right_depth;
+			n2->right_depth = std::max(n3->left_depth, n3->right_depth) + 1;
 			if ( n3->left )
 				n3->left->parent = n3;
 			return n2;
 		}
 
 		node_pointer _lr_rotation( node_pointer n1, node_pointer n2, node_pointer n3 ) {
-			std::cout << GRN << "LR : " << CBN << n2->value.first << "\n";
+			// std::cout << GRN << "LR : " << CBN << n2->value.first << "\n";
 			node_pointer tmpl = n2->left;
 			node_pointer tmpr = n2->right;
 
@@ -211,7 +211,7 @@ class bst {
 		}
 
 		node_pointer _rl_rotation( node_pointer n1, node_pointer n2, node_pointer n3 ) {
-			std::cout << GRN << "RL : " << CBN << n2->value.first << "\n";
+			// std::cout << GRN << "RL : " << CBN << n2->value.first << "\n";
 			node_pointer tmpl = n2->left;
 			node_pointer tmpr = n2->right;
 			n2->parent = n1->parent;
@@ -352,36 +352,33 @@ class bst {
 					node->left_depth = std::max( node->left->right_depth, node->left->left_depth ) + 1;
 				_balancing( node, node->left_depth, node->right_depth );
 			} else {
-				_toRm( node );
-			}
-		}
-
-		void _toRm( node_pointer &toRm ) {
-			if ( !toRm->left && !toRm->right ) {
-				if ( toRm != _root ) {
-					_assign_child( toRm, nullptr );
-					_delete( toRm );
-				} else
-					_delete( _root );
-			} else if ( toRm->left && !toRm->right ) {
-				_has_one_child( toRm, toRm->left );
-			} else if ( !toRm->left && toRm->right ) {
-				_has_one_child( toRm, toRm->right );
-			} else {
-				_has_two_child( toRm );
+				if ( !node->left && !node->right ) {
+					if ( node != _root ) {
+						_assign_child( node, nullptr );
+						_delete( node );
+					} else
+						_delete( _root );
+				} else if ( node->left && !node->right ) {
+					_has_one_child( node, node->left );
+				} else if ( !node->left && node->right ) {
+					_has_one_child( node, node->right );
+				} else {
+					_has_two_child( node );
+				}
 			}
 		}
 
 		void _has_two_child( node_pointer& toRm ) {
-			_find_successor_and_delete( toRm, toRm->right ); // one right->move to find min since toRm->right
-			if (toRm->right)
+			_find_successor_and_delete( toRm,
+																	toRm->right ); // one right->move to find min since toRm->right
+			if ( toRm->right )
 				toRm->right_depth = std::max( toRm->right->left_depth, toRm->right->right_depth ) + 1;
 			else
-			 toRm->right_depth = 0;
+				toRm->right_depth = 0;
 			_balancing( toRm, toRm->left_depth, toRm->right_depth );
 		}
 
-		void _find_successor_and_delete( node_pointer& toRm, node_pointer &succ ) {
+		void _find_successor_and_delete( node_pointer& toRm, node_pointer& succ ) {
 			if ( succ->left ) {
 				_find_successor_and_delete( toRm, succ->left );
 				if ( !succ->left )
@@ -427,7 +424,7 @@ class bst {
 		// 	}
 		// }
 
-		void _has_one_child( node_pointer& toRm, node_pointer& child ) {
+		void _has_one_child( node_pointer toRm, node_pointer child ) {
 			if ( toRm == _root ) {
 				_root = child;
 				_root->parent = nullptr;
@@ -438,7 +435,7 @@ class bst {
 			_delete( toRm );
 		}
 
-		void _assign_child( node_pointer& toRm, node_pointer child ) {
+		void _assign_child( node_pointer toRm, node_pointer child ) {
 			node_pointer parent = toRm->parent;
 			if ( _comp( toRm->value.first, parent->value.first ) )
 				parent->left = child;

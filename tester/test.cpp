@@ -12,7 +12,7 @@
 #include "../inc/map.hpp"
 #include "../inc/vector.hpp"
 
-#define S 1000
+#define S 500
 #define R 1
 
 template <class V>

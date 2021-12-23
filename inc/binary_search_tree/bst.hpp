@@ -10,6 +10,8 @@
 #include "bst_node.hpp"
 #include "bst_reverse_iterator.hpp"
 
+#include <iostream>
+
 namespace ft {
 
 template <class T, class Compare, class Node = ft::bst_node<T>,
@@ -32,9 +34,9 @@ class bst {
 		bst( Node_Alloc nodeAlloc = Node_Alloc() )
 				: _nodeAlloc( nodeAlloc ), _root(), _comp(), _size() {
 			_lastNode = _nodeAlloc.allocate( 1 );
-			_assign( _lastNode, Node( value_type(), true ) );
+			_assign_node( _lastNode, Node( value_type(), true ) );
 			_firstNode = _nodeAlloc.allocate( 1 );
-			_assign( _firstNode, Node( value_type(), true ) );
+			_assign_node( _firstNode, Node( value_type(), true ) );
 		}
 
 		~bst() {
@@ -235,16 +237,16 @@ class bst {
 
 		void _assign_limits() {
 			if ( !_root ) {
-				_assign( _firstNode, Node( value_type(), true ) );
-				_assign( _lastNode, Node( value_type(), true ) );
+				_assign_node( _firstNode, Node( value_type(), true ) );
+				_assign_node( _lastNode, Node( value_type(), true ) );
 			} else {
 				node_pointer min = _findMin();
 				node_pointer max = _findMax();
 				min->left = _firstNode;
-				_assign( _firstNode, Node( min->value, true ) );
+				_assign_node( _firstNode, Node( min->value, true ) );
 				_firstNode->parent = min;
 				max->right = _lastNode;
-				_assign( _lastNode, Node( max->value, true ) );
+				_assign_node( _lastNode, Node( max->value, true ) );
 				_lastNode->parent = max;
 			}
 		}
@@ -330,25 +332,15 @@ class bst {
 				return;
 			if ( _comp( node->value.first, value.first ) ) {
 				_erase( value, node->right );
-				if ( !node->right )
-					node->right_depth = 0;
-				else
-					node->right_depth = std::max( node->right->right_depth, node->right->left_depth ) + 1;
+				_assign_right_depth( node );
 				_balancing( node, node->left_depth, node->right_depth );
 			} else if ( _comp( value.first, node->value.first ) ) {
 				_erase( value, node->left );
-				if ( !node->left )
-					node->left_depth = 0;
-				else
-					node->left_depth = std::max( node->left->right_depth, node->left->left_depth ) + 1;
+				_assign_left_depth( node );
 				_balancing( node, node->left_depth, node->right_depth );
 			} else {
 				if ( !node->left && !node->right ) {
-					if ( node != _root ) {
-						_delete( node );
-					} else {
-						_delete( _root );
-					}
+					_delete( node );
 				} else if ( node->left && !node->right ) {
 					_has_one_child( node, node->left );
 				} else if ( !node->left && node->right ) {
@@ -359,36 +351,59 @@ class bst {
 			}
 		}
 
-		void _has_two_child( node_pointer& toRm ) {
-			_find_successor_and_delete( toRm,
-																	toRm->right ); // one right->move to find min since toRm->right
-			if ( toRm->right )
-				toRm->right_depth = std::max( toRm->right->left_depth, toRm->right->right_depth ) + 1;
+		void _assign_right_depth( node_pointer& node ) {
+			if ( !node->right )
+				node->right_depth = 0;
 			else
-				toRm->right_depth = 0;
+				node->right_depth = std::max( node->right->right_depth, node->right->left_depth ) + 1;
+		}
+
+		void _assign_left_depth( node_pointer& node ) {
+			if ( !node->left )
+				node->left_depth = 0;
+			else
+				node->left_depth = std::max( node->left->right_depth, node->left->left_depth ) + 1;
+		}
+
+		void _has_two_child( node_pointer& toRm ) {
+			_find_successor_and_delete( toRm, toRm->right );
+			_assign_right_depth( toRm );
 			_balancing( toRm, toRm->left_depth, toRm->right_depth );
 		}
 
 		void _find_successor_and_delete( node_pointer& toRm, node_pointer& succ ) {
 			if ( succ->left ) {
 				_find_successor_and_delete( toRm, succ->left );
-				if ( !succ->left )
-					succ->left_depth--;
-				else
-					succ->left_depth = std::max( succ->left->left_depth, succ->left->right_depth ) + 1;
+				_assign_left_depth( succ );
 				_balancing( succ, succ->left_depth, succ->right_depth );
 			} else {
-				_delete_toRm( toRm, succ );
+				_swap_nodes( toRm, succ );
 			}
 		}
 
-		void _delete_toRm( node_pointer& toRm, node_pointer succ ) {
-			_assign( toRm, Node( toRm->parent, toRm->left, toRm->right, succ->value, false,
-													 toRm->left_depth, toRm->right_depth ) );
-			if ( succ->right )
-				succ->right->parent = succ->parent;
-			_assign_child( succ, succ->right );
-			_delete( succ );
+		void _swap_nodes( node_pointer& toRm, node_pointer succ ) {
+			node_pointer child = succ->right;
+			node_pointer parent = succ->parent;
+
+			succ->parent = toRm->parent;
+			if ( succ->parent )
+				_assign_node_parent_child( succ, succ );
+
+			succ->left = toRm->left;
+			succ->left->parent = succ;
+
+			if ( parent != toRm ) {
+				succ->right = toRm->right;
+				succ->right->parent = succ;
+				if ( child )
+					child->parent = parent;
+				parent->left = child;
+			}
+
+			succ->left_depth = toRm->left_depth;
+			succ->right_depth = toRm->right_depth;
+			_delete( toRm );
+			toRm = succ;
 		}
 
 		void _has_one_child( node_pointer toRm, node_pointer child ) {
@@ -397,17 +412,16 @@ class bst {
 				_root->parent = nullptr;
 			} else {
 				child->parent = toRm->parent;
-				_assign_child( toRm, child );
+				_assign_node_parent_child( toRm, child );
 			}
 			_delete( toRm );
 		}
 
-		void _assign_child( node_pointer toRm, node_pointer child ) {
-			node_pointer parent = toRm->parent;
-			if ( _comp( toRm->value.first, parent->value.first ) )
-				parent->left = child;
+		void _assign_node_parent_child( node_pointer node, node_pointer child ) {
+			if ( _comp( node->value.first, node->parent->value.first ) )
+				node->parent->left = child;
 			else
-				parent->right = child;
+				node->parent->right = child;
 		}
 
 		//// SWAP ////
@@ -433,7 +447,7 @@ class bst {
 			node = nullptr;
 		}
 
-		void _assign( node_pointer& addr, Node value ) {
+		void _assign_node( node_pointer& addr, Node value ) {
 			_nodeAlloc.destroy( addr );
 			_nodeAlloc.construct( addr, value );
 		}

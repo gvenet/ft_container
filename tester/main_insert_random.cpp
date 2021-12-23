@@ -46,12 +46,12 @@ void add( ft::map<int, int>& m, int n ) {
 }
 
 void err( ft::map<int, int>& m, int n ) {
-	std::cout << "err : " << n << "\n";
+	// std::cout << "err : " << n << "\n";
 	m.erase( n );
-	if ( !m.empty() )
+	// if ( !m.empty() )
 		// m.print_tree();
-	std::cout << m << "\n";
-	std::cout << "--------------------------------------------------------\n";
+	// std::cout << m << "\n";
+	// std::cout << "--------------------------------------------------------\n";
 }
 
 void rdm( int size ) {
@@ -63,9 +63,9 @@ void rdm( int size ) {
 	for ( vec::iterator it = v.begin(); it != v.end(); it++ )
 		add( m, *it );
 
-	m.print_tree();
-	std::cout << m << "\n";
-	std::cout << "--------------------------------------------------------\n";
+	// m.print_tree();
+	// std::cout << m << "\n";
+	// std::cout << "--------------------------------------------------------\n";
 
 	v = random_tab( size );
 	for ( vec::iterator it = v.begin(); it != v.end(); it++ )
@@ -74,23 +74,23 @@ void rdm( int size ) {
 
 void pre() {
 	ft::map<int, int> m;
-	int								t1[] = { 9,2,10,3 };
+	int								t1[] = { 0,1};
 	int								s1 = sizeof( t1 ) / sizeof( *t1 );
-	int								t2[] = { 2 };
+	int								t2[] = { 1,0 };
 	int								s2 = sizeof( t2 ) / sizeof( *t2 );
 
 	for ( int i = 0; i < s1; i++ )
 		add( m, t1[i] );
 
-	m.print_tree();
-	std::cout << m << "\n";
-	std::cout << "--------------------------------------------------------\n";
+	// m.print_tree();
+	// std::cout << m << "\n";
+	// std::cout << "--------------------------------------------------------\n";
 
 	for ( int i = 0; i < s2; i++ )
 		err( m, t2[i] );
 }
 
 int main() {
-	rdm( 10 );
+	rdm( 10);
 	// pre();
 }

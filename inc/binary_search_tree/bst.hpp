@@ -302,10 +302,12 @@ class bst {
 	public:
 		template <class InputIterator>
 		void erase( InputIterator first, InputIterator last ) {
-			while ( first != last ) {
-				erase( first );
-				first++;
-			}
+			typedef ft::vector<InputIterator> vec;
+			vec																v;
+			while ( first != last )
+				v.push_back( first++ );
+			for ( typename vec::iterator it = v.begin(); it != v.end(); it++ )
+				erase( *it );
 		}
 
 		size_type erase( iterator position ) {

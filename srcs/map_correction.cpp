@@ -1,4 +1,5 @@
 #include "../inc/map.hpp"
+#include <ios>
 #include <iostream>
 #include <map>
 #include <string>
@@ -27,27 +28,27 @@ void print_container_nl( Container const& m ) {
 	std::cout << std::endl;
 }
 
-void pit( map<int, int>::iterator it ) {
+// void pit( map<int, int>::iterator it ) {
 
-	std::cout << *it << " p: ";
-	if ( it.base()->parent )
-		std::cout << it.base()->parent->value.first;
-	else
-		std::cout << "null";
+// 	std::cout << *it << " p: ";
+// 	if ( it.base()->parent )
+// 		std::cout << it.base()->parent->value.first;
+// 	else
+// 		std::cout << "null";
 
-	std::cout << " l: ";
-	if ( it.base()->left )
-		std::cout << it.base()->left->value.first;
-	else
-		std::cout << "null";
+// 	std::cout << " l: ";
+// 	if ( it.base()->left )
+// 		std::cout << it.base()->left->value.first;
+// 	else
+// 		std::cout << "null";
 
-	std::cout << " r: ";
-	if ( it.base()->right )
-		std::cout << it.base()->right->value.first;
-	else
-		std::cout << "null";
-	std::cout << std::endl;
-}
+// 	std::cout << " r: ";
+// 	if ( it.base()->right )
+// 		std::cout << it.base()->right->value.first;
+// 	else
+// 		std::cout << "null";
+// 	std::cout << std::endl;
+// }
 
 void test_iterator_valid() {
 	map<int, int> m;
@@ -66,23 +67,51 @@ void test_iterator_valid() {
 	std::cout << "it++  \n";
 	++it;
 
-	m.print_tree();
-	pit( it );
+	// m.print_tree();
+
+	// pit( it );
+
+	std::cout << *it << "\n";
 
 	std::cout << "\nErasing keys 1 and 3" << std::endl;
 	m.erase( 1 );
 	m.erase( 3 );
-	std::cout << std::endl;
-	m.print_tree();
-	pit( it );
-	pit( ++it );
-	pit( --it );
-	pit( --it );
+
+	// std::cout << std::endl;
+	// m.print_tree();
+
+	std::cout << *it << "\n";
+	std::cout << *(++it) << "\n";
+	std::cout << *(--it) << "\n";
+	std::cout << *(--it) << "\n";
+	std::cout << *(++it) << "\n";
+	
+	// pit( it );
+	// pit( ++it );
+	// pit( --it );
+	// pit( --it );
 
 	m.erase( 2 );
 
-	std::cout << std::endl;
-	m.print_tree();
+	std::cout << "erasing 2\n";
+	std::cout << *it << "\n";
+	std::cout << *(--it) << "\n";
+	std::cout << *(++it) << "\n";
+
+	m.erase( 4 );
+	std::cout << "erasing 4\n";
+	std::cout << *it << "\n";
+	std::cout << *(--it) << "\n";
+	std::cout << std::boolalpha << m.empty() << "\n";
+
+	m.erase( 0 );
+	std::cout << "erasing 0\n";
+	std::cout << *it << "\n";
+	std::cout << std::boolalpha << m.empty() << "\n";
+
+	
+	// std::cout << std::endl;
+	// m.print_tree();
 
 	// pit(it);
 

@@ -302,12 +302,10 @@ class bst {
 	public:
 		template <class InputIterator>
 		void erase( InputIterator first, InputIterator last ) {
-			typedef ft::vector<InputIterator> vec;
-			vec																v;
-			while ( first != last )
-				v.push_back( first++ );
-			for ( typename vec::iterator it = v.begin(); it != v.end(); it++ )
-				erase( *it );
+			while ( first != last ) {
+				erase( first );
+				first++;
+			}
 		}
 
 		size_type erase( iterator position ) {
@@ -376,22 +374,18 @@ class bst {
 				_find_successor_and_delete( toRm, succ->left );
 				_assign_left_depth( succ );
 				_balancing( succ, succ->left_depth, succ->right_depth );
+				_assign_node_parent_child(succ, succ);
 			} else {
-				_swap_nodes( toRm, succ );
+				toRm = _swap_nodes( toRm, succ );
 			}
 		}
 
-		void _swap_nodes( node_pointer& toRm, node_pointer succ ) {
+		node_pointer _swap_nodes( node_pointer toRm, node_pointer succ ) {
 			node_pointer child = succ->right;
 			node_pointer parent = succ->parent;
 
-			succ->parent = toRm->parent;
-			if ( succ->parent )
-				_assign_node_parent_child( succ, succ );
-
 			succ->left = toRm->left;
 			succ->left->parent = succ;
-
 			if ( parent != toRm ) {
 				succ->right = toRm->right;
 				succ->right->parent = succ;
@@ -399,11 +393,13 @@ class bst {
 					child->parent = parent;
 				parent->left = child;
 			}
-
+			succ->parent = toRm->parent;
+			if ( succ->parent )
+				_assign_node_parent_child( succ, succ );
 			succ->left_depth = toRm->left_depth;
 			succ->right_depth = toRm->right_depth;
 			_delete( toRm );
-			toRm = succ;
+			return succ;
 		}
 
 		void _has_one_child( node_pointer toRm, node_pointer child ) {

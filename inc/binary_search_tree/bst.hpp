@@ -97,7 +97,9 @@ class bst {
 			ft::pair<iterator, bool> tmp;
 			_reset_limits();
 			tmp = _insert( val, _root );
+			node_pointer node = _find(val.first, _root);
 			_assign_limits();
+			_assign_pred_succ( node );
 			return tmp;
 		}
 
@@ -138,6 +140,47 @@ class bst {
 				_balancing( node, node->left_depth, node->right_depth );
 			}
 			return ret;
+		}
+
+		void _assign_pred_succ( node_pointer& node ) {
+			if ( !node->left && !node->right && !node->parent )
+				return;
+			node_pointer tmp_pred = _predecessor( node );
+			node->succ = _successor( node );
+			if ( tmp_pred ) {
+				_predecessor( node )->succ = node;
+				node->pred = tmp_pred;
+			}
+		}
+
+		node_pointer _predecessor( node_pointer node ) {
+			if ( node->left ) {
+				node = node->left;
+				while ( node->right && node->right->is_limit == false)
+					node = node->right;
+			} else if ( node == node->parent->right ) {
+				node = node->parent;
+			} else {
+				while ( node == node->parent->left )
+					node = node->parent;
+				node = node->parent;
+			}
+			return node;
+		}
+
+		node_pointer _successor( node_pointer node ) {
+			if ( node->right ) {
+				node = node->right;
+				while ( node->left && node->left->is_limit == false)
+					node = node->left;
+			} else if ( node == node->parent->left ) {
+				node = node->parent;
+			} else {
+				while ( node == node->parent->right )
+					node = node->parent;
+				node = node->parent;
+			}
+			return node;
 		}
 
 		void _balancing( node_pointer& node, int& l, int& r ) {
@@ -245,9 +288,11 @@ class bst {
 				min->left = _firstNode;
 				_assign_node( _firstNode, Node( min->value, true ) );
 				_firstNode->parent = min;
+				_firstNode->succ = min;
 				max->right = _lastNode;
 				_assign_node( _lastNode, Node( max->value, true ) );
 				_lastNode->parent = max;
+				_lastNode->pred = max;
 			}
 		}
 
@@ -376,7 +421,7 @@ class bst {
 				_find_successor_and_delete( toRm, succ->left );
 				_assign_left_depth( succ );
 				_balancing( succ, succ->left_depth, succ->right_depth );
-				_assign_node_parent_child(succ, succ);
+				_assign_node_parent_child( succ, succ );
 			} else {
 				toRm = _swap_nodes( toRm, succ );
 			}

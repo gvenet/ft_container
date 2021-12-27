@@ -29,14 +29,13 @@ int main() {
 	typedef std::vector<int>	vec;
 	typedef vec::iterator			vit;
 
-	int size = 2;
+	int size = 20;
 	vec v = random_tab( size );
 	map m;
 
-	for ( vit it = v.begin(); it != v.end(); it++ ) ;
+	for ( vit it = v.begin(); it != v.end(); it++ )
+		m[*it];
 
-	m[1];
-	m[0];
 
 	for ( mit it = m.begin(); it != m.end(); it++ ) {
 		std::cout << it->first << " ";

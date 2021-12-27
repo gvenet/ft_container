@@ -97,8 +97,8 @@ class bst {
 			ft::pair<iterator, bool> tmp;
 			_reset_limits();
 			tmp = _insert( val, _root );
-			node_pointer node = _find(val.first, _root);
 			_assign_limits();
+			node_pointer node = _find( val.first, _root );
 			_assign_pred_succ( node );
 			return tmp;
 		}
@@ -116,6 +116,8 @@ class bst {
 			node_pointer cur( position.base() );
 			tmp = _insert( val, cur ).first;
 			_assign_limits();
+			node_pointer node = _find( val.first, _root );
+			_assign_pred_succ( node );
 			return tmp;
 		}
 
@@ -143,20 +145,19 @@ class bst {
 		}
 
 		void _assign_pred_succ( node_pointer& node ) {
-			if ( !node->left && !node->right && !node->parent )
-				return;
 			node_pointer tmp_pred = _predecessor( node );
-			node->succ = _successor( node );
-			if ( tmp_pred ) {
-				_predecessor( node )->succ = node;
-				node->pred = tmp_pred;
-			}
+			tmp_pred->succ = node;
+			node->pred = tmp_pred;
+
+			node_pointer tmp_succ = _successor( node );
+			tmp_succ->pred = node;
+			node->succ = tmp_succ;
 		}
 
 		node_pointer _predecessor( node_pointer node ) {
 			if ( node->left ) {
 				node = node->left;
-				while ( node->right && node->right->is_limit == false)
+				while ( node->right && node->right->is_limit == false )
 					node = node->right;
 			} else if ( node == node->parent->right ) {
 				node = node->parent;
@@ -171,7 +172,7 @@ class bst {
 		node_pointer _successor( node_pointer node ) {
 			if ( node->right ) {
 				node = node->right;
-				while ( node->left && node->left->is_limit == false)
+				while ( node->left && node->left->is_limit == false )
 					node = node->left;
 			} else if ( node == node->parent->left ) {
 				node = node->parent;

@@ -346,15 +346,14 @@ class bst {
 	public:
 		template <class InputIterator>
 		void erase( InputIterator first, InputIterator last ) {
-			while ( first != last ) {
+			while ( first != last )
 				erase( first++ );
-			}
 		}
 
-		size_type erase( iterator position ) {
-			if ( position == end() )
+		size_type erase( iterator pos ) {
+			if ( pos == end() )
 				return 0;
-			node_pointer cur( position.base() );
+			node_pointer cur = pos.base();
 			_size--;
 			if ( cur->left && cur->left->is_limit == true && cur->right &&
 					 cur->right->is_limit == true ) {
@@ -362,7 +361,7 @@ class bst {
 			} else {
 				_assign_pred_succ_erase( cur );
 				_reset_limits();
-				_erase( *position, _root );
+				_erase( *pos, _root );
 			}
 			_assign_limits();
 			return 1;
@@ -517,6 +516,13 @@ class bst {
 		}
 
 	public:
+		Compare get_comp() const { return _comp; }
+
+		allocator_type get_allocator() const { return _nodeAlloc; }
+
+	private:
+		node_pointer get_root() const { return _root; }
+
 		int height( node_pointer node ) {
 
 			if ( node->left == 0 && node->right == 0 )
@@ -528,12 +534,6 @@ class bst {
 			else
 				return 1 + std::max( height( node->left ), height( node->right ) );
 		}
-
-		Compare get_comp() const { return _comp; }
-
-		allocator_type get_allocator() const { return _nodeAlloc; }
-
-		node_pointer get_root() const { return _root; }
 
 	private:
 		Node_Alloc	 _nodeAlloc;

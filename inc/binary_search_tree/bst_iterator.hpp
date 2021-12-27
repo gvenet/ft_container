@@ -29,8 +29,6 @@ class bst_iterator {
 
 		pointer operator->() const { return &( const_cast<reference>( _elem->value ) ); }
 
-		node_pointer base() const { return _elem; }
-
 		bst_iterator& operator++( void ) {
 			_elem = _elem->succ;
 			return ( *this );
@@ -57,6 +55,8 @@ class bst_iterator {
 		bool operator!=( const bst_iterator& rhs ) const { return _elem != rhs.base(); }
 
 		operator bst_iterator<const Node>() const { return ( bst_iterator<const Node>( _elem ) ); }
+
+		node_pointer base() const { return _elem; }
 
 	private:
 		node_pointer _elem;

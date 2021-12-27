@@ -3,6 +3,7 @@
 #include <map>
 #include <random>
 #include <time.h>
+#include <utility>
 #include <vector>
 
 std::vector<int> random_tab( int size ) {

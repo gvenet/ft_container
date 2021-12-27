@@ -348,12 +348,10 @@ class bst {
 	public:
 		template <class InputIterator>
 		void erase( InputIterator first, InputIterator last ) {
-			typedef ft::vector<InputIterator> vec;
-			vec																v;
-			while ( first != last )
-				v.push_back( first++ );
-			for ( typename vec::iterator it = v.begin(); it != v.end(); it++ )
-				erase( *it );
+			while ( first != last ) {
+				erase( first );
+				first++;
+			}
 		}
 
 		size_type erase( iterator position ) {
@@ -375,6 +373,7 @@ class bst {
 
 	private:
 		void _assign_pred_succ_erase( node_pointer node ) {
+			// std::cout << node->value.first << "___\n";
 			node_pointer tmp_pred = node->pred;
 			if ( tmp_pred )
 				tmp_pred->succ = node->succ;
@@ -425,7 +424,7 @@ class bst {
 			_find_successor_and_delete( toRm, toRm->right );
 			_assign_right_depth( toRm );
 			_balancing( toRm, toRm->left_depth, toRm->right_depth );
-			_assign_node_parent_child( toRm, toRm->right );
+			// _assign_node_parent_child( toRm, toRm->right );
 		}
 
 		void _find_successor_and_delete( node_pointer& toRm, node_pointer& succ ) {

@@ -32,46 +32,26 @@ class bst_iterator {
 		node_pointer base() const { return _elem; }
 
 		bst_iterator& operator++( void ) {
-			// if ( _elem->right ) {
-			// 	_elem = _elem->right;
-			// 	while ( _elem->left && _elem->left->is_limit == false )
-			// 		_elem = _elem->left;
-			// } else if ( _elem == _elem->parent->left ) {
-			// 	_elem = _elem->parent;
-			// } else {
-			// 	while ( _elem == _elem->parent->right )
-			// 		_elem = _elem->parent;
-			// 	_elem = _elem->parent;
-			// }
 			_elem = _elem->succ;
 			return ( *this );
 		}
 
 		bst_iterator operator++( int ) {
 			bst_iterator tmp( *this );
-									 operator++();
+
+			this->operator++();
 			return ( tmp );
 		}
 
 		bst_iterator& operator--( void ) {
-			// if ( _elem->left ) {
-			// 	_elem = _elem->left;
-			// 	while ( _elem->right && _elem->right->is_limit == false )
-			// 		_elem = _elem->right;
-			// } else if ( _elem == _elem->parent->right ) {
-			// 	_elem = _elem->parent;
-			// } else {
-			// 	while ( _elem == _elem->parent->left )
-			// 		_elem = _elem->parent;
-			// 	_elem = _elem->parent;
-			// }
 			_elem = _elem->pred;
 			return ( *this );
 		}
 
 		bst_iterator operator--( int ) {
 			bst_iterator tmp( *this );
-									 operator--();
+
+			this->operator--();
 			return ( tmp );
 		}
 		bool operator!=( const bst_iterator& rhs ) const { return _elem != rhs.base(); }

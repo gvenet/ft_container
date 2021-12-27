@@ -15,9 +15,9 @@ std::vector<int> random_tab( int size ) {
 		m1[( rand() % 9000000 + 999999 )] = i;
 	for ( map::iterator it = m1.begin(); it != m1.end(); it++ )
 		v1.push_back( it->second );
-	for ( std::vector<int>::iterator it = v1.begin(); it != v1.end(); it++ )
-		std::cout << *it << " ";
-	std::cout << std::endl;
+	// for ( std::vector<int>::iterator it = v1.begin(); it != v1.end(); it++ )
+	// 	std::cout << *it << " ";
+	// std::cout << std::endl;
 	return v1;
 }
 
@@ -42,11 +42,12 @@ int main() {
 
 	map m;
 
-	int size = 1000;
+	int size = 100000;
 	std::vector<int> v = random_tab( size );
 	for ( std::vector<int>::iterator it = v.begin(); it != v.end(); it++ )
 		m[*it];
 
+	std::cout << "PT\n";
 	// m[1];
 	// m[2];
 	// m[0];

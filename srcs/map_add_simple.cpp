@@ -42,21 +42,39 @@ int main() {
 
 	map m;
 
-	int size = 100000;
+	int							 size = 60000;
 	std::vector<int> v = random_tab( size );
 	for ( std::vector<int>::iterator it = v.begin(); it != v.end(); it++ )
 		m[*it];
 
-	std::cout << "PT\n";
+	// for ( int i = 0; i < 10000000; i++ )
+	// 	m[i];
+
+	std::cout << "PT1\n";
+
+	// m.print_tree();
+	// m.erase( 0 );
+	// m.erase( 1 );
+	// m.erase( 2 );
+	// m.print_tree();
+	// m.erase(m.begin(), m.end());
+
+	// std::cout << "PT2\n";
 	// m[1];
 	// m[2];
 	// m[0];
 
 	// std::cout << std::endl;
 	// m.print_tree();
-	// prt( m );
-	// m.erase( 1 );
 	// m.print_tree();
+	// prt( m );
+	// m.erase( 5 );
+	// prt( m );
+	// m.erase( 8 );
+	// m.print_tree();
+	// m.erase( 9 );
+	// m.print_tree();
+	// prt( m );
 	// prt( m );
 	// prt( m );
 	// m.erase( 5 );

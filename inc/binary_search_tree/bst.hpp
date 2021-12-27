@@ -401,7 +401,7 @@ class bst {
 				} else if ( !node->left && node->right ) {
 					_has_one_child( node, node->right );
 				} else {
-					_has_two_child( node );
+					node = _has_two_child( node );
 				}
 			}
 		}
@@ -420,11 +420,11 @@ class bst {
 				node->left_depth = std::max( node->left->right_depth, node->left->left_depth ) + 1;
 		}
 
-		void _has_two_child( node_pointer& toRm ) {
+		node_pointer _has_two_child( node_pointer toRm ) {
 			_find_successor_and_delete( toRm, toRm->right );
 			_assign_right_depth( toRm );
 			_balancing( toRm, toRm->left_depth, toRm->right_depth );
-			// _assign_node_parent_child( toRm, toRm->right );
+			return toRm;
 		}
 
 		void _find_successor_and_delete( node_pointer& toRm, node_pointer& succ ) {

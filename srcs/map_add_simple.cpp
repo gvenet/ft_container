@@ -1,9 +1,9 @@
 #include "../inc/map.hpp"
 #include <iostream>
 #include <map>
-#include <vector>
-#include <time.h>
 #include <random>
+#include <time.h>
+#include <vector>
 
 std::vector<int> random_tab( int size ) {
 	typedef std::map<int, int> map;
@@ -21,29 +21,39 @@ std::vector<int> random_tab( int size ) {
 	return v1;
 }
 
+void prt( ft::map<int, int> m ) {
+	for ( ft::map<int, int>::iterator it = m.begin(); it != m.end(); it++ ) {
+		std::cout << it->first << " ";
+	}
+	std::cout << std::endl;
+}
+
 int main() {
 	srand( (unsigned)time( 0 ) );
 
 	typedef ft::map<int, int> map;
-	typedef map::iterator			mit;
 	typedef std::vector<int>	vec;
 	typedef vec::iterator			vit;
 
-	int size = 20;
+	int size = 10;
 	vec v = random_tab( size );
 	map m;
 
 	for ( vit it = v.begin(); it != v.end(); it++ )
 		m[*it];
 
-
-	for ( mit it = m.begin(); it != m.end(); it++ ) {
-		std::cout << it->first << " ";
-	}
 	std::cout << std::endl;
+	m.print_tree();
+	prt( m );
+	m.erase(5);
+	prt( m );
+	m.erase(5);
+	prt( m );
+	m.erase(9);
+	prt( m );
 	
-	for ( mit it = --m.end(); it != --m.begin(); it-- ) {
-		std::cout << it->first << " ";
-	}
-	std::cout << std::endl;
+	// for ( mit it = --m.end(); it != --m.begin(); it-- ) {
+	// 	std::cout << it->first << " ";
+	// }
+	// std::cout << std::endl;
 }

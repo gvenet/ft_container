@@ -99,7 +99,7 @@ class bst {
 			tmp = _insert( val, _root );
 			_assign_limits();
 			node_pointer node = _find( val.first, _root );
-			_assign_pred_succ( node );
+			_assign_pred_succ_insert( node );
 			return tmp;
 		}
 
@@ -117,7 +117,7 @@ class bst {
 			tmp = _insert( val, cur ).first;
 			_assign_limits();
 			node_pointer node = _find( val.first, _root );
-			_assign_pred_succ( node );
+			_assign_pred_succ_insert( node );
 			return tmp;
 		}
 
@@ -144,7 +144,7 @@ class bst {
 			return ret;
 		}
 
-		void _assign_pred_succ( node_pointer& node ) {
+		void _assign_pred_succ_insert( node_pointer& node ) {
 			node_pointer tmp_pred = _predecessor( node );
 			tmp_pred->succ = node;
 			node->pred = tmp_pred;
@@ -365,6 +365,7 @@ class bst {
 					 cur->right->is_limit == true ) {
 				_delete( _root );
 			} else {
+				_assign_pred_succ_erase( cur );
 				_reset_limits();
 				_erase( *position, _root );
 			}
@@ -373,6 +374,15 @@ class bst {
 		}
 
 	private:
+		void _assign_pred_succ_erase( node_pointer node ) {
+			node_pointer tmp_pred = node->pred;
+			if ( tmp_pred )
+				tmp_pred->succ = node->succ;
+			node_pointer tmp_succ = node->succ;
+			if ( tmp_succ )
+				tmp_succ->pred = node->pred;
+		}
+
 		void _erase( value_type value, node_pointer& node ) {
 			if ( !node )
 				return;
@@ -415,6 +425,7 @@ class bst {
 			_find_successor_and_delete( toRm, toRm->right );
 			_assign_right_depth( toRm );
 			_balancing( toRm, toRm->left_depth, toRm->right_depth );
+			_assign_node_parent_child( toRm, toRm->right );
 		}
 
 		void _find_successor_and_delete( node_pointer& toRm, node_pointer& succ ) {

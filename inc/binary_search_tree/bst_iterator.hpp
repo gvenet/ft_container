@@ -11,11 +11,12 @@ class bst_iterator {
 		typedef typename ft::Iterator<bidirectional_iterator_tag, value_type>::pointer	 pointer;
 		typedef typename ft::Iterator<bidirectional_iterator_tag, value_type>::reference reference;
 		typedef typename ft::Iterator<bidirectional_iterator_tag, value_type>::difference_type
-				difference_type;
+									difference_type;
+		typedef Node* node_pointer;
 
 		bst_iterator() : _elem() { }
 
-		bst_iterator( Node* node ) : _elem( node ) { }
+		bst_iterator( node_pointer node ) : _elem( node ) { }
 
 		bst_iterator( const bst_iterator& op ) { *this = op; }
 
@@ -28,7 +29,7 @@ class bst_iterator {
 
 		pointer operator->() const { return &( const_cast<reference>( _elem->value ) ); }
 
-		Node* base() const { return _elem; }
+		node_pointer base() const { return _elem; }
 
 		bst_iterator& operator++( void ) {
 			// if ( _elem->right ) {
@@ -78,7 +79,7 @@ class bst_iterator {
 		operator bst_iterator<const Node>() const { return ( bst_iterator<const Node>( _elem ) ); }
 
 	private:
-		Node* _elem;
+		node_pointer _elem;
 };
 
 template <typename T>

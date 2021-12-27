@@ -42,7 +42,7 @@ int main() {
 
 	map m;
 
-	int size = 10;
+	int size = 1000;
 	std::vector<int> v = random_tab( size );
 	for ( std::vector<int>::iterator it = v.begin(); it != v.end(); it++ )
 		m[*it];
@@ -51,9 +51,9 @@ int main() {
 	// m[2];
 	// m[0];
 
-	std::cout << std::endl;
+	// std::cout << std::endl;
 	// m.print_tree();
-	prt( m );
+	// prt( m );
 	// m.erase( 1 );
 	// m.print_tree();
 	// prt( m );
@@ -63,24 +63,24 @@ int main() {
 	// m.erase( 9 );
 	// prt( m );
 
-	ft::map<int, int>::iterator it[] = {m.begin() , m.end()};
-	it[0]++;
-	it[0]++;
-	it[1]--;
-	it[1]--;
+	// ft::map<int, int>::iterator it[] = {m.begin() , m.end()};
+	// it[0]++;
+	// it[0]++;
+	// it[1]--;
+	// it[1]--;
 	// std::cout << it->first << "___\n";
 
-	while ( it[0] != it[1] ) {
-		m.erase( it[0]++ );
-		// m.print_tree();
-	}
-	prt( m );
-	m.erase(9);
-	prt( m );
-	m.erase(m.begin());
-	prt( m );
-	m.erase(--m.end());
-	prt( m );
+	// while ( it[0] != it[1] ) {
+	// 	m.erase( it[0]++ );
+	// 	// m.print_tree();
+	// }
+	// prt( m );
+	// m.erase(9);
+	// prt( m );
+	// m.erase(m.begin());
+	// prt( m );
+	// m.erase(--m.end());
+	// prt( m );
 	// for ( mit it = --m.end(); it != --m.begin(); it-- ) {
 	// 	std::cout << it->first << " ";
 	// }

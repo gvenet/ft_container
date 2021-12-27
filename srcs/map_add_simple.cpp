@@ -42,22 +42,21 @@ int main() {
 
 	map m;
 
-	int							 size = 100000;
+	int							 size = 10;
 	std::vector<int> v = random_tab( size );
 	for ( std::vector<int>::iterator it = v.begin(); it != v.end(); it++ )
 		m[*it];
 
 	std::cout << "PT1\n\n";
 
-	// std::map<int, int>::iterator it = m.begin();
-	// std::map<int, int>::iterator itb = m.end();
+	std::map<int, int>::iterator it = m.begin();
+	std::map<int, int>::iterator itb = m.end();
 
-	// while ( it != itb ) {
-	// 	std::map<int, int>::iterator tmp = it;
-	// 	it++;
-	// 	m.erase( tmp );
-	// }
-	// std::cout << &(*itb) << " " << &(*it) << "\n";
+	while ( it != itb ) {
+		std::map<int, int>::iterator tmp = it;
+		it++;
+		m.erase( tmp );
+	}
 
 	std::cout << "\nPT2\n\n";
 }

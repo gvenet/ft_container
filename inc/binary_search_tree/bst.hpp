@@ -10,8 +10,6 @@
 #include "bst_node.hpp"
 #include "bst_reverse_iterator.hpp"
 
-#include <iostream>
-
 namespace ft {
 
 template <class T, class Compare, class Node = ft::bst_node<T>,
@@ -43,8 +41,6 @@ class bst {
 			clear();
 			_delete( _lastNode );
 			_delete( _firstNode );
-
-			std::cout << "SUCCES\n";
 		}
 
 		// ITERATOR //
@@ -523,7 +519,6 @@ class bst {
 	public:
 		int height( node_pointer node ) {
 
-			// std::cout<<"dans height "<<getKey()<<std::endl;
 			if ( node->left == 0 && node->right == 0 )
 				return 1;
 			else if ( node->right == 0 )

@@ -38,7 +38,7 @@ void prt( ft::map<int, int> m ) {
 int main() {
 	srand( (unsigned)time( 0 ) );
 
-	typedef std::map<int, int> map;
+	typedef ft::map<int, int> map;
 
 	map m;
 
@@ -49,13 +49,12 @@ int main() {
 
 	std::cout << "PT1\n\n";
 
-	std::map<int, int>::iterator it = m.begin();
-	std::map<int, int>::iterator itb = m.end();
+	ft::map<int, int>::iterator it = m.begin();
+	ft::map<int, int>::iterator itb = m.end();
 
 	while ( it != itb ) {
-		std::map<int, int>::iterator tmp = it;
-		it++;
-		m.erase( tmp );
+		m.erase( it++ );
+		prt(m);
 	}
 
 	std::cout << "\nPT2\n\n";

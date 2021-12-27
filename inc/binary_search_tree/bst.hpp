@@ -43,6 +43,8 @@ class bst {
 			clear();
 			_delete( _lastNode );
 			_delete( _firstNode );
+
+			std::cout << "SUCCES\n";
 		}
 
 		// ITERATOR //
@@ -349,8 +351,7 @@ class bst {
 		template <class InputIterator>
 		void erase( InputIterator first, InputIterator last ) {
 			while ( first != last ) {
-				erase( first );
-				first++;
+				erase( first++ );
 			}
 		}
 
@@ -373,7 +374,6 @@ class bst {
 
 	private:
 		void _assign_pred_succ_erase( node_pointer node ) {
-			// std::cout << node->value.first << "___\n";
 			node_pointer tmp_pred = node->pred;
 			if ( tmp_pred )
 				tmp_pred->succ = node->succ;

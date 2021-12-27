@@ -38,70 +38,26 @@ void prt( ft::map<int, int> m ) {
 int main() {
 	srand( (unsigned)time( 0 ) );
 
-	typedef ft::map<int, int> map;
+	typedef std::map<int, int> map;
 
 	map m;
 
-	int							 size = 60000;
+	int							 size = 100000;
 	std::vector<int> v = random_tab( size );
 	for ( std::vector<int>::iterator it = v.begin(); it != v.end(); it++ )
 		m[*it];
 
-	// for ( int i = 0; i < 10000000; i++ )
-	// 	m[i];
+	std::cout << "PT1\n\n";
 
-	std::cout << "PT1\n";
+	// std::map<int, int>::iterator it = m.begin();
+	// std::map<int, int>::iterator itb = m.end();
 
-	// m.print_tree();
-	// m.erase( 0 );
-	// m.erase( 1 );
-	// m.erase( 2 );
-	// m.print_tree();
-	// m.erase(m.begin(), m.end());
-
-	// std::cout << "PT2\n";
-	// m[1];
-	// m[2];
-	// m[0];
-
-	// std::cout << std::endl;
-	// m.print_tree();
-	// m.print_tree();
-	// prt( m );
-	// m.erase( 5 );
-	// prt( m );
-	// m.erase( 8 );
-	// m.print_tree();
-	// m.erase( 9 );
-	// m.print_tree();
-	// prt( m );
-	// prt( m );
-	// prt( m );
-	// m.erase( 5 );
-	// prt( m );
-	// m.erase( 9 );
-	// prt( m );
-
-	// ft::map<int, int>::iterator it[] = {m.begin() , m.end()};
-	// it[0]++;
-	// it[0]++;
-	// it[1]--;
-	// it[1]--;
-	// std::cout << it->first << "___\n";
-
-	// while ( it[0] != it[1] ) {
-	// 	m.erase( it[0]++ );
-	// 	// m.print_tree();
+	// while ( it != itb ) {
+	// 	std::map<int, int>::iterator tmp = it;
+	// 	it++;
+	// 	m.erase( tmp );
 	// }
-	// prt( m );
-	// m.erase(9);
-	// prt( m );
-	// m.erase(m.begin());
-	// prt( m );
-	// m.erase(--m.end());
-	// prt( m );
-	// for ( mit it = --m.end(); it != --m.begin(); it-- ) {
-	// 	std::cout << it->first << " ";
-	// }
-	// std::cout << std::endl;
+	// std::cout << &(*itb) << " " << &(*it) << "\n";
+
+	std::cout << "\nPT2\n\n";
 }

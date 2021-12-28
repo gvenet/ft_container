@@ -5,18 +5,21 @@
 #include <iostream>
 #include <map>
 #include <random>
+#include <string>
 #include <time.h>
 #include <vector>
-#include <string>
 
-#include "../inc/utils/pair.hpp"
 #include "../inc/map.hpp"
-
+#include "../inc/utils/pair.hpp"
 
 struct tester_utils {
 
-		typedef std::map<int, int> map;
-		typedef std::vector<int>	 vec;
+		typedef std::map<int, int>																map;
+		typedef std::vector<int>																	vec;
+		typedef std::map<int, int>																std_mapi;
+		typedef ft::map<int, int>																	ft_mapi;
+		typedef std::pair<std_mapi::iterator, std_mapi::iterator> std_pair_it;
+		typedef ft::pair<ft_mapi::iterator, ft_mapi::iterator>		ft_pair_it;
 
 		tester_utils() {
 			struct timespec ts;
@@ -57,6 +60,16 @@ struct tester_utils {
 			for ( it = b.begin(); it != b.end(); it++ )
 				p( it, "31" );
 			std::cout << "\n";
+		}
+
+		template <class Iterator>
+		void print_range( Iterator first, Iterator last ) {
+			for ( Iterator it = first; it != last; ++it ) {
+				if ( it != first )
+					std::cout << ", ";
+				std::cout << it->first;
+			}
+			std::cout << std::endl;
 		}
 
 		template <class M, class T>

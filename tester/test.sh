@@ -16,14 +16,13 @@ diff ft.txt  std.txt
 d=5
 ((x+=5))
 
-echo -e "${BLUE}MAP_TEST_1${ENDC}"
-echo "test1_insert_rand_erase_rand.cpp"
+echo -e "${BLUE}test1_insert_rand_erase_rand"
 while ( ((x<=640)) ) do
 ((c*=0))
 	while ( diff ft.txt std.txt > diff_log && ((c<$d)) ) do
 		./test1 $x
 		(( c+=1 ))
-		echo -ne "$c / $d > test $x\r" 
+		echo -ne "${BLUE}$c / $d > test $x\r" 
 	done
 	if (diff ft.txt std.txt > diff_log) then
 		echo -e "test $x ${CHECK_MARK}                    "
@@ -34,15 +33,13 @@ while ( ((x<=640)) ) do
 ((x*=2))
 done
 
-echo -ne "leaks 2000 \r"
-leaks -atExit -- ./test1 2000
-echo -e "leaks 2000 ${CHECK_MARK}"
+leaks -atExit -- ./test1 100
+echo -e "${BLUE}leaks 100 ${CHECK_MARK}"
 
 #TEST2 ======================================================================
-echo -e "${BLUE}MAP_TEST_2${ENDC}"
 clang++ test2_map_modifier.cpp -o "test2"
 ./test2
-echo -ne "test2_map_modifier\r"
+echo -ne "${BLUE}test2_map_modifier\r"
 if (diff ft.txt std.txt > diff_log) then
 	echo -e "test2_map_modifier ${CHECK_MARK}"
 else
@@ -51,10 +48,9 @@ else
 fi
 
 #TEST3 ======================================================================
-echo -e "${BLUE}MAP_TEST_3${ENDC}"
 clang++ test3_map_correction.cpp -o "test3"
 ./test3
-echo -ne "test3_map_correction\r"
+echo -ne "${BLUE}test3_map_correction\r"
 if (diff ft.txt std.txt > diff_log) then
 	echo -e "test3_map_correction ${CHECK_MARK}"
 else
@@ -62,14 +58,38 @@ else
 	exit 1
 fi
 
-#TEST3 ======================================================================
-echo -e "${BLUE}MAP_TEST_4${ENDC}"
-clang++ test3_map_correction.cpp -o "test4"
+#TEST4 ======================================================================
+clang++ test4_map_operation.cpp -o "test4"
 ./test4
-echo -ne "test4_map_correction\r"
+echo -ne "${BLUE}test4_map_operation\r"
 if (diff ft.txt std.txt > diff_log) then
-	echo -e "test4_map_correction ${CHECK_MARK}"
+	echo -e "test4_map_operation ${CHECK_MARK}"
 else
-	echo -e "test4_map_correction ${ERROR_MARK}"
+	echo -e "test4_map_operation ${ERROR_MARK}"
 	exit 1
 fi
+
+#TEST5 ======================================================================
+clang++ test5_map_access.cpp -o "test5"
+./test5
+echo -ne "${BLUE}test5_map_access\r"
+if (diff ft.txt std.txt > diff_log) then
+	echo -e "test5_map_access ${CHECK_MARK}"
+else
+	echo -e "test5_map_access ${ERROR_MARK}"
+	exit 1
+fi
+
+#TEST6 ======================================================================
+clang++ test6_map_copy.cpp -o "test6"
+./test6
+echo -ne "${BLUE}test6_map_copy\r"
+if (diff ft.txt std.txt > diff_log) then
+	echo -e "test6_map_copy ${CHECK_MARK}"
+else
+	echo -e "test6_map_copy ${ERROR_MARK}"
+	exit 1
+fi
+
+
+rm test1 test2 test3 test4 test5 test6 test7 test8

@@ -14,15 +14,17 @@ template <class Key, class T, class Compare = ft::less<Key>,
 					class Alloc = std::allocator<ft::pair<const Key, T> > >
 class map {
 	public:
-		typedef Key										 key_type;
-		typedef T											 mapped_type;
-		typedef ft::pair<const Key, T> value_type;
+		typedef Key																					 key_type;
+		typedef T																						 mapped_type;
+		typedef ft::pair<const Key, T>											 value_type;
+		typedef ft::bst_node<value_type>										 Node;
+		typedef Alloc																				 allocator_type;
+		typedef typename Alloc::template rebind<Node>::other node_allocator_type;
 
 	private:
-		typedef ft::bst<value_type, Compare> __bst;
+		typedef ft::bst<value_type, Compare, node_allocator_type> __bst;
 
 	public:
-		typedef Alloc																	 allocator_type;
 		typedef typename __bst::iterator							 iterator;
 		typedef typename __bst::const_iterator				 const_iterator;
 		typedef typename __bst::reverse_iterator			 reverse_iterator;
@@ -266,9 +268,9 @@ class map {
 		}
 
 	private:
-		key_compare		 _comp;
-		allocator_type _alloc;
-		__bst					 _bst;
+		key_compare					_comp;
+		node_allocator_type _alloc;
+		__bst								_bst;
 };
 
 } // namespace ft

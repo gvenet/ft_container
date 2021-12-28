@@ -12,14 +12,14 @@
 
 namespace ft {
 
-template <class T, class Compare, class Node = ft::bst_node<T>,
-					class Node_Alloc = std::allocator<Node> >
+template <class T, class Compare, class Node_Alloc>
 class bst {
 	public:
 		typedef T																		 value_type;
 		typedef T*																	 pointer;
 		typedef T&																	 reference;
 		typedef std::ptrdiff_t											 difference_type;
+		typedef ft::bst_node<T>											 Node;
 		typedef ft::bst_iterator<Node>							 iterator;
 		typedef ft::bst_iterator<const Node>				 const_iterator;
 		typedef ft::bst_reverse_iterator<Node>			 reverse_iterator;

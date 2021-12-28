@@ -7,8 +7,11 @@
 #include <random>
 #include <time.h>
 #include <vector>
+#include <string>
 
 #include "../inc/utils/pair.hpp"
+#include "../inc/map.hpp"
+
 
 struct tester_utils {
 

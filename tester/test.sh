@@ -29,12 +29,13 @@ while ( ((x<=640)) ) do
 		echo -e "test $x ${CHECK_MARK}                    "
 	else
 		echo -e "test $x ${ERROR_MARK}                    "
+		exit 1
 	fi
 ((x*=2))
 done
 
 echo -ne "leaks 2000 \r"
-leaks -atExit -- ./test 2000
+leaks -atExit -- ./test1 2000
 echo -e "leaks 2000 ${CHECK_MARK}"
 
 #TEST2 ======================================================================
@@ -46,7 +47,29 @@ if (diff ft.txt std.txt > diff_log) then
 	echo -e "test2_map_modifier ${CHECK_MARK}"
 else
 	echo -e "test2_map_modifier ${ERROR_MARK}"
+	exit 1
 fi
 
 #TEST3 ======================================================================
+echo -e "${BLUE}MAP_TEST_3${ENDC}"
+clang++ test3_map_correction.cpp -o "test3"
+./test3
+echo -ne "test3_map_correction\r"
+if (diff ft.txt std.txt > diff_log) then
+	echo -e "test3_map_correction ${CHECK_MARK}"
+else
+	echo -e "test3_map_correction ${ERROR_MARK}"
+	exit 1
+fi
 
+#TEST3 ======================================================================
+echo -e "${BLUE}MAP_TEST_4${ENDC}"
+clang++ test3_map_correction.cpp -o "test4"
+./test4
+echo -ne "test4_map_correction\r"
+if (diff ft.txt std.txt > diff_log) then
+	echo -e "test4_map_correction ${CHECK_MARK}"
+else
+	echo -e "test4_map_correction ${ERROR_MARK}"
+	exit 1
+fi

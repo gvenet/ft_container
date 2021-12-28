@@ -120,7 +120,6 @@ struct test_modifier {
 			test_swap<M>();
 			std::cout << "--- Test clear ---" << std::endl;
 			test_clear<M>();
-
 			std::cout.rdbuf( coutbuf );
 		}
 

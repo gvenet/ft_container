@@ -8,6 +8,8 @@
 #include <time.h>
 #include <vector>
 
+#include "../inc/utils/pair.hpp"
+
 struct tester_utils {
 
 		typedef std::map<int, int> map;
@@ -61,6 +63,28 @@ struct tester_utils {
 			std::cout.rdbuf( out.rdbuf() );
 			test.template routine<M>();
 			std::cout.rdbuf( coutbuf );
+		}
+};
+
+template <class C1, class C2>
+std::ostream& operator<<( std::ostream& os, std::pair<C1, C2> const& p ) {
+	os << "(" << p.first << "," << p.second << ")";
+	return os;
+}
+
+template <class C1, class C2>
+std::ostream& operator<<( std::ostream& os, ft::pair<C1, C2> const& p ) {
+	os << "(" << p.first << "," << p.second << ")";
+	return os;
+}
+
+struct KeyCompareInt {
+		bool operator()( int x, int y ) const { return -x / 2 < -y / 2; }
+};
+
+struct KeyCompareStr {
+		bool operator()( std::string x, std::string y ) const {
+			return ( x.empty() && !y.empty() ) || ( !x.empty() && !y.empty() && x[0] < y[0] );
 		}
 };
 

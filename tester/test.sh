@@ -1,24 +1,52 @@
 #!/bin/bash
 
-clang++ test1_insert_rand_erase_rand.cpp -o "test1_insert_rand_erase_rand"
-./test1_insert_rand_erase_rand 5
+GRN="\033[1;32m"
+RED="\033[1;31m"
+BLUE="\033[1;34m"
+ENDC="\033[0m"
+
+CHECK_MARK="${GRN}\xE2\x9C\x94${ENDC}"
+ERROR_MARK="${RED}\xE2\x9C\x96${ENDC}"
+
+#TEST1 ==============================================================
+clang++ test1_insert_rand_erase_rand.cpp -o "test1"
+./test1 5
 diff ft.txt  std.txt
 
-d=40
+d=100
 ((x+=5))
+
+echo -e "${BLUE}MAP_TEST_1${ENDC}"
+echo "test1_insert_rand_erase_rand.cpp"
 while ( ((x<=640)) ) do
 ((c*=0))
 	while ( diff ft.txt std.txt > diff_log && ((c<$d)) ) do
-		./test1_insert_rand_erase_rand $x
+		./test1 $x
 		(( c+=1 ))
-		clear
-		echo "TEST 1"
-		echo "insert_rand_erase_rand.cpp"
-		echo "test random insert/erase"
-		echo "$c / $d > test $x"
+		echo -ne "$c / $d > test $x\r" 
 	done
+	if (diff ft.txt std.txt > diff_log) then
+		echo -e "test $x ${CHECK_MARK}                    "
+	else
+		echo -e "test $x ${ERROR_MARK}                    "
+	fi
 ((x*=2))
 done
 
-echo "leaks 2000 : "
-leaks -atExit -- ./test1_insert_rand_erase_rand 2000
+echo -ne "leaks 2000 \r"
+leaks -atExit -- ./test 2000
+echo -e "leaks 2000 ${CHECK_MARK}"
+
+#TEST2 ======================================================================
+echo -e "${BLUE}MAP_TEST_2${ENDC}"
+clang++ test2_map_modifier.cpp -o "test2"
+./test2
+echo -ne "test2_map_modifier\r"
+if (diff ft.txt std.txt > diff_log) then
+	echo -e "test2_map_modifier ${CHECK_MARK}"
+else
+	echo -e "test2_map_modifier ${ERROR_MARK}"
+fi
+
+#TEST3 ======================================================================
+

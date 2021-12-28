@@ -1,17 +1,8 @@
-#include <time.h>
-
-#include <algorithm>
-#include <fstream>
-#include <iostream>
-#include <map>
-#include <random>
 #include <sstream>
 #include <string>
-#include <vector>
 
 #include "../inc/map.hpp"
 #include "../inc/vector.hpp"
-
 #include "tester_utils.hpp"
 
 struct test_remove {
@@ -30,7 +21,7 @@ struct test_remove {
 			b.erase( x );
 			utls.print_map( b );
 		}
-		
+
 		template <class T>
 		void routine() {
 			typedef T								 map;

@@ -25,6 +25,13 @@ struct test_remove {
 		}
 
 		template <class T>
+		void rm( int x, T& b ) {
+			std::cout << "-" << x << "\t";
+			b.erase( x );
+			utls.print_map( b );
+		}
+		
+		template <class T>
 		void routine() {
 			typedef T								 map;
 			typedef std::vector<int> vector;
@@ -34,31 +41,33 @@ struct test_remove {
 
 			std::cout << "construct : ";
 			utls.print_vec( v1 );
-			std::cout << "\ndestruct  : ";
+			std::cout << "destruct  : ";
 			utls.print_vec( v2 );
-			std::cout << "\n";
 
 			for ( iterator it = v1.begin(); it != v1.end(); it++ )
 				b[*it];
 			std::cout << "\n\t";
 			utls.print_map( b );
 			for ( iterator it = v2.begin(); it != v2.end(); it++ )
-				utls.rm( *it, b );
+				rm( *it, b );
 
-			std::cout << "\n";
-			std::cout << "construct : ";
+			std::cout << "\nconstruct : ";
 			utls.print_vec( v2 );
-			std::cout << "\ndestruct  : ";
+			std::cout << "destruct  : ";
 			utls.print_vec( v1 );
-			std::cout << "\n";
 
 			for ( iterator it = v2.begin(); it != v2.end(); it++ )
 				b[*it];
 			std::cout << "\n\t";
 			utls.print_map( b );
 			for ( iterator it = v1.begin(); it != v1.end(); it++ )
-				utls.rm( *it, b );
+				rm( *it, b );
 			std::cout << "\nSUCCES\n";
+		}
+
+		void output() {
+			utls.file_out<ft::map<int, int> >( "ft.txt", *this );
+			utls.file_out<std::map<int, int> >( "std.txt", *this );
 		}
 
 	public:
@@ -68,26 +77,10 @@ struct test_remove {
 		std::vector<int> v2;
 };
 
-template <class M, class T>
-void file_out( std::string out_name, T& test ) {
-	std::ofstream		out( out_name );
-	std::streambuf* coutbuf = std::cout.rdbuf();
-	std::cout.rdbuf( out.rdbuf() );
-	test.template routine<M>();
-	std::cout.rdbuf( coutbuf );
-}
-
 int main( int ac, char** av ) {
 	if ( ac != 2 )
 		return 1;
-
 	test_remove test( av[1] );
-
-	// file_out<ft::map<int, int> >( "ft.txt", test );
-	// file_out<std::map<int, int> >( "std.txt", test );
-
-	test.routine<ft::map<int, int> >();
-	test.routine<std::map<int, int> >();
-	
+	test.output();
 	return 0;
 }

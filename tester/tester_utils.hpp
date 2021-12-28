@@ -37,7 +37,7 @@ struct tester_utils {
 			for ( it = b.begin(); it != --b.end(); it++ )
 				std::cout << *it << ", ";
 			std::cout << *it << " }";
-			std::cout << "\n";
+			std::cout << std::endl;
 		}
 
 		template <class InputIterator>
@@ -46,19 +46,21 @@ struct tester_utils {
 			std::cout << it->first << " ";
 		}
 
-		template <class T>
-		void print_map( T& b ) {
-			typename T::iterator it;
+		template <class M>
+		void print_map( M& b ) {
+			typename M::iterator it;
 			for ( it = b.begin(); it != b.end(); it++ )
 				p( it, "31" );
 			std::cout << "\n";
 		}
 
-		template <class T>
-		void rm( int x, T& b ) {
-			std::cout << "-" << x << "\t";
-			b.erase( x );
-			print_map( b );
+		template <class M, class T>
+		void file_out( std::string out_name, T& test ) {
+			std::ofstream		out( out_name );
+			std::streambuf* coutbuf = std::cout.rdbuf();
+			std::cout.rdbuf( out.rdbuf() );
+			test.template routine<M>();
+			std::cout.rdbuf( coutbuf );
 		}
 };
 

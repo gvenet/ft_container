@@ -91,5 +91,16 @@ else
 	exit 1
 fi
 
+#TEST7 ======================================================================
+clang++ test7_map_iterator.cpp -o "test7"
+./test7
+echo -ne "${BLUE}test7_map_iterator\r"
+if (diff ft.txt std.txt > diff_log) then
+	echo -e "test7_map_iterator ${CHECK_MARK}"
+else
+	echo -e "test7_map_iterator ${ERROR_MARK}"
+	exit 1
+fi
+
 
 rm test1 test2 test3 test4 test5 test6 test7 test8

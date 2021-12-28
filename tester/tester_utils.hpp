@@ -12,14 +12,26 @@
 #include "../inc/map.hpp"
 #include "../inc/utils/pair.hpp"
 
+struct KeyCompareInt {
+		bool operator()( int x, int y ) const { return -x / 2 < -y / 2; }
+};
+
+struct KeyCompareStr {
+		bool operator()( std::string x, std::string y ) const {
+			return ( x.empty() && !y.empty() ) || ( !x.empty() && !y.empty() && x[0] < y[0] );
+		}
+};
+
 struct tester_utils {
 
-		typedef std::map<int, int>																map;
-		typedef std::vector<int>																	vec;
 		typedef std::map<int, int>																std_mapi;
 		typedef ft::map<int, int>																	ft_mapi;
 		typedef std::pair<std_mapi::iterator, std_mapi::iterator> std_pair_it;
 		typedef ft::pair<ft_mapi::iterator, ft_mapi::iterator>		ft_pair_it;
+		typedef std::map<int, int, KeyCompareInt>									std_mapi_cmp;
+		typedef std::map<std::string, std::string, KeyCompareStr> std_maps_cmp;
+		typedef ft::map<int, int, KeyCompareInt>									ft_mapi_cmp;
+		typedef ft::map<std::string, std::string, KeyCompareStr>	ft_maps_cmp;
 
 		tester_utils() {
 			struct timespec ts;
@@ -28,12 +40,12 @@ struct tester_utils {
 		}
 
 		std::vector<int> random_tab( int size ) {
-			map m1;
-			vec v1;
+			std_mapi m1;
+			std::vector<int> v1;
 
 			for ( int i = 0; i < size; i++ )
 				m1[( rand() % 9000000 + 999999 )] = i;
-			for ( map::iterator it = m1.begin(); it != m1.end(); it++ )
+			for ( std_mapi::iterator it = m1.begin(); it != m1.end(); it++ )
 				v1.push_back( it->second );
 			return v1;
 		}
@@ -93,15 +105,5 @@ std::ostream& operator<<( std::ostream& os, ft::pair<C1, C2> const& p ) {
 	os << "(" << p.first << "," << p.second << ")";
 	return os;
 }
-
-struct KeyCompareInt {
-		bool operator()( int x, int y ) const { return -x / 2 < -y / 2; }
-};
-
-struct KeyCompareStr {
-		bool operator()( std::string x, std::string y ) const {
-			return ( x.empty() && !y.empty() ) || ( !x.empty() && !y.empty() && x[0] < y[0] );
-		}
-};
 
 #endif

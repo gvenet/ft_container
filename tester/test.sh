@@ -8,33 +8,35 @@ ENDC="\033[0m"
 CHECK_MARK="${GRN}\xE2\x9C\x94${ENDC}"
 ERROR_MARK="${RED}\xE2\x9C\x96${ENDC}"
 
+echo -e "${GRN}TEST_MAP${ENDC}"
+
 #TEST1 ==============================================================
 clang++ test1_insert_rand_erase_rand.cpp -o "test1"
 ./test1 5
 diff ft.txt  std.txt
 
-d=5
+d=1
 ((x+=5))
 
-echo -e "${BLUE}test1_insert_rand_erase_rand"
+echo -e "${BLUE}test1_insert_rand_erase_rand${ENDC}"
 while ( ((x<=640)) ) do
 ((c*=0))
 	while ( diff ft.txt std.txt > diff_log && ((c<$d)) ) do
 		./test1 $x
 		(( c+=1 ))
-		echo -ne "${BLUE}$c / $d > test $x\r" 
+		echo -ne "  $c / $d > $x\r" 
 	done
 	if (diff ft.txt std.txt > diff_log) then
-		echo -e "test $x ${CHECK_MARK}                    "
+		echo -e "  $x ${CHECK_MARK}                    "
 	else
-		echo -e "test $x ${ERROR_MARK}                    "
+		echo -e "  $x ${ERROR_MARK}                    "
 		exit 1
 	fi
 ((x*=2))
 done
 
-leaks -atExit -- ./test1 100
-echo -e "${BLUE}leaks 100 ${CHECK_MARK}"
+# leaks -atExit -- ./test1 100
+# echo -e "${BLUE}leaks 100 ${CHECK_MARK}"
 
 #TEST2 ======================================================================
 clang++ test2_map_modifier.cpp -o "test2"
@@ -102,5 +104,28 @@ else
 	exit 1
 fi
 
+#TEST8 ======================================================================
+clang++ test8_map_comp.cpp -o "test8"
+./test8
+echo -ne "${BLUE}test8_map_comp\r"
+if (diff ft.txt std.txt > diff_log) then
+	echo -e "test8_map_comp ${CHECK_MARK}"
+else
+	echo -e "test8_map_comp ${ERROR_MARK}"
+	exit 1
+fi
 
-rm test1 test2 test3 test4 test5 test6 test7 test8
+#TEST9 ======================================================================
+clang++ test9_map_size.cpp -o "test9"
+./test9
+echo -ne "${BLUE}test9_map_size\r"
+if (diff ft.txt std.txt > diff_log) then
+	echo -e "test9_map_size ${CHECK_MARK}"
+else
+	echo -e "test9_map_size ${ERROR_MARK}"
+	exit 1
+fi
+
+leaks -atExit -- ./test2
+
+rm test1 test2 test3 test4 test5 test6 test7 test8 test9

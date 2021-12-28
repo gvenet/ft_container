@@ -13,7 +13,7 @@ clang++ test1_insert_rand_erase_rand.cpp -o "test1"
 ./test1 5
 diff ft.txt  std.txt
 
-d=100
+d=5
 ((x+=5))
 
 echo -e "${BLUE}MAP_TEST_1${ENDC}"

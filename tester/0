@@ -1,1 +1,21 @@
-US
+Process:         test9 [55258]
+Path:            /Users/USER/Documents/*/test9
+Load Address:    0x103932000
+Identifier:      test9
+Version:         ???
+Code Type:       X86-64
+Platform:        macOS
+Parent Process:  leaks [55257]
+
+Date/Time:       2021-12-29 11:15:20.565 +0100
+Launch Time:     2021-12-29 11:15:20.177 +0100
+OS Version:      Mac OS X 10.15.7 (19H1615)
+Report Version:  7
+Analysis Tool:   /Applications/Xcode.app/Contents/Developer/usr/bin/leaks
+Analysis Tool Version:  Xcode 12.4 (12D4e)
+----
+
+leaks Report Version: 4.0
+Process 55258: 155 nodes malloced for 8 KB
+Process 55258: 0 leaks for 0 total leaked bytes.
+

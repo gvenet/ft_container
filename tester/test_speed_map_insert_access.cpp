@@ -6,6 +6,7 @@
 #include <sstream>
 #include <string>
 #include <sys/time.h>
+#include "tester_utils.hpp"
 
 #define GRN "\033[01;31m"
 #define RED "\033[01;32m"
@@ -14,19 +15,24 @@
 
 struct test_speed {
 	private:
+		tester_utils utls;
 		std::stringstream ss1;
 		std::stringstream ss2;
-		int								insert;
-		int								access;
+		int								ins_size;
+		int								acc_size;
 		double						ft;
 		double						std;
+		std::vector<int>	v1;
+		std::vector<int>	v2;
 
 	public:
 		test_speed( std::string ins, std::string acc ) {
 			ss1 << ins;
-			ss1 >> insert;
+			ss1 >> ins_size;
 			ss2 << acc;
-			ss2 >> access;
+			ss2 >> acc_size;
+			v1 = utls.random_tab( ins_size );
+			v2 = utls.random_tab( ins_size );
 			ft = exec_time<ft::map<int, int> >();
 			std = exec_time<std::map<int, int> >();
 			this->ratio();
@@ -35,13 +41,12 @@ struct test_speed {
 		template <class M>
 		void test_insert_access() {
 			M map_int;
-			for ( int i = 0; i < insert; ++i ) {
-				map_int[rand()] = rand();
+			for ( int i = 0; i < ins_size; ++i ) {
+				map_int[v1[i]] = v2[i];
 			}
 			int sum = 0;
-			for ( int i = 0; i < access; i++ ) {
-				int access = rand() % map_int.size();
-				sum += map_int[access];
+			for ( int i = 0; i < acc_size; i++ ) {
+				sum += map_int[v2[i]];
 			}
 		}
 
@@ -57,8 +62,8 @@ struct test_speed {
 
 		void ratio() {
 			double ratio = ft / std;
-			std::cout << YLW << "inserts = " << CBN << insert << std::endl;
-			std::cout << YLW << "access = " << CBN << access << std::endl;
+			std::cout << YLW << "inserts = " << CBN << ins_size << std::endl;
+			std::cout << YLW << "access = " << CBN << acc_size << std::endl;
 			std::cout << YLW << "ft  = " << CBN << ft << std::endl;
 			std::cout << YLW << "std = " << CBN << std << std::endl;
 			std::cout << YLW << "ratio ft / std = " << CBN;

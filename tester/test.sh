@@ -15,7 +15,7 @@ clang++ -fsanitize=address test1_insert_rand_erase_rand.cpp -o "test1"
 ./test1 5
 diff ft.txt  std.txt
 
-d=1
+d=10
 ((x+=5))
 
 echo "./test1_insert_rand_erase_rand.cpp"

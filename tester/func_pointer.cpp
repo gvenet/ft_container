@@ -3,10 +3,11 @@
 #include <string>
 
 template <class M, class P, typename T_L, typename T_R>
-void test_insert_access( P ( *make_pair )( T_L, T_R ), T_L __x, T_R __y ) {
+int test_insert_access( P ( *make_pair )( T_L, T_R ), T_L __x, T_R __y ) {
 	M										 map_int;
 	typename M::iterator it( map_int.insert( make_pair( __x,__y) ).first );
 	std::cout << it->first << "_" << it->second << " | test_insert_access" << std::endl;
+	return 42;
 }
 
 template <typename T_L, typename T_R>
@@ -20,7 +21,7 @@ void func(T_L __x, T_R __y) {
 
 	std::cout << make_pair(__x,__y).first << "__\n";
 	
-	test_insert_access<std_map, std_pair>( make_pair, __x, __y);
+	int i = test_insert_access<std_map, std_pair>( make_pair, __x, __y);
 
 	// void ( *insert_access )( std_pair( * )( int, int ) ) = &( test_insert_access<std_map, std_pair> );
 	// insert_access(make_pair);

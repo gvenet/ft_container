@@ -10,7 +10,7 @@ ERROR_MARK="${RED}\xE2\x9C\x96${ENDC}"
 
 BIN=$(echo $1 | awk '{print substr ($0, 3, 5)}')
 
-clang++ $1 -o $BIN
+clang++ -fsanitize=address $1 -o $BIN
 ./$BIN
 echo -ne "$1\r"
 if (diff ft.txt std.txt > diff_log) then
@@ -19,3 +19,5 @@ else
 	echo -e "$1 ${ERROR_MARK}"
 	exit 1
 fi
+clang++ $1 -o $BIN
+

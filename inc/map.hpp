@@ -185,7 +185,7 @@ class map {
 
 		allocator_type get_allocator() const { return _bst.get_allocator(); }
 
-	private:
+	public:
 		void print_tree() {
 
 			_bst._reset_limits();

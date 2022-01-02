@@ -422,7 +422,7 @@ class bst {
 			return toRm;
 		}
 
-		void _find_successor_and_delete( node_pointer& toRm, node_pointer& succ ) {
+		void _find_successor_and_delete( node_pointer& toRm, node_pointer succ ) {
 			if ( succ->left ) {
 				_find_successor_and_delete( toRm, succ->left );
 				_assign_left_depth( succ );
@@ -520,7 +520,7 @@ class bst {
 
 		allocator_type get_allocator() const { return _nodeAlloc; }
 
-	private:
+	public:
 		node_pointer get_root() const { return _root; }
 
 		int height( node_pointer node ) {

@@ -11,7 +11,7 @@ ERROR_MARK="${RED}\xE2\x9C\x96${ENDC}"
 echo -e "${GRN}TEST_MAP_FUNCTIONS${ENDC}"
 
 #TEST1 ==============================================================
-clang++ test1_insert_rand_erase_rand.cpp -o "test1"
+clang++ -fsanitize=address test1_insert_rand_erase_rand.cpp -o "test1"
 ./test1 5
 diff ft.txt  std.txt
 
@@ -34,11 +34,16 @@ while ( ((x<=640)) ) do
 	fi
 ((x*=2))
 done
+clang++ test1_insert_rand_erase_rand.cpp -o "test1"
 
-n=1
+n=2
 while ( ((n<10)) ) do 
 	id=$(find . -name  "test${n}_*")
 	./func.sh $id
+	if [[ $? -ne 0 ]]; then
+		echo "exit"
+		exit 1
+	fi
 	((n+=1))
 done
 

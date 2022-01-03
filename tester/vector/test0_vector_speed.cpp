@@ -2,7 +2,6 @@
 #include <ctime>
 #include <fstream>
 #include <iostream>
-#include <map>
 #include <sstream>
 #include <string>
 #include <sys/time.h>
@@ -34,32 +33,32 @@ struct test_speed {
 			ss2 >> acc_size;
 			ss3 << era;
 			ss3 >> era_size;
-			v1 = utls.random_tab(ins_size);
-			ft = exec_time<ft::map<int, int> >();
-			std = exec_time<std::map<int, int> >();
+			v1 = utls.random_tab( ins_size );
+			ft = exec_time<ft::vector<int> >();
+			std = exec_time<std::vector<int> >();
 			this->ratio();
 		}
 
-		template <class M>
+		template <class V>
 		void test_insert_access() {
-			M map_int;
+			V v;
 			for ( int i = 0; i < v1.size(); ++i ) {
-				map_int[v1[i]] = rand();
+				v.push_back( rand() );
 			}
 			int sum = 0;
 			for ( int i = 0; i < acc_size; i++ ) {
-				sum += map_int[rand() % map_int.size()];
+				sum += v.at( rand() % v.size() );
 			}
 			for ( int i = 0; i < era_size; i++ ) {
-				map_int.erase( rand() % map_int.size() );
+				v.erase( v.begin() += rand() % v.size() );
 			}
 		}
 
-		template <class M>
+		template <class V>
 		double exec_time() {
 			std::clock_t start, end;
 			start = clock();
-			test_insert_access<M>();
+			test_insert_access<V>();
 			end = clock();
 			double time_taken = double( end - start ) / double( CLOCKS_PER_SEC );
 			return time_taken;

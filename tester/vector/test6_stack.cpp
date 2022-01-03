@@ -1,8 +1,5 @@
-#include "../inc/stack.hpp"
-#include <stack>
-#include <vector>
-
-using namespace ft;
+#include "tester_utils.hpp"
+#include <ios>
 
 template <typename T, size_t n>
 T* array_end( T ( &array )[n] ) {
@@ -49,18 +46,21 @@ void test_stack2( typename StackType::container_type& c ) {
 	std::cout << "s.size() = " << s.size() << std::endl;
 }
 
+template <class S2>
 void all_comparisons( std::vector<int> const& va, std::vector<int> const& vb ) {
-	std::boolalpha( std::cout );
-	stack<int, std::vector<int> > a( va );
-	stack<int, std::vector<int> > b( vb );
+	S2 a( va );
+	S2 b( vb );
+	std::cout << std::boolalpha;
 	std::cout << "a == b : " << ( a == b ) << std::endl;
 	std::cout << "a != b : " << ( a != b ) << std::endl;
 	std::cout << "a < b : " << ( a < b ) << std::endl;
 	std::cout << "a > b : " << ( a > b ) << std::endl;
 	std::cout << "a >= b : " << ( a >= b ) << std::endl;
 	std::cout << "a <= b : " << ( a <= b ) << std::endl;
+	std::cout << std::noboolalpha;
 }
 
+template <class S2>
 void test_relational() {
 	int							 v1_values[] = { 0, 1, 2, 3 };
 	std::vector<int> v1( v1_values, array_end( v1_values ) );
@@ -75,24 +75,37 @@ void test_relational() {
 	int							 v3b_values[] = { 0, 1, 1 };
 	std::vector<int> v3b( v3b_values, array_end( v3b_values ) );
 
-	all_comparisons( v1, v1b );
-	all_comparisons( v1, v2 );
-	all_comparisons( v1, v2b );
-	all_comparisons( v1, v3 );
-	all_comparisons( v1, v3b );
+	all_comparisons<S2>( v1, v1b );
+	all_comparisons<S2>( v1, v2 );
+	all_comparisons<S2>( v1, v2b );
+	all_comparisons<S2>( v1, v3 );
+	all_comparisons<S2>( v1, v3b );
 }
 
+template <class S1, class S2>
 void test() {
-	int												 array_int[] = { 42, 71, 33, 0 };
-	stack<int>::container_type default_container_int( array_int, array_int + sizeof( array_int ) /
-																																							 sizeof( int ) );
-	std::vector<int>					 vect_int( array_int, array_int + sizeof( array_int ) / sizeof( int ) );
+	int													array_int[] = { 42, 71, 33, 0 };
+	typename S1::container_type default_container_int( array_int, array_int + sizeof( array_int ) /
+																																								sizeof( int ) );
+	std::vector<int> vect_int( array_int, array_int + sizeof( array_int ) / sizeof( int ) );
 
-	test_stack1<stack<int> >( array_int );
-	test_stack2<stack<int> >( default_container_int );
-	test_stack1<stack<int, std::vector<int> > >( array_int );
-	test_stack2<stack<int, std::vector<int> > >( vect_int );
-	test_relational();
+	test_stack1<S1>( array_int );
+	test_stack2<S1>( default_container_int );
+	test_stack1<S2>( array_int );
+	test_stack2<S2>( vect_int );
+	test_relational<S2>();
 }
 
-int main() { test(); }
+template <class S1, class S2>
+void file_out( std::string id ) {
+	std::ofstream		out( id );
+	std::streambuf* coutbuf = std::cout.rdbuf();
+	std::cout.rdbuf( out.rdbuf() );
+	test<S1, S2>();
+	std::cout.rdbuf( coutbuf );
+}
+
+int main() {
+	file_out<ft::stack<int>, ft::stack<int, std::vector<int> > >( FT );
+	file_out<std::stack<int>, std::stack<int, std::vector<int> > >( STD );
+}

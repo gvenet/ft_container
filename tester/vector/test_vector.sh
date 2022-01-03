@@ -8,7 +8,7 @@ CHECK_MARK="${GRN}\xE2\x9C\x94${ENDC}"
 ERROR_MARK="${RED}\xE2\x9C\x96${ENDC}"
 
 echo -e "${GRN}TEST_VECTOR_FUNCTIONS${ENDC}"
-nf=6
+nf=7
 n=1
 while ( ((n<nf)) ) do 
 	id=$(find . -name  "test${n}_*")
@@ -42,8 +42,5 @@ clang++ test0_vector_speed.cpp -o vector_speed
 ./vector_speed 1000 1000 1000
 ./vector_speed 100000 0 0
 ./vector_speed 100000 100000 0
-./vector_speed 100000 0 100000
-./vector_speed 100000 100000 100000
-./vector_speed 1000000 1000000 0
 
 rm vector_speed

@@ -9,8 +9,8 @@
 #include <time.h>
 #include <vector>
 
+#include "../../inc/stack.hpp"
 #include "../../inc/vector.hpp"
-#include "../../inc/map.hpp"
 #include "../../inc/utils/pair.hpp"
 
 #define FT "ft"
@@ -28,13 +28,9 @@ struct KeyCompareStr {
 
 struct tester_utils {
 		typedef std::map<int, int>																std_mapi;
-		typedef ft::map<int, int>																	ft_mapi;
 		typedef std::pair<std_mapi::iterator, std_mapi::iterator> std_pair_it;
-		typedef ft::pair<ft_mapi::iterator, ft_mapi::iterator>		ft_pair_it;
 		typedef std::map<int, int, KeyCompareInt>									std_mapi_cmp;
 		typedef std::map<std::string, std::string, KeyCompareStr> std_maps_cmp;
-		typedef ft::map<int, int, KeyCompareInt>									ft_mapi_cmp;
-		typedef ft::map<std::string, std::string, KeyCompareStr>	ft_maps_cmp;
 
 		tester_utils() {
 			struct timespec ts;

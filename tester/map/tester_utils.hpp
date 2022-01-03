@@ -9,8 +9,8 @@
 #include <time.h>
 #include <vector>
 
-#include "../inc/map.hpp"
-#include "../inc/utils/pair.hpp"
+#include "../../inc/map.hpp"
+#include "../../inc/utils/pair.hpp"
 
 struct KeyCompareInt {
 		bool operator()( int x, int y ) const { return -x / 2 < -y / 2; }

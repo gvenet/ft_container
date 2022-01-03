@@ -1,8 +1,6 @@
 #include <sstream>
 #include <string>
 
-#include "../inc/map.hpp"
-#include "../inc/vector.hpp"
 #include "tester_utils.hpp"
 
 struct test_remove {

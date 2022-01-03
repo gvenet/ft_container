@@ -1,4 +1,3 @@
-#include "../inc/map.hpp"
 #include "tester_utils.hpp"
 
 struct test_modifier {

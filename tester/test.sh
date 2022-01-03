@@ -1,7 +1,6 @@
 #!/bin/bash
 
 cd map/
-./test.sh
--
+./test_map.sh
 
 

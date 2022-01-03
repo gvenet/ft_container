@@ -43,15 +43,23 @@ struct test_speed {
 		void test_insert_access() {
 			V v;
 			for ( int i = 0; i < v1.size(); ++i ) {
-				v.push_back( rand() );
+				v.push_back( rand());
+				// std::cout << v[i] << " ";
 			}
-			int sum = 0;
+			// std::cout << std::endl;
+			unsigned long int sum = 0;
 			for ( int i = 0; i < acc_size; i++ ) {
-				sum += v.at( rand() % v.size() );
+				sum += v[rand() % v.size()];
+				// std::cout << sum << " ";
 			}
+			// std::cout << std::endl;
 			for ( int i = 0; i < era_size; i++ ) {
 				v.erase( v.begin() += rand() % v.size() );
+				// for ( int i = 0; i < v.size(); i++ )
+				// 	std::cout << v[i] << " ";
+				// std::cout << "\n";
 			}
+			// std::cout << std::endl;
 		}
 
 		template <class V>

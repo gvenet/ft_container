@@ -10,7 +10,7 @@ ERROR_MARK="${RED}\xE2\x9C\x96${ENDC}"
 echo -e "${GRN}TEST_VECTOR_FUNCTIONS${ENDC}"
 
 n=1
-while ( ((n<10)) ) do 
+while ( ((n<5)) ) do 
 	id=$(find . -name  "test${n}_*")
 	./func.sh $id
 	if [[ $? -ne 0 ]]; then
@@ -19,3 +19,6 @@ while ( ((n<10)) ) do
 	fi
 	((n+=1))
 done
+
+rm ft std diff_log
+rm test1 test2 test3 test4

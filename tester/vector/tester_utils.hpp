@@ -13,6 +13,9 @@
 #include "../../inc/map.hpp"
 #include "../../inc/utils/pair.hpp"
 
+#define FT "ft"
+#define STD "std"
+
 struct KeyCompareInt {
 		bool operator()( int x, int y ) const { return -x / 2 < -y / 2; }
 };
@@ -84,14 +87,6 @@ struct tester_utils {
 			std::cout << std::endl;
 		}
 
-		template <class M, class T>
-		void file_out( std::string out_name, T& test ) {
-			std::ofstream		out( out_name );
-			std::streambuf* coutbuf = std::cout.rdbuf();
-			std::cout.rdbuf( out.rdbuf() );
-			test.template routine<M>();
-			std::cout.rdbuf( coutbuf );
-		}
 };
 
 template <class C1, class C2>

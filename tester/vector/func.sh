@@ -13,7 +13,7 @@ BIN=$(echo $1 | awk '{print substr ($0, 3, 5)}')
 clang++ -fsanitize=address $1 -o $BIN
 ./$BIN
 echo -ne "$1\r"
-if (diff ft.txt std.txt > diff_log) then
+if (diff ft std > diff_log) then
 	echo -e "$1 ${CHECK_MARK}"
 else
 	echo -e "$1 ${ERROR_MARK}"

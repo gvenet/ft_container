@@ -1,31 +1,39 @@
 #include "tester_utils.hpp"
 
-template <class V>
-void print( V& v ) {
+struct vector_erase {
+	private:
+		tester_utils utls;
 
-	for ( typename V::iterator it = v.begin(); it != v.end(); it++ )
-		std::cout << *it << " ";
-	std::cout << "\n";
-}
+	public:
+		vector_erase() {
+			file_out<std::vector<int> >( STD );
+			file_out<ft::vector<int> >( FT );
+		}
 
-template <class V>
-void test() {
-	V v;
-	for ( int i = 0; i != 20; i++ )
-		v.push_back( i );
+		template <class V>
+		void test() {
+			V v;
+			for ( int i = 0; i != 20; i++ )
+				v.push_back( i );
 
+			v.erase( v.begin() + 2 );
+			utls.print_vec( v );
 
-	v.erase( v.begin() + 2 );
-	print(v);
+			v.erase( v.begin() + 2, v.end() - 5 );
+			utls.print_vec( v );
+		}
 
-	v.erase( v.begin() + 2, v.end() - 5 );
-	print( v );
-
-	// std::cout << "S : " << v.size() << "\n";
-	// std::cout << "C : " << v.capacity() << "\n";
-}
+		template <class V>
+		void file_out( std::string id ) {
+			std::ofstream		out( id );
+			std::streambuf* coutbuf = std::cout.rdbuf();
+			std::cout.rdbuf( out.rdbuf() );
+			test<V>();
+			std::cout.rdbuf( coutbuf );
+		}
+};
 
 int main() {
-	test<std::vector<int> >();
-	test<ft::vector<int> >();
+	vector_erase test;
+	return 0;
 }

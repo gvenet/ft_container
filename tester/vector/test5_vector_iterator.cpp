@@ -1,8 +1,4 @@
-#include "../inc/vector.hpp"
-#include <ios>
-#include <fstream>
-#include <iostream>
-#include <vector>
+#include "tester_utils.hpp"
 
 template <class V>
 void test_iterator_types() {
@@ -148,8 +144,8 @@ void file_out( std::string out_name ) {
 }
 
 int main() {
-	file_out<ft::vector<int> >( "ft" );
-	file_out<std::vector<int> >( "std" );
+	file_out<ft::vector<int> >( FT);
+	file_out<std::vector<int> >( STD );
 
 	// std::cout << "___FT___\n";
 	// test<ft::vector<int> >();

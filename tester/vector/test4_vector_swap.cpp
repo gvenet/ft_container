@@ -6,8 +6,8 @@ struct test_swap {
 
 	public:
 		test_swap() {
-			this->file_out<ft::vector<int> >( "ft.txt" );
-			this->file_out<std::vector<int> >( "std.txt" );
+			this->file_out<ft::vector<int> >( FT );
+			this->file_out<std::vector<int> >( STD );
 		}
 
 		template <class V>

@@ -44,13 +44,7 @@ void file_out( std::string out_name ) {
 }
 
 int main() {
-	// file_out<ft::vector<int> >( "ft" );
-	// file_out<std::vector<int> >( "std" );
-
-	std::cout << "___FT___\n";
-	test<ft::vector<int> >();
-	std::cout << std::endl;
-	std::cout << "___STD___\n";
-	test<std::vector<int> >();
+	file_out<ft::vector<int> >( FT );
+	file_out<std::vector<int> >( STD );
 	return 0;
 }

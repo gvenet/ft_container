@@ -1,5 +1,4 @@
-#include "../inc/vector.hpp"
-#include <vector>
+#include "tester_utils.hpp"
 
 template <class V>
 void print( V& v ) {

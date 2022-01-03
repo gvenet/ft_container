@@ -1,10 +1,4 @@
-#include <fstream>
-#include <iostream>
-
-#include "../inc/map.hpp"
-#include "../inc/utils/pair.hpp"
-#include <map>
-#include <vector>
+#include "tester_utils.hpp"
 
 int _new;
 int _del;

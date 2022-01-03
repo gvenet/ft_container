@@ -1,8 +1,4 @@
-#include "../inc/vector.hpp"
 #include "tester_utils.hpp"
-#include <fstream>
-#include <iostream>
-#include <vector>
 
 struct test_swap {
 	private:

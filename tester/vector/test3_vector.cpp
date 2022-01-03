@@ -1,8 +1,4 @@
-#include "../inc/vector.hpp"
-#include <fstream>
-#include <ios>
-#include <iostream>
-#include <vector>
+#include "tester_utils.hpp"
 
 template <class Iterator>
 void iter( Iterator begin, Iterator end, void ( *f )( typename Iterator::value_type& ) ) {
@@ -18,6 +14,7 @@ void printElem( T& elem ) {
 
 template <class V>
 void test() {
+	int ret;
 	V vect( 6, 1 );
 	vect.push_back( 0 );
 	vect.push_back( 1 );
@@ -25,7 +22,7 @@ void test() {
 	std::cout << "size = " << vect.size() << std::endl;
 	std::cout << "capacity = " << vect.capacity() << std::endl;
 	try {
-		vect.at( 10 );
+		ret = vect.at( 10 );
 	} catch ( std::exception const& e ) {
 		std::cout << e.what() << std::endl;
 	}

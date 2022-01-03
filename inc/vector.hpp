@@ -58,16 +58,13 @@ class vector {
 			_end_capacity = _end;
 		}
 
-		vector( const vector& x ) : _start( nullptr ), _end( nullptr ), _end_capacity( nullptr ) {
-			*this = x;
+		vector( const vector& x ) : _start(), _end(), _end_capacity() {
+			if ( !x.empty() )
+				*this = x;
 		}
 
-		~vector() {
-			// std::cout << "C_" << this->capacity() << " "
-			// 					<< "S_" << this->size() << "\n";
-			// std::cout << size() << "___\n";
-			_dealloc();
-		}
+		~vector() { _dealloc(); }
+
 		vector& operator=( const vector& x ) {
 			_dealloc();
 			_start = _alloc.allocate( x.capacity() );

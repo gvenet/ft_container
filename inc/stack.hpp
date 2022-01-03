@@ -18,7 +18,6 @@ class stack {
 
 	public:
 		stack( const container_type& ctnr = container_type() ) : _c( ctnr ) { }
-		~stack() { }
 
 		stack& operator=( const stack& other ) {
 			_c = other._c;

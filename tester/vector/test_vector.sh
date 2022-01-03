@@ -28,7 +28,7 @@ while ( ((n<nf)) ) do
 done
 
 rm ft std diff_log
-rm test1 test2 test3 test4 test5
+rm test1 test2 test3 test4 test5 test6
 
 echo -e "${GRN}\nTEST_VECTOR_SPEED${ENDC}"
 echo "./test0_vector_speed.cpp"

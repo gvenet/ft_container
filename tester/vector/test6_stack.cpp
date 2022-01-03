@@ -6,23 +6,24 @@ T* array_end( T ( &array )[n] ) {
 	return array + n;
 }
 
-template <class StackType, int n>
-void test_stack1( typename StackType::value_type ( &array )[n] ) {
+template <class StackType>
+void test_stack1( typename StackType::value_type ( &array )[4] ) {
 	StackType s;
 
+	std::cout << std::boolalpha;
 	std::cout << "--- Test stack 1 ---" << std::endl;
 
 	std::cout << "s.empty() = " << s.empty() << std::endl;
 	std::cout << "s.size() = " << s.size() << std::endl;
-	for ( int i = 0; i < n; ++i ) {
+	for ( int i = 0; i < 4; ++i ) {
 		s.push( array[i] );
 		std::cout << "s.top() = " << s.top() << std::endl;
 	}
 	std::cout << "s.empty() = " << s.empty() << std::endl;
 	std::cout << "s.size() = " << s.size() << std::endl;
-	for ( int i = 0; i < n; ++i ) {
+	for ( int i = 0; i < 4; ++i ) {
 		s.pop();
-		if ( i < n - 1 )
+		if ( i < 4 - 1 )
 			std::cout << "s.top() = " << s.top() << std::endl;
 	}
 	std::cout << "s.empty() = " << s.empty() << std::endl;

@@ -64,10 +64,6 @@ echo
 
 clang++ test0_map_speed_insert_access.cpp -o map_speed
 
-# ./map_speed 1000 0 0
-# ./map_speed 1000 1000 0
-# ./map_speed 1000 0 1000
-# ./map_speed 1000 1000 1000
 ./map_speed 100000 0 0
 ./map_speed 100000 100000 0
 ./map_speed 100000 0 100000

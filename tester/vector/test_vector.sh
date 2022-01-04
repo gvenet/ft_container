@@ -34,13 +34,11 @@ echo -e "${GRN}\nTEST_VECTOR_SPEED${ENDC}"
 echo "./test0_vector_speed.cpp"
 echo
 
-clang++ test0_vector_speed.cpp -o vector_speed
+clang++ -fsanitize=address test0_vector_speed.cpp -o vector_speed
 
-./vector_speed 1000 0 0
-./vector_speed 1000 1000 0
-./vector_speed 1000 0 1000
-./vector_speed 1000 1000 1000
-./vector_speed 100000 0 0
-./vector_speed 100000 100000 0
+./vector_speed 10000000 0 0
+./vector_speed 10000000 10000000 0
+./vector_speed 50000 0 50000
+./vector_speed 50000 50000 50000
 
 rm vector_speed

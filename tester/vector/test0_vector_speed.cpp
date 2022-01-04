@@ -1,4 +1,5 @@
 #include "tester_utils.hpp"
+#include <climits>
 #include <ctime>
 #include <fstream>
 #include <iostream>
@@ -18,9 +19,9 @@ struct test_speed {
 		std::stringstream ss1;
 		std::stringstream ss2;
 		std::stringstream ss3;
-		int								ins_size;
-		int								acc_size;
-		int								era_size;
+		unsigned long int ins_size;
+		unsigned long int acc_size;
+		unsigned long int era_size;
 		double						ft;
 		double						std;
 
@@ -33,7 +34,6 @@ struct test_speed {
 			ss2 >> acc_size;
 			ss3 << era;
 			ss3 >> era_size;
-			v1 = utls.random_tab( ins_size );
 			ft = exec_time<ft::vector<int> >();
 			std = exec_time<std::vector<int> >();
 			this->ratio();
@@ -42,24 +42,16 @@ struct test_speed {
 		template <class V>
 		void test_insert_access() {
 			V v;
-			for ( int i = 0; i < v1.size(); ++i ) {
-				v.push_back( rand());
-				// std::cout << v[i] << " ";
+
+			for ( unsigned long int i = 0; i < ins_size; ++i ) {
+				v.push_back( i );
 			}
-			// std::cout << std::endl;
-			unsigned long int sum = 0;
-			for ( int i = 0; i < acc_size; i++ ) {
-				sum += v[rand() % v.size()];
-				// std::cout << sum << " ";
+			unsigned long int p = 0;
+			for ( int i = 0; i < acc_size && i < v.size(); i++ ) {
+				p += v[i];
 			}
-			// std::cout << std::endl;
-			for ( int i = 0; i < era_size; i++ ) {
+			for ( int i = 0; i < era_size && i < v.size(); i++ )
 				v.erase( v.begin() += rand() % v.size() );
-				// for ( int i = 0; i < v.size(); i++ )
-				// 	std::cout << v[i] << " ";
-				// std::cout << "\n";
-			}
-			// std::cout << std::endl;
 		}
 
 		template <class V>
@@ -74,7 +66,7 @@ struct test_speed {
 
 		void ratio() {
 			double ratio = ft / std;
-			std::cout << YLW << "inserts = " << CBN << ins_size << std::endl;
+			std::cout << YLW << "insert = " << CBN << ins_size << std::endl;
 			std::cout << YLW << "access = " << CBN << acc_size << std::endl;
 			std::cout << YLW << "erase = " << CBN << era_size << std::endl;
 			std::cout << YLW << "ft  = " << CBN << ft << std::endl;
